@@ -3,7 +3,7 @@ var startApp = function() {
   gapi.load('auth2', function(){
     // Retrieve the singleton for the GoogleAuth library and set up the client.
     auth2 = gapi.auth2.init({
-      client_id: '888921774195-m315saae090djjonpdqquthqm0htv8ra.apps.googleusercontent.com',
+      client_id: '374800921348-2hhko2o7c8iufbp4h4qbpfv7km771qjt.apps.googleusercontent.com',
       cookiepolicy: 'single_host_origin',
       // Request scopes in addition to 'profile' and 'email'
       //scope: 'additional_scope'
@@ -61,27 +61,4 @@ function loginVisibility(isLoggedIn) {
         document.getElementById('logoutBtn').style.display = 'none';
         document.getElementById('loginBtn').style.display = 'block';
     }
-}
-
-
-function realtimeClock(){
-  var rtClock = new Date();
-
-  var hours = rtClock.getHours();
-  var minutes = rtClock.getMinutes();
-  var seconds = rtClock.getSeconds();
-
-
-  var amPm = (hours < 12) ? "AM" : "PM";
-
-  hours = (hours > 12) ? hours - 12 : hours;
-
-  hours = ("0" + hours).slice(-2);
-  minutes = ("0" + minutes).slice(-2);
-  seconds = ("0" + seconds).slice(-2);
-
-
-  document.getElementById('clock').innerHTML = 
-      hours + " : " + minutes + " : " + seconds + " " + amPm;
-  var t = setTimeout(realtimeClock, 500);
 }
