@@ -25,7 +25,7 @@ var marker = L.marker([45.7489, 21.2087 -0.09]).addTo(mymap);
 
 var markers = []
 
-fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Pins", {
+fetch("https://cityinventory.azure-api.net/v1/Pins", {
   method: 'GET',
   redirect: 'follow'
 })
@@ -86,7 +86,7 @@ function postIssue(message) {
     body: message,
     redirect: 'follow'
   };    
-  fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Issues", requestOptions)
+  fetch("https://cityinventory.azure-api.net/v1/Issues", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
@@ -95,7 +95,7 @@ function postIssue(message) {
 
 function loadIssues() {
   var issuesList = document.getElementById('issueList');
-  fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Issues", {
+  fetch("https://cityinventory.azure-api.net/v1/Issues", {
     method: 'GET',
     redirect: 'follow'
   })

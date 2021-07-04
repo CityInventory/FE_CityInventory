@@ -20,7 +20,7 @@ function getAllPins() {
     redirect: 'follow'
   };
   
-fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Pins", requestOptions)
+fetch("https://cityinventory.azure-api.net/v1/Pins", requestOptions)
   .then(response => response.json())
   .then(results=> {
     for(let i = 0; i < results.data.length; i++) {
@@ -64,7 +64,7 @@ function removePin() {
         mode: 'cors'
       };
       
-      fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Pins/"+markers[i].id, requestOptions)
+      fetch("https://cityinventory.azure-api.net/v1/Pins/"+markers[i].id, requestOptions)
         .then(response => response.text())
         .then(result => { 
           console.log(result);
@@ -98,7 +98,7 @@ function updatePin() {
         redirect: 'follow'
       };    
 
-      fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Pins/"+foundMarker.id, requestOptions)
+      fetch("https://cityinventory.azure-api.net/v1/Pins/"+foundMarker.id, requestOptions)
       .then(response => response.text())
       .then(result => { 
         console.log(result);
@@ -133,7 +133,7 @@ function onMapClick(e) {
 
 
   
-  fetch("https://sibiuinventoryapimanager.azure-api.net/v1/PinTypes", {
+  fetch("https://cityinventory.azure-api.net/v1/PinTypes", {
     method: 'GET',
     redirect: 'follow'
   })
@@ -189,7 +189,7 @@ function postPin(message) {
     body: message,
     redirect: 'follow'
   };    
-  fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Pins", requestOptions)
+  fetch("https://cityinventory.azure-api.net/v1/Pins", requestOptions)
   .then(response => response.text())
   .then(result => { 
     console.log(result);

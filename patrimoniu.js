@@ -14,7 +14,7 @@ var requestOptions = {
     redirect: 'follow'
   };
   
-  fetch("https://sibiuinventoryapimanager.azure-api.net/v1/Pins", requestOptions)
+  fetch("https://cityinventory.azure-api.net/v1/Pins", requestOptions)
     .then(response => response.json())
     .then(results=> {
         for(let i = 0; i < results.data.length; i++) {
