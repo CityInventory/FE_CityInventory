@@ -70,7 +70,7 @@ function handleSubmit(event) {
     "pinId": pinId,
   });
   postIssue(message);
-  location.reload();
+  // location.reload();
 }
 
 const form = document.getElementById('pinCreateForm');
