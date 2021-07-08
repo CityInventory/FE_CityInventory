@@ -25,7 +25,7 @@ var marker = L.marker([45.7489, 21.2087 -0.09]).addTo(mymap);
 
 var markers = []
 
-fetch("https://cityinventory.azure-api.net/v1/Pins", {
+fetch("https://cityinventory.azure-api.net/Pins", {
   method: 'GET',
   redirect: 'follow'
 })
@@ -70,7 +70,7 @@ function handleSubmit(event) {
     "pinId": pinId,
   });
   postIssue(message);
-  // location.reload();
+  location.reload();
 }
 
 const form = document.getElementById('pinCreateForm');

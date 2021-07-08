@@ -1,3 +1,5 @@
+
+
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -14,13 +16,13 @@ var requestOptions = {
     redirect: 'follow'
   };
   
-  fetch("https://cityinventory.azure-api.net/v1/Pins", requestOptions)
+  fetch("https://cityinventory.azure-api.net/Pins", requestOptions)
     .then(response => response.json())
     .then(results=> {
         for(let i = 0; i < results.data.length; i++) {
-            if (isDesiredPinType(results.data[i].pinTypeId)){
+            if (isDesiredPinType(results.data[i].pinTypeId)) {
                 L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-                .bindPopup("<div> <b>Descriere</b><hr>"+results.data[i].description+"</div>")
+                .bindPopup("<a href='detalii.html?id="+results.data[i].id+"' class='btn btn-info btn-fill btn-wd'>Vezi detalii</a>")
                 .addTo(mymap);
             }
         }
@@ -49,4 +51,9 @@ function isDesiredPinType(pinType){
         return true;
     } return false;
 }
+
+
+
+
+
 

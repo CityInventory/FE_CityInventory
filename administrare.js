@@ -1,3 +1,5 @@
+import { pagestemplate } from './pages-template.js';
+
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -197,3 +199,34 @@ function postPin(message) {
   });
   alert('Solicitatea a fost inregistrata.');
 }
+
+document.addEventListener('DOMContentLoaded', showInventory);
+
+function showInventory() {
+    fetch ("https://cityinventory.azure-api.net/Pins", {
+      method: 'GET',
+      redirect: 'follow'
+    })
+    .then(response => response.json())
+    .then(results=> {
+        console.log(results.data);
+        pagestemplate.showAllPins(results.data)
+    })
+    .catch(error => console.log('error', error));       
+		// .then((data) => ui.showAdminInventory(data));
+}
+
+// fetch("https://cityinventory.azure-api.net/PinTypes", {
+//     method: 'GET',
+//     redirect: 'follow'
+//   })
+//   .then(response => response.json())
+//   .then(results=> {
+//       var selector = document.getElementById("categoryMaster");
+//       for(let i = 0; i < results.data.length; i++) {
+//         var option = document.createElement("option");
+//         option.text = results.data[i].id + "_" + results.data[i].name;
+//         selector.add(option);
+//       }
+//   })
+//   .catch(error => console.log('error', error));
