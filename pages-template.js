@@ -17,14 +17,12 @@ let output = '';
 
     output += `
     <div class="pin-details-card">
-
-    <h2 class="card-title1">${pin.name}</h2>
-    <h5 class="card-description">${pin.description}</h5>
-    <h6 class="coordinates">${pin.gpsCoordX}</h6>
-    <h6 class="coordinates">${pin.gpsCoordY}</h6>
-    <button onclick="window.location.href='patrimoniu.html'"  id="continueHome" type="button">Inapoi la Patrimoniu</button>
-    <button onclick="window.location.href='sesizari.html'"  id="continueHome" type="button">Sesizare noua</button>
-
+        <h2 class="card-title1">${pin.name}</h2>
+        <h5 class="card-description">${pin.description}</h5>
+        <h6 class="coordinates">${pin.gpsCoordX}</h6>
+        <h6 class="coordinates">${pin.gpsCoordY}</h6>
+        <button onclick="window.location.href='index.html'"  id="continueHome" type="button">Inapoi la Pagina Principala</button>
+        <button onclick="window.location.href='sesizari.html'"  id="continueHome" type="button">Sesizare noua</button>
     </div>
     `
     this.pinDetails.innerHTML = output;

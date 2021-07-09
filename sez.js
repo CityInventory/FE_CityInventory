@@ -33,9 +33,10 @@ fetch("https://cityinventory.azure-api.net/Pins", {
 .then(results=> {
     for(let i = 0; i < results.data.length; i++) {
       var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-      .bindPopup("<div><h5>"+results.data[i].name+"</h5></div><hr>"+
-      "<a href='sesizari.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;'>Adauga sesizare</a>" + 
-      "<br>"+
+      .bindPopup("<h5>"+results.data[i].name+"</h5>"+"<br>"+"<a href='detalii.html?id="+results.data[i].id+"' class='btn btn-info btn-fill btn-wd'>Vezi detalii</a>"
+      +"<br>"+"<br>"+
+      "<a href='sesizari.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;' id='addSezBtn'>Adauga sesizare</a>" + 
+      "<br>"+"<br>"+
       "<a href='sesizari.html#editForm' class='btn btn-info btn-fill btn-wd'>Vezi sesizari</a>")      
       .addTo(mymap);
       newMarker.addEventListener('click',logPosition);
@@ -43,6 +44,7 @@ fetch("https://cityinventory.azure-api.net/Pins", {
     }
 })
 .catch(error => console.log('error', error));
+
 
 function logPosition(e) {
   let coordinates = e.latlng;
@@ -54,6 +56,15 @@ function logPosition(e) {
     }
   }  
 }  
+
+// var editForm = document.getElementById('editForm');
+// var addSezBtn = document.getElementById('addSezBtn');
+
+// addSezBtn.addEventListener('click', showForm);
+
+// function showForm() {
+//   editForm.style.visibility='visible'
+// }
 
 
 function handleSubmit(event) {
@@ -110,4 +121,46 @@ function loadIssues() {
   .catch(error => console.log('error', error));
 }
 
+
 loadIssues();
+
+// var requestOptions = {
+//   method: 'GET',
+//   redirect: 'follow'
+// };
+
+// fetch("https://cityinventory.azure-api.net/Pins", requestOptions)
+//   .then(response => response.json())
+//   .then(results=> {
+//       for(let i = 0; i < results.data.length; i++) {
+//           if (isDesiredPinType(results.data[i].pinTypeId)) {
+//               L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
+//               .bindPopup("<h5>"+results.data[i].name+"</h5>"+"<br>"+"<a href='detalii.html?id="+results.data[i].id+"' class='btn btn-info btn-fill btn-wd'>Vezi detalii</a>")
+//               .addTo(mymap);
+//           }
+//       }
+//   })
+//   .catch(error => console.log('error', error));
+// function isDesiredPinType(pinType){
+//   if(pinType==4){
+//       return true;
+//   }
+//   if(pinType==7){
+//       return true;
+//   }
+//   if(pinType==8){
+//       return true;
+//   }
+//   if(pinType==9){
+//       return true;
+//   }
+//   if(pinType==10){
+//       return true;
+//   }
+//   if(pinType==11){
+//       return true;
+//   }
+//   if(pinType==13){
+//       return true;
+//   } return false;
+// }
