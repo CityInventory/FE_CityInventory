@@ -33,7 +33,7 @@ fetch("https://cityinventory.azure-api.net/Pins", {
 .then(results=> {
     for(let i = 0; i < results.data.length; i++) {
       var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-      .bindPopup("<div> <b>Descriere: </b>"+results.data[i].description+"</div><hr>"+
+      .bindPopup("<div><h5>"+results.data[i].name+"</h5></div><hr>"+
       "<a href='sesizari.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;'>Adauga sesizare</a>" + 
       "<br>"+
       "<a href='sesizari.html#editForm' class='btn btn-info btn-fill btn-wd'>Vezi sesizari</a>")      

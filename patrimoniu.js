@@ -22,7 +22,7 @@ var requestOptions = {
         for(let i = 0; i < results.data.length; i++) {
             if (isDesiredPinType(results.data[i].pinTypeId)) {
                 L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-                .bindPopup("<a href='detalii.html?id="+results.data[i].id+"' class='btn btn-info btn-fill btn-wd'>Vezi detalii</a>")
+                .bindPopup("<h5>"+results.data[i].name+"</h5>"+"<br>"+"<a href='detalii.html?id="+results.data[i].id+"' class='btn btn-info btn-fill btn-wd'>Vezi detalii</a>")
                 .addTo(mymap);
             }
         }
