@@ -26,3 +26,13 @@ flex: 1;
     height: 5em;
 }
 
+.options-btn {
+    display: block;
+    margin-top: 1em;
+    min-width: 10em;
+}
+
+#issueList {
+    display: none;
+    margin: 1em;
+}

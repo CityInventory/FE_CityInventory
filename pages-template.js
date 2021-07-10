@@ -19,8 +19,6 @@ let output = '';
     <div class="pin-details-card">
         <h2 class="card-title1">${pin.name}</h2>
         <h5 class="card-description">${pin.description}</h5>
-        <h6 class="coordinates">${pin.gpsCoordX}</h6>
-        <h6 class="coordinates">${pin.gpsCoordY}</h6>
         <button onclick="window.location.href='index.html'"  id="continueHome" type="button">Inapoi la Pagina Principala</button>
         <button onclick="window.location.href='sesizari.html'"  id="continueHome" type="button">Sesizare noua</button>
     </div>
@@ -38,7 +36,7 @@ showAllPins(pinsArray) {
             <tbody> 
             <tr>
                 <td>${pin.id}</td>
-                <td>${pin.name}</td>
+                <td><a href = "#mapid"${pin.gpsCoordX}>${pin.name}</a></td>
                 <td>${pin.gpsCoordX}</td>
                 <td>${pin.gpsCoordY}</td>
                 <td><button id=${pin.id} type="button" href='detalii.html' class="card-button delete">Detalii</button></td>

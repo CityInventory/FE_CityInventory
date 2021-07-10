@@ -161,8 +161,8 @@ function handleSubmit() {
   let longitude = document.getElementById('longitude').value;
 
   if(latitude==null || latitude=='' || longitude==null || longitude=='') {
-    document.getElementById('latitude').style.border = '2px solid red';;
-    document.getElementById('longitude').style.border = '2px solid red';;
+    document.getElementById('latitude').style.border = '2px solid red';
+    document.getElementById('longitude').style.border = '2px solid red';
   } else {
 
     var message = JSON.stringify({

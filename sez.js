@@ -1,71 +1,70 @@
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
+window.addEventListener('load', init());
 
-L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-  maxZoom: 18,
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-  id: 'mapbox/streets-v11',
-  tileSize: 512,
-  zoomOffset: -1
-}).addTo(mymap);
-var marker = L.marker([45.7489, 21.2087 -0.09]).addTo(mymap);
+function loadMap() {
+  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    maxZoom: 18,
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1
+  }).addTo(mymap);
+}
 
+function showInputForm(isVisible) {
+  var formElement = document.getElementById("editForm");
+  if (isVisible) {
+    formElement.style.display = "block"; 
+  } else {
+    formElement.style.display = "none";
+  }
+}
 
-// var popup = new L.marker();
+function loadPins() {
+  fetch("https://cityinventory.azure-api.net/Pins", {
+    method: 'GET',
+    redirect: 'follow'
+  })
+  .then(response => response.json())
+  .then(results=> {
+      for(let i = 0; i < results.data.length; i++) {
+        var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY]).addTo(mymap);
 
-// function onMapClick(e) {
-//     marker
-//         .bindPopup("Ai selectat ").openPopup()
-//         .setLatLng(e.latlng)
-//         // .setContent("You clicked the map at " + e.latlng.toString())
-//         .openOn(mymap);
-// }
+        var popup = L.DomUtil.create('LI', 'options');
+        popup.style.listStyle = "none";
 
-// mymap.on('click', onMapClick);
+        var title = L.DomUtil.create('h5');
+        title.innerHTML = results.data[i].name;
+        popup.appendChild(title);
 
-var markers = []
+        var details = L.DomUtil.create('a');
+        details.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        details.setAttribute("href", "detalii.html?id="+results.data[i].id);
+        details.innerHTML = "Detalii"
+        popup.appendChild(details);
 
-fetch("https://cityinventory.azure-api.net/Pins", {
-  method: 'GET',
-  redirect: 'follow'
-})
-.then(response => response.json())
-.then(results=> {
-    for(let i = 0; i < results.data.length; i++) {
-      var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-      .bindPopup("<h5>"+results.data[i].name+"</h5>"+"<br>"+"<a href='detalii.html?id="+results.data[i].id+"' class='btn btn-info btn-fill btn-wd'>Vezi detalii</a>"
-      +"<br>"+"<br>"+
-      "<a href='sesizari.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;' id='addSezBtn'>Adauga sesizare</a>" + 
-      "<br>"+"<br>"+
-      "<a href='sesizari.html#editForm' class='btn btn-info btn-fill btn-wd'>Vezi sesizari</a>")      
-      .addTo(mymap);
-      newMarker.addEventListener('click',logPosition);
-      markers.push(results.data[i]);        
-    }
-})
-.catch(error => console.log('error', error));
+        var addIssueBtn = L.DomUtil.create('button');
+        addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        addIssueBtn.innerHTML = "Adauga sesizare"
+        addIssueBtn.addEventListener('click', () => { 
+          document.getElementById('pinID').value = results.data[i].id;
+          showInputForm(true);
+          document.location.href = "#editForm";
+        });
+        popup.appendChild(addIssueBtn);
 
+        var issues = L.DomUtil.create('a');
+        issues.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        issues.setAttribute("href", "#issueList");
+        issues.innerHTML = "Lista sesizari"
+        popup.appendChild(issues);
 
-function logPosition(e) {
-  let coordinates = e.latlng;
-
-  for(let i = 0; i < markers.length; i++) {
-    if (markers[i].gpsCoordX == coordinates.lat && markers[i].gpsCoordY == coordinates.lng) {
-      document.getElementById('pinID').value = markers[i].id;
-      break;
-    }
-  }  
-}  
-
-// var editForm = document.getElementById('editForm');
-// var addSezBtn = document.getElementById('addSezBtn');
-
-// addSezBtn.addEventListener('click', showForm);
-
-// function showForm() {
-//   editForm.style.visibility='visible'
-// }
-
+        newMarker.bindPopup(popup);
+      }
+  })
+  .catch(error => console.log('error', error));
+}
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -73,6 +72,12 @@ function handleSubmit(event) {
   
   const pinId = data.get('pinID');
   const description = data.get('message');
+  if (!description) {
+    document.getElementById('pinDescription').style.border = '2px solid red';
+    alert('Va rugam adaugati o descrirere a sesizarii dumneavoastra.');
+
+    return;
+  }
   
   var message = JSON.stringify({
     "id": 0,
@@ -81,11 +86,7 @@ function handleSubmit(event) {
     "pinId": pinId,
   });
   postIssue(message);
-  location.reload();
 }
-
-const form = document.getElementById('pinCreateForm');
-form.addEventListener('submit', handleSubmit);
 
 function postIssue(message) {
   var requestOptions = {
@@ -97,16 +98,24 @@ function postIssue(message) {
     body: message,
     redirect: 'follow'
   };    
-  fetch("https://cityinventory.azure-api.net/v1/Issues", requestOptions)
+  fetch("https://cityinventory.azure-api.net/Issues", requestOptions)
   .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-  alert('Solicitatea a fost inregistrata.');
+  .then(result => { 
+    console.log(result); 
+    alert('Solicitatea a fost inregistrata.');
+    showInputForm(false);
+    window.location= window.location.origin + window.location.pathname;
+  })
+  .catch(error => { 
+    console.log('error', error)
+    alert('Ceva nu a mers bine. Te rugam sa incerci din nou.');
+    clear();
+  });
 }
 
 function loadIssues() {
   var issuesList = document.getElementById('issueList');
-  fetch("https://cityinventory.azure-api.net/v1/Issues", {
+  fetch("https://cityinventory.azure-api.net/Issues", {
     method: 'GET',
     redirect: 'follow'
   })
@@ -117,12 +126,26 @@ function loadIssues() {
         record.innerHTML = '<b>Marcaj:</b> ' + results.data[i].pinId + "     <b>Descriere:</b> "+ results.data[i].details;
         issuesList.appendChild(record);   
       }
+      if (results.data.length > 0) {
+        document.getElementById("issueList").style.display = "block";
+      }
   })
   .catch(error => console.log('error', error));
 }
 
+function init() {
+  console.log(window.location.href);
+  console.log(window.location.ancestorOrigins);
+  console.log(window.location.pathname);
+  console.log(window.location.origin);
+  loadMap();
+  loadPins();
+  loadIssues();
 
-loadIssues();
+  document
+  .getElementById('pinCreateForm')
+  .addEventListener('submit', handleSubmit);
+}
 
 // var requestOptions = {
 //   method: 'GET',
