@@ -27,8 +27,8 @@ fetch("https://cityinventory.azure-api.net/Pins", requestOptions)
   .then(results=> {
     for(let i = 0; i < results.data.length; i++) {
       var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-      .bindPopup("<div> <b>Descriere: </b>"+results.data[i].description+"</div><hr>"+
-      "<a href='administrare.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;'>Sterge Marcaj</a>"+ "<hr>" +
+      .bindPopup(results.data[i].name+"<hr>"+
+      "<a href='administrare.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;'>Sterge Marcaj</a>"+ "<br>" + "<br>" +
       "<a href='administrare.html#editForm' class='btn btn-info btn-fill btn-wd'>Modifica descriere</a>")
       .addTo(mymap);
       newMarker.addEventListener('click',logPosition);
@@ -55,31 +55,57 @@ function logPosition(e) {
   }  
 }
 
-function removePin() {
-  var latElement = document.getElementById('latitude');
-  var lngElement = document.getElementById('longitude');
-  for(let i = 0; i < markers.length; i++) {
-    if (markers[i].gpsCoordX == latElement.value && markers[i].gpsCoordY == lngElement.value) {
-      var requestOptions = {
-        method: 'DELETE',
-        redirect: 'follow',
-        mode: 'cors'
-      };
+document.getElementById('tableBody').addEventListener('click', removePin);
+
+function removePin(e){
+  if(e.target.classList.contains('delete')){
+    const id = e.target.id;
+    var requestOptions = {
+              method: 'DELETE',
+              redirect: 'follow',
+              mode: 'cors'
+            };
+            
+            fetch(`https://cityinventory.azure-api.net/Pins/${id}`, requestOptions)
+              .then(response => response.text())
+              .then(result => { 
+                console.log(result);
+              })
+              .catch(error => { 
+                console.log('error', error);
+              });
+              alert('Solicitatea a fost inregistrata.');
+          }
+          location.reload();
+        }
+        
+
+  
+// function removePin() {
+//   var latElement = document.getElementById('latitude');
+//   var lngElement = document.getElementById('longitude');
+//   for(let i = 0; i < markers.length; i++) {
+//     if (markers[i].gpsCoordX == latElement.value && markers[i].gpsCoordY == lngElement.value) {
+//       var requestOptions = {
+//         method: 'DELETE',
+//         redirect: 'follow',
+//         mode: 'cors'
+//       };
       
-      fetch("https://cityinventory.azure-api.net/Pins/"+markers[i].id, requestOptions)
-        .then(response => response.text())
-        .then(result => { 
-          console.log(result);
-        })
-        .catch(error => { 
-          console.log('error', error);
-        });
-        alert('Solicitatea a fost inregistrata.');
-      break;
-    }
-  }
-  location.reload();  
-}
+//       fetch("https://cityinventory.azure-api.net/Pins/"+markers[i].id, requestOptions)
+//         .then(response => response.text())
+//         .then(result => { 
+//           console.log(result);
+//         })
+//         .catch(error => { 
+//           console.log('error', error);
+//         });
+//         alert('Solicitatea a fost inregistrata.');
+//       break;
+//     }
+//   }
+//   location.reload();  
+// }
 
 function updatePin() {
   var latElement = document.getElementById('latitude');

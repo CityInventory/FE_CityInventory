@@ -7,7 +7,8 @@ class PAGESTEMPLATE {
         this.gpsCoordY = document.getElementById('gpsCoordY');
         this.description = document.getElementById('description');
         this.pinDetails = document.getElementById('pinDetails');
-        this.tableBody = document.getElementById('table-body');
+        this.tableBody = document.getElementById('tableBody');
+        this.pinList = document.getElementById('pinList');
     }
 
 
@@ -36,11 +37,10 @@ showAllPins(pinsArray) {
             <tbody> 
             <tr>
                 <td>${pin.id}</td>
-                <td><a href = "#mapid"${pin.gpsCoordX}>${pin.name}</a></td>
-                <td>${pin.gpsCoordX}</td>
-                <td>${pin.gpsCoordY}</td>
-                <td><button id=${pin.id} type="button" href='detalii.html' class="card-button delete">Detalii</button></td>
-                <td><button id=${pin.id} type="button" class="card-button delete">Sterge</button></td>
+                <td><a href = "mapid" ${pin.gpsCoordx + pin.gpsCoordY}>${pin.name}</a></td>
+                <td><button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'"  class="card-button">Detalii</button></td>
+                <td><button id=${pin.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
+                <td><button id=${pin.id} type="button" class="card-button delete">Șterge</button></td>
            </tr>
         </tbody>   
         </table> 
