@@ -25,35 +25,14 @@ let output = '';
     </div>
     `
     this.pinDetails.innerHTML = output;
-    
+
 }
 
 
-// showAllPins(pinsArray) {
-    
-//         let output = '';
-//         pinsArray.forEach((pin) => {
-//             output = `
-//             <table id="table-admin">
-//             <tbody> 
-//             <tr>
-//                 <td>${pin.id}</td>
-//                 <td><a href = "mapid" ${pin.gpsCoordx + pin.gpsCoordY}>${pin.name}</a></td>
-//                 <td><button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'"  class="card-button">Detalii</button></td>
-//                 <td><button id=${pin.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
-//                 <td><button id=${pin.id} type="button" class="card-button delete">Șterge</button></td>
-//            </tr>
-//         </tbody>   
-//         </table> 
-//         `;
-//         this.tableBody.innerHTML += output;
-//         });
-//     }
-
-    showAllIssues(issuesArray) {
+showAllPins(pinsArray) {
     
         let output = '';
-        issuesArray.forEach((pin) => {
+        pinsArray.forEach((pin) => {
             output = `
             <table id="table-admin">
             <tbody> 
@@ -70,6 +49,27 @@ let output = '';
         this.tableBody.innerHTML += output;
         });
     }
+
+    // showAllIssues(issuesArray) {
+    
+    //     let output = '';
+    //     issuesArray.forEach((pin) => {
+    //         output = `
+    //         <table id="table-admin">
+    //         <tbody> 
+    //         <tr>
+    //             <td>${pin.id}</td>
+    //             <td><a href = "mapid" ${pin.gpsCoordx + pin.gpsCoordY}>${pin.name}</a></td>
+    //             <td><button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'"  class="card-button">Detalii</button></td>
+    //             <td><button id=${pin.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
+    //             <td><button id=${pin.id} type="button" class="card-button delete">Șterge</button></td>
+    //        </tr>
+    //     </tbody>   
+    //     </table> 
+    //     `;
+    //     this.tableBody.innerHTML += output;
+    //     });
+    // }
 
 
 }

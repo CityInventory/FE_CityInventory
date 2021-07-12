@@ -256,7 +256,7 @@ function init() {
   document.getElementById('tableBody').addEventListener('click', removePin);
   document.addEventListener('DOMContentLoaded', showInventory);
   loadPinTypes();
-  updatePin()
+  // updatePin()
 }
 
 // fetch("https://cityinventory.azure-api.net/PinTypes", {
