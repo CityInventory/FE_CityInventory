@@ -226,19 +226,19 @@ function postPin(message) {
   alert('Solicitatea a fost inregistrata.');
 }
 
-function showInventory() {
-    fetch ("https://cityinventory.azure-api.net/Pins", {
-      method: 'GET',
-      redirect: 'follow'
-    })
-    .then(response => response.json())
-    .then(results=> {
-        console.log(results.data);
-        pagestemplate.showAllPins(results.data)
-    })
-    .catch(error => console.log('error', error));       
-		// .then((data) => ui.showAdminInventory(data));
-}
+// function showInventory() {
+//     fetch ("https://cityinventory.azure-api.net/Pins", {
+//       method: 'GET',
+//       redirect: 'follow'
+//     })
+//     .then(response => response.json())
+//     .then(results=> {
+//         console.log(results.data);
+//         pagestemplate.showAllPins(results.data)
+//     })
+//     .catch(error => console.log('error', error));       
+// 		// .then((data) => ui.showAdminInventory(data));
+// }
 
 function showInputForm(isVisible) {
   var formElement = document.getElementById("editForm");
@@ -254,10 +254,13 @@ function init() {
   loadPins();
   mymap.on('click', onMapClick);  
   document.getElementById('tableBody').addEventListener('click', removePin);
-  document.addEventListener('DOMContentLoaded', showInventory);
+  // document.addEventListener('DOMContentLoaded', showInventory);
+  document.addEventListener('DOMContentLoaded', showIssuesList);
   loadPinTypes();
   // updatePin()
 }
+
+
 
 // fetch("https://cityinventory.azure-api.net/PinTypes", {
 //     method: 'GET',
@@ -271,5 +274,20 @@ function init() {
 //         option.text = results.data[i].id + "_" + results.data[i].name;
 //         selector.add(option);
 //       }
+
 //   })
 //   .catch(error => console.log('error', error));
+
+ function showIssuesList() {
+  fetch ("https://cityinventory.azure-api.net/Issues", {
+    method: 'GET',
+    redirect: 'follow'
+  })
+  .then(response => response.json())
+  .then(results=> {
+      console.log(results.data);
+      pagestemplate.showAllIssues(results.data)
+  })
+  .catch(error => console.log('error', error));       
+  // .then((data) => ui.showAdminInventory(data));
+}
