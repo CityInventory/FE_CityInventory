@@ -64,7 +64,7 @@ function removePin(e){
               mode: 'cors'
             };
             
-            fetch(`https://cityinventory.azure-api.net/Pins/${id}`, requestOptions)
+            fetch(`https://cityinventory.azure-api.net/Pins/${id}`+markers[i].id, requestOptions)
               .then(response => response.text())
               .then(result => { 
                 console.log(result);
@@ -254,10 +254,10 @@ function init() {
   loadPins();
   mymap.on('click', onMapClick);  
   document.getElementById('tableBody').addEventListener('click', removePin);
+  document.getElementById('issuesTableBody').addEventListener('click', removeIssue);
   // document.addEventListener('DOMContentLoaded', showInventory);
   document.addEventListener('DOMContentLoaded', showIssuesList);
   loadPinTypes();
-  // updatePin()
 }
 
 
@@ -278,6 +278,10 @@ function init() {
 //   })
 //   .catch(error => console.log('error', error));
 
+
+
+// Functionality for Issues
+
  function showIssuesList() {
   fetch ("https://cityinventory.azure-api.net/Issues", {
     method: 'GET',
@@ -289,5 +293,26 @@ function init() {
       pagestemplate.showAllIssues(results.data)
   })
   .catch(error => console.log('error', error));       
-  // .then((data) => ui.showAdminInventory(data));
 }
+
+function removeIssue(e){
+  if(e.target.classList.contains('delete')){
+    const id = e.target.id;
+    var requestOptions = {
+              method: 'DELETE',
+              redirect: 'follow',
+              mode: 'cors'
+            };
+            
+            fetch(`https://cityinventory.azure-api.net/Issues/${id}`, requestOptions)
+              .then(response => response.text())
+              .then(result => { 
+                console.log(result);
+              })
+              .catch(error => { 
+                console.log('error', error);
+              });
+              alert('Solicitatea a fost inregistrata.');
+          }
+          location.reload();
+        }
