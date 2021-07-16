@@ -21,6 +21,7 @@ function showInputForm(isVisible) {
   }
 }
 
+var allPins =[];
 function loadPins() {
   fetch("https://cityinventory.azure-api.net/Pins", {
     method: 'GET',
@@ -29,6 +30,8 @@ function loadPins() {
   .then(response => response.json())
   .then(results=> {
       for(let i = 0; i < results.data.length; i++) {
+        allPins.push(results.data[i]);
+
         var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY]).addTo(mymap);
 
         var popup = L.DomUtil.create('LI', 'options');
@@ -113,6 +116,19 @@ function postIssue(message) {
   });
 }
 
+function getPinName(pinCollection, pinId) {
+  for(let i = 0; i < pinCollection.length; i++) {
+    if (pinId == pinCollection[i].id ) {
+      console.log(pinCollection[i].id);
+      console.log(pinId);
+      return pinCollection[i].name;
+    }
+  }
+  return null;
+};
+
+
+
 function loadIssues() {
   var issuesList = document.getElementById('issueList');
   fetch("https://cityinventory.azure-api.net/Issues", {
@@ -123,7 +139,7 @@ function loadIssues() {
   .then(results=> {
       for(let i = 0; i < results.data.length; i++) {
         var record = document.createElement("LI");
-        record.innerHTML = '<b>Marcaj:</b> ' + results.data[i].pinId + "     <b>Descriere:</b> "+ results.data[i].details;
+        record.innerHTML = '<b>Marcaj:</b> ' + getPinName(allPins, results.data[i].pinId) + "     <b>Descriere:</b> "+ results.data[i].details;
         issuesList.appendChild(record);   
       }
       if (results.data.length > 0) {
@@ -186,4 +202,5 @@ function init() {
 //   if(pinType==13){
 //       return true;
 //   } return false;
-// }
+// }\
+
