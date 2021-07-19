@@ -1,3 +1,5 @@
+import { pagestemplate } from './pages-template.js';
+
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
 
@@ -191,6 +193,7 @@ function removeIssue(e){
 }
 
 function init() {
+  pagestemplate.validateAuthorization();
   loadMap();
   loadPins();
   mymap.on('click', onMapClick);  

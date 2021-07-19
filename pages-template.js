@@ -70,6 +70,17 @@ let output = '';
     }
 
 
+    isAuthorized() {
+        var userName = localStorage.getItem('userName');
+        return (userName != null)
+    }
+
+    validateAuthorization() {
+        if (!this.isAuthorized()) {
+            alert("You don't have permission to access this content. Please log in first.")
+            window.location.href = "index.html";
+        }
+    }
 }
 
 export const pagestemplate = new PAGESTEMPLATE();

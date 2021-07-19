@@ -1,5 +1,10 @@
 import { pagestemplate } from './pages-template.js';
-document.addEventListener('DOMContentLoaded', showAllIssues);
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (pagestemplate.isAuthorized()) {
+        showAllIssues();
+    }
+});
 
 document.getElementById('toate').addEventListener('click', showAllIssues)
 
