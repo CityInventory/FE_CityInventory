@@ -41,11 +41,7 @@
     <body>
      <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/home.jpg">
-             <!--
-         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
- 
-         Tip 2: you can also add an image using data-image tag
-     -->
+
              <div class="sidebar-wrapper">
                  <div class="logo">
                     HARTA INTERACTIVĂ
@@ -57,12 +53,6 @@
                              <p>Acasa</p>
                          </a>
                      </li>
-                     <!-- <li>
-                         <a class="nav-link" href="patrimoniu.html">
-                             <i class="nc-icon nc-notes"></i>
-                             <p>Patrimoniu</p>
-                         </a>
-                     </li> -->
                      <li>
                          <a class="nav-link" href="sesizari.html">
                              <i class="nc-icon nc-paper-2"></i>
@@ -120,117 +110,59 @@
                  </div>
              </nav>
              <!-- End Navbar -->
-             <div class="homepage-container">
-                <div class="piechart d-flex justify-piechart-center">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div id="donutchart" style="width: 500px; height: 400px;"></div>
-                        </div>
-                    </div>
-                </div>
-                <div id="issues-home-list">
-                    <div id="banner">
-                        <h2 class="issues-home-title">Ultimele sesizari adaugate</h2>
-                        <div class="dots">
-                            <span class="dot3" onclick='dot3Clicked()'></span>
-                            <span class="dot2" onclick='dot2Clicked()'></span>                
-                            <span class="dot1" onclick='dot1Clicked()'></span>                
-                        </div>
-                    </div>
-                    <div id="news">
-                        <div id="news-title"></div>
-                        <div id="news-content"></div>
-                    </div>
-                    <div id="currentNewsPage"></div><br><br>
-                </div>
-             </div>
-             <div class="container-carousel">
-                 <h1 class="events">Evenimente </h1>
-                <div id="carousel">
-                    <figure><img src="assets/events-images/1puls20-1024x451.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/festivalul-filmului-francez/'"></figure>
-                    <figure><img src="assets/events-images/2portrete-1024x679.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/boema-romantica-pariziana-in-marile-portrete-ale-lui-nadar-la-muzeul-de-arta/'"></figure>
-                    <figure><img src="assets/events-images/3WorldPress-1-1024x813.png" alt="" class="carousel-img" type="button" onclick="window.location.href=' https://timisoaraazi.ro/expozitia-internationala-world-press-photo-ajunge-la-muzeul-national-de-arta/'"></figure>
-                    <figure><img src="assets/events-images/4festivalulfilmuluifrancez-1024x505.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/festivalul-filmului-francez/'"></figure>
-                    <figure><img src="assets/events-images/5cover-event-august-1024x536.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/editia-din-2021-flight-festival-in-10-locatii-inedite/'"></figure>
-                    <figure><img src="assets/events-images/6Opera-1024x586.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/festivalul-de-opera-si-opereta-in-aer-liber/'"></figure>
-                    <figure><img src="assets/events-images/7sudest-1024x460.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/concertul-3-sud-est-nostalgia/'"></figure>
-                    <figure><img src="assets/events-images/8bass_request-1024x575.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://www.facebook.com/events/202426278552646'"></figure>
-                    <figure><img src="assets/events-images/4jazz-1024x625.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/concerte-in-premiera-cu-trei-muzicieni-contemporani-de-jazz/'"></figure>
-                </div>
-            </div>
-             
              <div class="content">
-                 <div class="container-fluid">
-                     <div class="row">
-                         <!-- <div class="col-md-12">
-                             <div class="card">
-                                    <div class="card-header">
-                                        <h2 class="card-title">Ora locală este:</h2>
-                                        <div id="clock"></div>
-                                        <img class="img-clock-background" src="/images/clock.jpg">
-                                    </div>
-                             </div>
-                         </div> -->
-                         
-                         
-                         <div class="column">
-                            <!-- <div class="box">
-                                <div class="complains">
-                                   <h3> <i class="nc-icon nc-simple-add"></i> Pentru a face o sesizare click aici</h3>
-                                    <a class="btn btn-info btn-fill btn-wd"
-                                    href="sesizari.html">Sesizări   
-                                   </a>
+                <div class="homepage-container">
+                    <div class="piechart d-flex justify-piechart-center">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="donutchart" style="width: 500px; height: 400px;"></div>
                             </div>
-                            <div class="box">
-                                <div class="complains">
-                                    <h3> <i class="nc-icon nc-square-pin"></i> Pentru a vizualiza harta cu obiective de patrimoniu click aici</h3>
-                                     <a class="btn btn-info btn-fill btn-wd"
-                                     href="patrimoniu.html">Patrimoniu  
-                                    </a>
-                            </div> -->
-                            <div id="pins"></div>
-                             <!-- <div class="card">
-                                 <div class="card-body">
-                                     <img src="/images/Timisoara.jpeg" alt=""  style="background-size: cover">
-                                 </div>
-                                 <div class="card-body">
-                                    <h3>Timișoara</h3>
-                                    <p>Timișoara este un centru industrial, comercial, medical, cultural și universitar important pentru România. Numele localității provine de la cel al râului Timiș, combinat cu substantivul maghiar vár, „cetate”, adică Cetatea Timișului. Situat pe râul Bega, orașul este considerat capitala regiunii istorice Banat. Din 1848 și până în 1860 a fost capitala Voivodinei sârbești și a Banatului timișan. Cucerită în 1716 de către austrieci de la turci, Timișoara s-a dezvoltat în următoarele secole îndărătul fortificațiilor și în nucleele urbane situate în jurul lor. După ce fortificațiile și-au pierdut utilitatea în lumina avansurilor tehnologice din domeniul militar, cetatea a fost în mare parte dezmembrată și zonele recuperate au fost valorificate. După Primul Război Mondial Timișoara a intrat în componența României. În 1989, orașul a fost focarul Revoluției Române, care a îndepărtat regimul comunist.
-
-                                        Clădiri emblematice pentru oraș sunt Catedrala Mitropolitană Ortodoxă și Opera Națională Română din Piața Victoriei
-                                        respectiv Domul Romano-Catolic, Vicariatul Sârbesc și Casa Brück din Piața Unirii. Printre obiectivele turistice se numără Castelul Huniade, Bastionul Theresia, Muzeul de Artă și Muzeul Satului Bănățean.
-                                        </p>
-                                    
-                                 </div>
-                             </div> -->
-                             <!-- <div class="box">
-                                 <div class="box-image">
-                                     <img src="/images/Iasi.jpg" alt="">
-                                 </div>
-                                 <div class="box-content">
-                                    <h3>Iași</h3>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facilis voluptas numquam quas corrupti modi earum. Placeat qui ipsa quod autem totam distinctio, optio aliquid temporibus necessitatibus iure nostrum harum dolore!</p>
-                                    <a href="#">Read More</a>
-                                 </div>
-                             </div> -->
                         </div>
-                     </div>
-                 </div>
-             </h1>
-             <footer class="footer">
-                 <div class="container-fluid">
-                     <nav>
-                         <p class="copyright text-center">
-                             ©
-                             <script>
-                                 document.write(new Date().getFullYear())
-                             </script> | 
-                             <a href="https://scoalainformala.ro/events/challenge-accepted-paperhack-25-27-iunie-2021-editia-vii/">Challenge Accepted</a> de a pune .ro la birocrație
-                         </p>
-                     </nav>
-                 </div>
-             </footer>
-         </div>
+                    </div>
+                    <div id="issues-home-list">
+                        <div id="banner">
+                            <h3 class="issues-home-title">Ultimele sesizari adaugate</h3>
+                            <div class="dots">
+                                <span class="dot3" onclick='dot3Clicked()'></span>
+                                <span class="dot2" onclick='dot2Clicked()'></span>                
+                                <span class="dot1" onclick='dot1Clicked()'></span>                
+                            </div>
+                        </div>
+                        <div id="news">
+                            <div id="news-title"></div>
+                            <div id="news-content"></div>
+                        </div>
+                        <div id="currentNewsPage"></div>
+                    </div>
+                </div>
+                <div class="container-carousel">
+                    <h1 class="events">Evenimente </h1>
+                    <div id="carousel">
+                        <figure><img src="assets/events-images/1puls20-1024x451.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/festivalul-filmului-francez/'"></figure>
+                        <figure><img src="assets/events-images/2portrete-1024x679.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/boema-romantica-pariziana-in-marile-portrete-ale-lui-nadar-la-muzeul-de-arta/'"></figure>
+                        <figure><img src="assets/events-images/3WorldPress-1-1024x813.png" alt="" class="carousel-img" type="button" onclick="window.location.href=' https://timisoaraazi.ro/expozitia-internationala-world-press-photo-ajunge-la-muzeul-national-de-arta/'"></figure>
+                        <figure><img src="assets/events-images/4festivalulfilmuluifrancez-1024x505.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/festivalul-filmului-francez/'"></figure>
+                        <figure><img src="assets/events-images/5cover-event-august-1024x536.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/editia-din-2021-flight-festival-in-10-locatii-inedite/'"></figure>
+                        <figure><img src="assets/events-images/6Opera-1024x586.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/festivalul-de-opera-si-opereta-in-aer-liber/'"></figure>
+                        <figure><img src="assets/events-images/7sudest-1024x460.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/concertul-3-sud-est-nostalgia/'"></figure>
+                        <figure><img src="assets/events-images/8bass_request-1024x575.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://www.facebook.com/events/202426278552646'"></figure>
+                        <figure><img src="assets/events-images/4jazz-1024x625.png" alt="" class="carousel-img" type="button" onclick="window.location.href='https://timisoaraazi.ro/concerte-in-premiera-cu-trei-muzicieni-contemporani-de-jazz/'"></figure>
+                    </div>
+                    </div>
+                    <footer class="footer">
+                        <div class="container-fluid">
+                            <nav>
+                                <p class="copyright text-center">
+                                    ©
+                                    <script>
+                                        document.write(new Date().getFullYear())
+                                    </script> | 
+                                    <a href="https://scoalainformala.ro/events/challenge-accepted-paperhack-25-27-iunie-2021-editia-vii/">Challenge Accepted</a> de a pune .ro la birocrație
+                                </p>
+                            </nav>
+                        </div>
+                    </footer>
+             </div>
      </div>
  </body>
  <!--   Core JS Files   -->
