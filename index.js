@@ -10,8 +10,6 @@ var dot1 = document.getElementById('dot1');
 var dot2 = document.getElementById('dot2');
 var dot3 = document.getElementById('dot3');
 
-
-
 document.addEventListener('DOMContentLoaded', startTimers);
 
 	
@@ -21,12 +19,12 @@ function showPage (data, startIndex) {
     pageElement.innerHTML = '';
     for (let i = startIndex; i <= endIndex; i++) {
         let output = `
-        <div class="card">
-        <h3>${data[i].id}</h3>
-        <h3>${data[i].date}</h3>
-        <h3>${data[i].statusId}</h3>
-        <h4>${data[i].details}</h4>
-        </div>
+        <ul class="card-contor">
+            <li>
+                ${data[i].date}
+                ${data[i].details}
+            </li>
+        </ul>
         `;            
         pageElement.innerHTML += output;
     }
@@ -72,3 +70,34 @@ function startTimers() {
          setInterval(goToNextPage, 15000);
          setInterval(showNews, 180000);
 }
+
+$(document).ready(function(){
+
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+    ['Categorie', 'Total sesizari'],
+    ['Initiat', 3],
+    ['Vizualizat', 5],
+    ['In lucru', 7],
+    ['Finalizat', 9]
+    ]);
+    
+    var options = {
+    title: 'Status sesizari',
+    pieHole: 0.4,
+    };
+    
+    var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+    chart.draw(data, options);
+    }
+    
+    });
+
+
+
+
+
+
+

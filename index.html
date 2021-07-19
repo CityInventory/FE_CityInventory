@@ -120,22 +120,30 @@
                  </div>
              </nav>
              <!-- End Navbar -->
-             <div id="issues-home-list">
-                <div id="banner">
-                    <h2 class="issues-home-title">Lista sesizari</h2>
-                    <div class="dots">
-                        <span class="dot3" onclick='dot3Clicked()'></span>
-                        <span class="dot2" onclick='dot2Clicked()'></span>                
-                        <span class="dot1" onclick='dot1Clicked()'></span>                
+             <div class="homepage-container">
+                <div class="piechart d-flex justify-piechart-center">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="donutchart" style="width: 500px; height: 500px;"></div>
+                        </div>
                     </div>
                 </div>
-                <div id="news">
-                    <div id="news-title"></div>
-                    <div id="news-content"></div>
+                <div id="issues-home-list">
+                    <div id="banner">
+                        <h2 class="issues-home-title">Ultimele sesizari adaugate</h2>
+                        <div class="dots">
+                            <span class="dot3" onclick='dot3Clicked()'></span>
+                            <span class="dot2" onclick='dot2Clicked()'></span>                
+                            <span class="dot1" onclick='dot1Clicked()'></span>                
+                        </div>
+                    </div>
+                    <div id="news">
+                        <div id="news-title"></div>
+                        <div id="news-content"></div>
+                    </div>
+                    <div id="currentNewsPage"></div><br><br>
                 </div>
-                <div id="currentNewsPage"></div><br><br>
-            </div>
-
+             </div>
              <div class="container-carousel">
                  <h1 class="events">Evenimente </h1>
                 <div id="carousel">
@@ -243,7 +251,7 @@
 <script src="auth.js"></script>
 <!-- <script src="clock.js"></script> -->
 <script src="index.js"></script>
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
  
  </html>
  

@@ -23,14 +23,13 @@ let output = '';
     <div class="pin-details-card">
         <h2 class="card-title1">${pin.name}</h2>
         <h5 class="card-description">${pin.description}</h5>
-        <button onclick="window.location.href='index.html'"  id="continueHome" type="button">Inapoi la Pagina Principala</button>
+        <button onclick="window.location.href='sesizari.html'"  id="continueHome" type="button">Inapoi la Sesizari</button>
         <button onclick="window.location.href='sesizari.html#editForm'"  id="continueHome" type="button">Sesizare noua</button>
     </div>
     `
     this.pinDetails.innerHTML = output;
 
 }
-
 
 // showAllPins(pinsArray) {
     

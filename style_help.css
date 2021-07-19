@@ -2,3 +2,12 @@
     display:flex;
     flex-direction: column;
 }
+
+#help-auth {
+	font-weight: bold;
+}
+
+.question {
+    font-weight: bold;
+}
+
