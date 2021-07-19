@@ -1,4 +1,8 @@
 import { pagestemplate } from './pages-template.js';
+
+window.addEventListener('load', init());
+
+
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
 var markers = []
@@ -14,29 +18,80 @@ function loadMap() {
   }).addTo(mymap);
 }
 
+function showInputForm(isVisible) {
+  var formElement = document.getElementById("editForm");
+  if (isVisible) {
+    formElement.style.display = "block"; 
+  } else {
+    formElement.style.display = "none";
+  }
+}
 
-//Functionality for pins
+var allPins =[];
 function loadPins() {
-  var requestOptions = {
+  fetch("https://cityinventory.azure-api.net/Pins", {
     method: 'GET',
     redirect: 'follow'
-  };
-
-  fetch("https://cityinventory.azure-api.net/Pins", requestOptions)
-    .then(response => response.json())
-    .then(results=> {
+  })
+  .then(response => response.json())
+  .then(results=> {
       for(let i = 0; i < results.data.length; i++) {
-        var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-        .bindPopup(results.data[i].name+"<hr>"+
-        "<a href='administrare.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;'>Sterge Marcaj</a>"+ "<br>" + "<br>" +
-        "<a href='administrare.html#editForm' class='btn btn-info btn-fill btn-wd'>Modifica descriere</a>")
-        .addTo(mymap);
-        newMarker.addEventListener('click',logPosition);
-        markers.push(results.data[i]);
+        allPins.push(results.data[i]);
+
+        var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY]).addTo(mymap);
+
+        var popup = L.DomUtil.create('LI', 'options');
+        popup.style.listStyle = "none";
+
+        var title = L.DomUtil.create('h5');
+        title.innerHTML = results.data[i].name;
+        popup.appendChild(title);
+
+        var changeBtn = L.DomUtil.create('button');
+        addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        changeBtn.innerHTML = "Modifica marcaj"
+        changeBtn.addEventListener('click', () => { 
+          document.getElementById('pinID').value = results.data[i].id;
+          showInputForm(true);
+          document.location.href = "#editForm";
+        });
+        popup.appendChild(changeBtn);
+
+        var deletePinBtn = L.DomUtil.create('a');
+        deletePinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        deletePinBtn.addEventListener('click', removePin)
+        deletePinBtn.innerHTML = "Sterge marcaj"
+        popup.appendChild(deletePinBtn);
+
+        newMarker.bindPopup(popup);
       }
-    })
-    .catch(error => console.log('error', error));
+  })
+  .catch(error => console.log('error', error));
 }
+
+
+//Functionality for pins
+// function loadPins() {
+//   var requestOptions = {
+//     method: 'GET',
+//     redirect: 'follow'
+//   };
+
+//   fetch("https://cityinventory.azure-api.net/Pins", requestOptions)
+//     .then(response => response.json())
+//     .then(results=> {
+//       for(let i = 0; i < results.data.length; i++) {
+//         var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
+//         .bindPopup(results.data[i].name+"<hr>"+
+//         "<a href='administrare.html#editForm' class='btn btn-info btn-fill btn-wd' style='margin-bottom: 2px;'>Sterge Marcaj</a>"+ "<br>" + "<br>" +
+//         "<a href='administrare.html#editForm' class='btn btn-info btn-fill btn-wd' id='changeBtn'>Modifica descriere</a>")
+//         .addTo(mymap);
+//         newMarker.addEventListener('click',logPosition);
+//         markers.push(results.data[i]);
+//       }
+//     })
+//     .catch(error => console.log('error', error));
+// }
 
 function logPosition(e) {
   let coordinates = e.latlng;
@@ -240,14 +295,18 @@ function postPin(message) {
 // 		// .then((data) => ui.showAdminInventory(data));
 // }
 
-function showInputForm(isVisible) {
-  var formElement = document.getElementById("editForm");
-  if (isVisible) {
-    formElement.style.display = "block"; 
-  } else {
-    formElement.style.display = "none";
-  }
-}
+// document.getElementById('changeBtn').addEventListener('click',showInputForm());
+
+
+
+// function showInputForm(isVisible) {
+//   var formElement = document.getElementById("editForm");
+//   if (isVisible) {
+//     formElement.style.display = "block"; 
+//   } else {
+//     formElement.style.display = "none";
+//   }
+// }
 
 function init() {
   loadMap();
@@ -290,7 +349,7 @@ function init() {
   .then(response => response.json())
   .then(results=> {
       console.log(results.data);
-      pagestemplate.showAllIssues(results.data)
+      pagestemplate.showIssues(results.data)
   })
   .catch(error => console.log('error', error));       
 }
@@ -316,3 +375,44 @@ function removeIssue(e){
           }
           location.reload();
         }
+
+//Filter on pins
+document.getElementById('toate').addEventListener('click', function(){
+  showIssuesList();
+})
+document.getElementById('cladiri').addEventListener('click', function(){
+  getFilterPins(1);
+});
+document.getElementById('drumuri').addEventListener('click', function(){
+  getFilterPins(2);
+});
+document.getElementById('spatiiDeschise').addEventListener('click', function(){
+  getFilterPins(3);
+});
+document.getElementById('altele').addEventListener('click', function(){
+  getFilterPins(4);
+});
+
+function getFilterPins(selectedPinType){
+  // var selectedPins=[];
+  fetch ("https://cityinventory.azure-api.net/Issues/pinType/"+ selectedPinType, {
+      method: 'GET',
+      redirect: 'follow'
+    })
+    .then(response => response.json())
+    .then(results=> {
+        // selectedPins = results.data;
+        console.log(results.data);
+        pagestemplate.showIssues(results.data);
+    })
+    .catch(error => console.log('error', error));       
+		// .then((data) => ui.showAdminInventory(data));
+    
+}
+
+
+// function init(){
+//   loadMap();
+//   // loadPins();
+//   // loadIssues();
+// }
