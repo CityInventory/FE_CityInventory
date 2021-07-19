@@ -47,9 +47,10 @@ function loadPins() {
         details.innerHTML = "Detalii"
         popup.appendChild(details);
 
-        var addIssueBtn = L.DomUtil.create('button');
-        addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        var addIssueBtn = L.DomUtil.create('a');
+        addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");   
         addIssueBtn.innerHTML = "Adauga sesizare"
+        addIssueBtn.style.color = "white";
         addIssueBtn.addEventListener('click', () => { 
           document.getElementById('pinID').value = results.data[i].id;
           showInputForm(true);
@@ -104,7 +105,6 @@ function postIssue(message) {
   fetch("https://cityinventory.azure-api.net/Issues", requestOptions)
   .then(response => response.text())
   .then(result => { 
-    console.log(result); 
     alert('Solicitatea a fost inregistrata.');
     showInputForm(false);
     window.location= window.location.origin + window.location.pathname;

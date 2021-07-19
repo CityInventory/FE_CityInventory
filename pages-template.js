@@ -53,7 +53,7 @@ let output = '';
 //     }
 
     showIssues(issuesArray) {
-        this.issuesTableBody = '';
+        this.issuesTableBody.innerHTML = '';
         let output = '';
         issuesArray.forEach((pinType) => {
             output = `
