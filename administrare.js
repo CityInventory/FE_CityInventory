@@ -199,7 +199,24 @@ function init() {
   loadPinTypes();
 }
 
+//added by ale
+ document.getElementById('marcaj').addEventListener('click', getPins);
 
+function getPins(){
+  fetch ("https://cityinventory.azure-api.net/Pins", {
+    method: 'GET',
+    redirect: 'follow'
+  })
+  .then(response => response.json())
+  .then(results=> {
+      // selectedPins = results.data;
+      console.log(results.data);
+      pagestemplate.showPins(results.data);
+  })
+  .catch(error => console.log('error', error));       
+  // .then((data) => ui.showAdminInventory(data));
+  
+}
 
 // function updatePin() {
 //   var latElement = document.getElementById('latitude');
