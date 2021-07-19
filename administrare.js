@@ -1,6 +1,6 @@
 import { pagestemplate } from './pages-template.js';
 
-window.addEventListener('load', init());
+
 
 
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
@@ -349,7 +349,7 @@ function init() {
   .then(response => response.json())
   .then(results=> {
       console.log(results.data);
-      pagestemplate.showIssues(results.data)
+      pagestemplate.showAllIssues(results.data)
   })
   .catch(error => console.log('error', error));       
 }
@@ -403,7 +403,7 @@ function getFilterPins(selectedPinType){
     .then(results=> {
         // selectedPins = results.data;
         console.log(results.data);
-        pagestemplate.showIssues(results.data);
+        pagestemplate.showAllIssues(results.data);
     })
     .catch(error => console.log('error', error));       
 		// .then((data) => ui.showAdminInventory(data));
