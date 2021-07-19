@@ -52,13 +52,11 @@ let output = '';
 //         });
 //     }
 
-    showAllIssues(issuesArray) {
-    
+    showIssues(issuesArray) {
+        this.issuesTableBody = '';
         let output = '';
         issuesArray.forEach((pinType) => {
             output = `
-            <table id="issues-table">
-            <tbody id="issuesTableBody"> 
             <tr>
                 <td>${pinType.id}</td>
                 <td>${pinType.details}</td>
@@ -66,8 +64,6 @@ let output = '';
                 <td><button id=${pinType.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
                 <td><button id=${pinType.id} type="button" class="card-button delete">Șterge</button></td>
            </tr>
-        </tbody>   
-        </table> 
         `;
         this.issuesTableBody.innerHTML += output;
         });

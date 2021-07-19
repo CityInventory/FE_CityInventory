@@ -349,7 +349,7 @@ function init() {
   .then(response => response.json())
   .then(results=> {
       console.log(results.data);
-      pagestemplate.showAllIssues(results.data)
+      pagestemplate.showIssues(results.data)
   })
   .catch(error => console.log('error', error));       
 }
