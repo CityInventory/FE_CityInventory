@@ -5,3 +5,7 @@
 #pinDescription {
     height: 5em;
 }
+
+#pinsList, #issuesList, #worksList{
+    display : none;
+}

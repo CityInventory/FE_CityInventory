@@ -7,14 +7,14 @@ class PAGESTEMPLATE {
         this.gpsCoordY = document.getElementById('gpsCoordY');
         this.details = document.getElementById('details');
         this.pinDetails = document.getElementById('pinDetails');
-        this.tableBody = document.getElementById('tableBody');
+        // this.tableBody = document.getElementById('tableBody');
         this.pinList = document.getElementById('pinList');
         this.issuesList = document.getElementById('issuesList');
         this.issuesTable = document.getElementById('issues-table');
         this.issuesTableBody = document.getElementById('issuesTableBody');
 
-        this.pinsTableBody = document.getElementById('pinsTablebody');
-        this.worksTableBody=document.getElementById('worksTableBody');
+        this.pinsTableBody = document.getElementById('pinsTableBody');
+        this.worksTableBody = document.getElementById('worksTableBody');
 
     }
 
@@ -75,14 +75,14 @@ let output = '';
 
     //added by Ale
     showPins(pinsArray) {
-        this.pinsTableBody = '';
+        this.pinsTableBody.innerHTML = '';
         let output = '';
         pinsArray.forEach((pin) =>{
             output = `
             <tr>
                 <td>${pin.id}</td>
-                <td>${pin.title}<td>
-                <td>${pin.pinType}<td>
+                <td>${pin.name}<td>
+                <td>${pin.pinTypeId}<td>
                 <td><button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'" class="card-button">Detalii</button></td>
                 <td><button id=${pin.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
                 <td><button id=${pin.id} type="button" class="card-button delete">Șterge</button></td>
@@ -93,21 +93,22 @@ let output = '';
     }
 
     //added by Ale
-    showWorks(){
-        this.worksTableBody = '';
+    showWorks(worksArray){
+        this.worksTableBody.innerHTML = '';
         let output = '';
         worksArray.forEach((work) => {
-            output = `           <tr>
-            <td>${work.id}</td>
-            <td>${work.title}<td>
-            <td>${work.pinType}<td>
-            <td><button id=${work.id} type="button" onclick="window.location.href='detalii.html?id=${work.id}'" class="card-button">Detalii</button></td>
-            <td><button id=${work.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
-            <td><button id=${work.id} type="button" class="card-button delete">Șterge</button></td>
-        <tr>
-    `;
-    this.worksTableBody.innerHTML += output;
-        })
+            output = `           
+                <tr>
+                <td>${work.pinId}</td>
+                <td>${work.statusId}<td>
+                <td>${work.details}</td>
+                <td><button id=${work.id} type="button" onclick="window.location.href='detalii.html?id=${work.id}'" class="card-button">Detalii</button></td>
+                <td><button id=${work.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
+                <td><button id=${work.id} type="button" class="card-button delete">Șterge</button></td>
+            <tr>
+            `;
+        this.worksTableBody.innerHTML += output;
+        });
     }
 
 

@@ -1,4 +1,5 @@
 import { pagestemplate } from './pages-template.js';
+import { showIssuesByPinType, showAllIssues} from './filters.js';
 
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
@@ -192,18 +193,8 @@ function removeIssue(e){
   location.reload();
 }
 
-function init() {
-  pagestemplate.validateAuthorization();
-  loadMap();
-  loadPins();
-  mymap.on('click', onMapClick);  
-  document.getElementById('tableBody').addEventListener('click', removePin);
-  document.getElementById('issuesTableBody').addEventListener('click', removeIssue);
-  loadPinTypes();
-}
-
 //added by ale
- document.getElementById('marcaj').addEventListener('click', getPins);
+document.getElementById('marcaj').addEventListener('click', getPins);
 
 function getPins(){
   fetch ("https://cityinventory.azure-api.net/Pins", {
@@ -220,6 +211,89 @@ function getPins(){
   // .then((data) => ui.showAdminInventory(data));
   
 }
+
+
+function getWorks(){
+  fetch ("https://cityinventory.azure-api.net/Works", {
+    method: 'GET',
+    redirect: 'follow'
+  })
+  .then(response => response.json())
+  .then(results=> {
+      // selectedPins = results.data;
+      console.log(results.data);
+      pagestemplate.showWorks(results.data);
+  })
+  .catch(error => console.log('error', error));       
+  // .then((data) => ui.showAdminInventory(data));
+  
+}
+
+function showSelectedTable(){
+  var selectedOption = document.getElementById("selectedList").value;
+  var pinsList = document.getElementById('pinsList');
+  var worksList = document.getElementById('worksList');
+  if(selectedOption=='sesizari'){
+    showIssuesTable();
+    pinsList.style.display="none";
+    worksList.style.display="none";
+  }
+  else if(selectedOption=='marcaj'){
+    hideIssuesTable();
+    pinsList.style.display="block";
+    worksList.style.display="none";
+  }
+  else if(selectedOption=='lucrari'){
+    hideIssuesTable();
+    pinsList.style.display="none";
+    worksList.style.display="block";
+  }else{
+    hideIssuesTable();
+    pinsList.style.display="none";
+    worksList.style.display="none";
+  }
+}
+
+function showIssuesTable() {
+  var issuesList = document.getElementById('issuesList');
+  issuesList.style.display="block";
+
+  document.getElementById('toate').addEventListener('click', showAllIssues)
+
+  document.getElementById('cladiri').addEventListener('click', function(){
+      showIssuesByPinType(1);
+  });
+  document.getElementById('drumuri').addEventListener('click', function(){
+      showIssuesByPinType(2);
+  });
+  document.getElementById('spatiiDeschise').addEventListener('click', function(){
+      showIssuesByPinType(3);
+  });
+  document.getElementById('altele').addEventListener('click', function(){
+      showIssuesByPinType(4);
+  });
+
+}
+
+function hideIssuesTable() {
+  var issuesList = document.getElementById('issuesList');
+  issuesList.style.display="none";
+}
+
+function init() {
+  pagestemplate.validateAuthorization();
+  loadMap();
+  loadPins();
+  mymap.on('click', onMapClick);  
+  // document.getElementById('pinsTableBody').addEventListener('click', removePin);
+  // document.getElementById('issuesTableBody').addEventListener('click', removeIssue);
+  loadPinTypes();
+  getPins();
+  getWorks();
+  document.getElementById('selectedList').addEventListener('change', showSelectedTable);
+}
+
+
 
 // function updatePin() {
 //   var latElement = document.getElementById('latitude');
