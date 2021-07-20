@@ -231,26 +231,24 @@ function getWorks(){
 
 function showSelectedTable(){
   var selectedOption = document.getElementById("selectedList").value;
-  var pinsList = document.getElementById('pinsList');
-  var worksList = document.getElementById('worksList');
   if(selectedOption=='sesizari'){
     showIssuesTable();
-    pinsList.style.display="none";
-    worksList.style.display="none";
+    hidePinsTable();
+    hideWorksTable();
   }
   else if(selectedOption=='marcaj'){
     hideIssuesTable();
-    pinsList.style.display="block";
-    worksList.style.display="none";
+    showPinsTable();
+    hideWorksTable();
   }
   else if(selectedOption=='lucrari'){
     hideIssuesTable();
-    pinsList.style.display="none";
-    worksList.style.display="block";
+    hidePinsTable();
+    showWorksTable();
   }else{
     hideIssuesTable();
-    pinsList.style.display="none";
-    worksList.style.display="none";
+    hidePinsTable();
+    showWorksTable();
   }
 }
 
@@ -279,6 +277,27 @@ function hideIssuesTable() {
   var issuesList = document.getElementById('issuesList');
   issuesList.style.display="none";
 }
+
+function showPinsTable() {
+  var pinsList = document.getElementById('pinsList');
+  pinsList.style.display="block";
+}
+
+function hidePinsTable() {
+  var pinsList = document.getElementById('pinsList');
+  pinsList.style.display="none";
+}
+
+function showWorksTable() {
+  var worksList = document.getElementById('worksList');
+  worksList.style.display="block";
+}
+
+function hideWorksTable() {
+  var worksList = document.getElementById('worksList');
+  worksList.style.display="none";
+}
+
 
 function init() {
   pagestemplate.validateAuthorization();
