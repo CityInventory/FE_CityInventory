@@ -127,8 +127,6 @@ function getPinName(pinCollection, pinId) {
   return null;
 };
 
-
-
 function loadIssues() {
   var issuesList = document.getElementById('issueList');
   fetch("https://cityinventory.azure-api.net/Issues", {
@@ -162,45 +160,4 @@ function init() {
   .getElementById('pinCreateForm')
   .addEventListener('submit', handleSubmit);
 }
-
-// var requestOptions = {
-//   method: 'GET',
-//   redirect: 'follow'
-// };
-
-// fetch("https://cityinventory.azure-api.net/Pins", requestOptions)
-//   .then(response => response.json())
-//   .then(results=> {
-//       for(let i = 0; i < results.data.length; i++) {
-//           if (isDesiredPinType(results.data[i].pinTypeId)) {
-//               L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-//               .bindPopup("<h5>"+results.data[i].name+"</h5>"+"<br>"+"<a href='detalii.html?id="+results.data[i].id+"' class='btn btn-info btn-fill btn-wd'>Vezi detalii</a>")
-//               .addTo(mymap);
-//           }
-//       }
-//   })
-//   .catch(error => console.log('error', error));
-// function isDesiredPinType(pinType){
-//   if(pinType==4){
-//       return true;
-//   }
-//   if(pinType==7){
-//       return true;
-//   }
-//   if(pinType==8){
-//       return true;
-//   }
-//   if(pinType==9){
-//       return true;
-//   }
-//   if(pinType==10){
-//       return true;
-//   }
-//   if(pinType==11){
-//       return true;
-//   }
-//   if(pinType==13){
-//       return true;
-//   } return false;
-// }\
 

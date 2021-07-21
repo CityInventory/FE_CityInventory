@@ -14,9 +14,6 @@ window.onload = () => {
             pagestemplate.showPinDetails(results.data)
         })
         .catch(error => console.log('error', error));        
-        // .then((pins) => pagestemplate.showPinDetails(pins));
-		// http
-		// .get(`https://cityinventory.azure-api.net/Pins/${id}`)
-		// .then((pins) => ui.showPinDetails(pins));
 	}
 }
+
