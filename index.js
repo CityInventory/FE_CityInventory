@@ -77,15 +77,15 @@ $(document).ready(function(){
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
     var data = google.visualization.arrayToDataTable([
-    ['Categorie', 'Total sesizari'],
-    ['Initiat', 3],
+    ['Categorie', 'Total sesizări'],
+    ['Inițiat', 3],
     ['Vizualizat', 5],
-    ['In lucru', 7],
+    ['În lucru', 7],
     ['Finalizat', 9]
     ]);
     
     var options = {
-    title: 'Status sesizari',
+    title: 'Status sesizări',
     pieHole: 0.4,
     };
     

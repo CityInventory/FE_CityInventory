@@ -47,7 +47,7 @@ function loadPins() {
 
         var changeBtn = L.DomUtil.create('a');
         changeBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
-        changeBtn.innerHTML = "Modifica marcaj"
+        changeBtn.innerHTML = "Modifică marcaj"
         changeBtn.style.color = "white";
         changeBtn.addEventListener('click', () => { 
           document.getElementById('pinID').value = results.data[i].id;
@@ -58,7 +58,7 @@ function loadPins() {
 
         var deletePinBtn = L.DomUtil.create('a');
         deletePinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
-        deletePinBtn.innerHTML = "Sterge marcaj"
+        deletePinBtn.innerHTML = "Șterge marcaj"
         deletePinBtn.style.color = "white";        
         deletePinBtn.addEventListener('click', removePin)        
         popup.appendChild(deletePinBtn);
@@ -81,11 +81,11 @@ function removePin(e){
     fetch(`https://cityinventory.azure-api.net/Pins/${id}`+markers[i].id, requestOptions)
     .then(response => response.text())
     .then(result => { 
-      alert('Solicitatea a fost inregistrata.');
+      alert('Solicitatea a fost înregistrată.');
     })
     .catch(error => { 
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugam sa incerci din nou.');
+      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
     });
   }
   location.reload();
@@ -102,7 +102,7 @@ function onMapClick(e) {
 
     L.popup()
     .setLatLng(coordinates)
-    .setContent("<a href='administrare.html#editForm' id='saveBtn' class='btn btn-info btn-fill btn-wd'>Adauga Marcaj</a>")
+    .setContent("<a href='administrare.html#editForm' id='saveBtn' class='btn btn-info btn-fill btn-wd'>Adaugă marcaj</a>")
     .openOn(mymap);
 
 }
@@ -163,11 +163,11 @@ function postPin(message) {
   })
   .then(response => response.text())
   .then(result => { 
-    alert('Solicitatea a fost inregistrata.');
+    alert('Solicitatea a fost înregistrată.');
   })
   .catch(error => {
     console.log('error', error)
-    alert('Ceva nu a mers bine. Te rugam sa incerci din nou.');
+    alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
   });
 }
 
@@ -187,7 +187,7 @@ function removeIssue(e){
       })
       .catch(error => { 
         console.log('error', error)
-        alert('Ceva nu a mers bine. Te rugam sa incerci din nou.');
+        alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
       });
   }
   location.reload();

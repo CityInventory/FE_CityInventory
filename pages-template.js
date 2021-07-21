@@ -117,7 +117,7 @@ let output = '';
 
     validateAuthorization() {
         if (!this.isAuthorized()) {
-            alert("You don't have permission to access this content. Please log in first.")
+            alert("Nu ai acces la acest conținut. Loghează-te folosind butonul de 'Autentificare'")
             window.location.href = "index.html";
         }
     }

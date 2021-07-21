@@ -49,7 +49,7 @@ function loadPins() {
 
         var addIssueBtn = L.DomUtil.create('a');
         addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");   
-        addIssueBtn.innerHTML = "Adauga sesizare"
+        addIssueBtn.innerHTML = "Adaugă sesizare"
         addIssueBtn.style.color = "white";
         addIssueBtn.addEventListener('click', () => { 
           document.getElementById('pinID').value = results.data[i].id;
@@ -61,7 +61,7 @@ function loadPins() {
         var issues = L.DomUtil.create('a');
         issues.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
         issues.setAttribute("href", "#issueList");
-        issues.innerHTML = "Lista sesizari"
+        issues.innerHTML = "Listă sesizări"
         popup.appendChild(issues);
 
         newMarker.bindPopup(popup);
@@ -78,7 +78,7 @@ function handleSubmit(event) {
   const description = data.get('message');
   if (!description) {
     document.getElementById('pinDescription').style.border = '2px solid red';
-    alert('Va rugam adaugati o descrirere a sesizarii dumneavoastra.');
+    alert('Vă rugăm adaugați o descrirere a sesizării dumneavoastră.');
 
     return;
   }
@@ -105,13 +105,13 @@ function postIssue(message) {
   fetch("https://cityinventory.azure-api.net/Issues", requestOptions)
   .then(response => response.text())
   .then(result => { 
-    alert('Solicitatea a fost inregistrata.');
+    alert('Solicitatea a fost înregistrată.');
     showInputForm(false);
     window.location= window.location.origin + window.location.pathname;
   })
   .catch(error => { 
     console.log('error', error)
-    alert('Ceva nu a mers bine. Te rugam sa incerci din nou.');
+    alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
     clear();
   });
 }
