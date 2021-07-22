@@ -35,6 +35,11 @@ function signOut() {
     });
 }
 
+function signOutAndRefresh() {
+  signOut();
+  location.reload();
+}
+
 function signIn(googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
     var userName =  googleUser.getBasicProfile().getName();

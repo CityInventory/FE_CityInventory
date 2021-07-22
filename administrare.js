@@ -298,7 +298,6 @@ function hideWorksTable() {
   worksList.style.display="none";
 }
 
-
 function init() {
   pagestemplate.validateAuthorization();
   loadMap();
