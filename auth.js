@@ -1,4 +1,5 @@
 var googleUser = {};
+const cookieName = "username";
 var startApp = function() {
   gapi.load('auth2', function(){
     // Retrieve the singleton for the GoogleAuth library and set up the client.
@@ -28,7 +29,7 @@ function attachSignin(element) {
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-        localStorage.removeItem('userName');
+        removeCookie(cookieName);
         setUserNameLabel('');
         loginVisibility(false); 
     });
@@ -37,13 +38,14 @@ function signOut() {
 function signIn(googleUser) {
     var id_token = googleUser.getAuthResponse().id_token;
     var userName =  googleUser.getBasicProfile().getName();
-    localStorage.setItem('userName', userName);
+    let daysToExpiration = 30;
+    setCookie(cookieName, userName, daysToExpiration);
     setUserNameLabel(userName);   
     loginVisibility(true); 
 }
 
 startApp();
-    var userName = localStorage.getItem('userName');
+    var userName = getCookie(cookieName);
     if(userName != null){
         setUserNameLabel(userName);
         loginVisibility(true);
@@ -61,4 +63,38 @@ function loginVisibility(isLoggedIn) {
         document.getElementById('logoutBtn').style.display = 'none';
         document.getElementById('loginBtn').style.display = 'block';
     }
+}
+
+function setCookie(cookieName, value="", expirationDays=-1) {
+  let newDate = new Date('01 Jan 1970');
+  if (expirationDays >= 0) {  
+    newDate = new Date();
+    newDate.setTime(newDate.getTime() + convertDaysToMiliseconds(expirationDays));
+  }
+  let expires = "expires="+ newDate.toUTCString();
+  document.cookie =cookieName + "=" + value + ";" + expires + ";path=/";
+}
+
+function convertDaysToMiliseconds (numberOfDays) {
+      return (numberOfDays*24*60*60*1000);
+}
+
+function getCookie(cookieName) {
+  let name = cookieName + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let cookieArray = decodedCookie.split(';');
+  for(let i = 0; i <cookieArray.length; i++) {
+    let cookie = cookieArray[i];
+    while (cookie.charAt(0) == ' ') {
+      cookie = cookie.substring(1);
+    }
+    if (cookie.indexOf(name) == 0) {
+      return cookie.substring(name.length, cookie.length);
+    }
+  }
+  return null;
+}
+
+function removeCookie (cookieName) {
+  setCookie(cookieName);
 }

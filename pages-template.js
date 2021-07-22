@@ -111,7 +111,7 @@ let output = '';
 
 
     isAuthorized() {
-        var userName = localStorage.getItem('userName');
+        var userName = getCookie(cookieName);
         return (userName != null)
     }
 
