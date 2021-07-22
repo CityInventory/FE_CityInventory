@@ -62,7 +62,6 @@ let output = '';
             <tr>
                 <td>${pinType.id}</td>
                 <td>${pinType.details}</td>
-                <td><button id=${pinType.id} type="button" onclick="window.location.href='detalii.html?id=${pinType.id}'"  class="card-button">Detalii</button></td>
                 <td><button id=${pinType.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
                 <td><button id=${pinType.id} type="button" class="card-button delete">Șterge</button></td>
            </tr>
@@ -100,7 +99,6 @@ let output = '';
                 <td>${work.pinId}</td>
                 <td>${work.statusId}<td>
                 <td>${work.details}</td>
-                <td><button id=${work.id} type="button" onclick="window.location.href='detalii.html?id=${work.id}'" class="card-button">Detalii</button></td>
                 <td><button id=${work.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
                 <td><button id=${work.id} type="button" class="card-button delete">Șterge</button></td>
             <tr>
