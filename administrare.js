@@ -48,10 +48,12 @@ function loadPins() {
         title.innerHTML = results.data[i].name;
         popup.appendChild(title);
 
+
         var changeBtn = L.DomUtil.create('a');
         changeBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
         changeBtn.innerHTML = "Modifică marcaj"
         changeBtn.style.color = "white";
+        changeBtn.style.display = "flex";
         changeBtn.addEventListener('click', () => {
           document.getElementById('pinID').value = results.data[i].id;
           showInputForm(true);
@@ -63,6 +65,8 @@ function loadPins() {
         deletePinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
         deletePinBtn.innerHTML = "Șterge marcaj"
         deletePinBtn.style.color = "white";
+        deletePinBtn.style.display = "flex";
+        deletePinBtn.style.marginTop = "4px";
         deletePinBtn.addEventListener('click', removePin)
         popup.appendChild(deletePinBtn);
 
