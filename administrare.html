@@ -143,6 +143,10 @@
                                             <select id="categoryMaster" class="form-control"></select>
                                         </div>
                                         <div class="form-group">
+                                            <label class="formLabel">Este acesta un obiectiv de patrimoniu?</label>
+                                            <input type="checkbox" id="isHeritage"/>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="formLabel">Latitudine</label>
                                             <input type="text" readonly id="latitude" name="latitude" class="form-control"/>
                                         </div>
@@ -159,9 +163,10 @@
                                             <textarea name="message" id="pinDescription" class="form-control"></textarea>
                                         </div>
                                     </form>   
-                                    <button class='btn btn-info btn-fill btn-wd' onClick="handleSubmit();">Adaugă marcaj</button>
-                                    <button class='btn btn-info btn-fill btn-wd' onClick="updatePin();">Modifică marcaj</button>                                                                     
-                                    <button class='btn btn-info btn-fill btn-wd' onClick="removePin();">Șterge marcaj</button>                                    
+                                    <button class='btn btn-info btn-fill btn-wd' id="createPinBtn" onClick="addNewPin();">Adaugă marcaj</button>
+                                    <button class='btn btn-info btn-fill btn-wd' id="cancelBtn" onClick="cancelNewPinForm();">Renunta</button>
+                                    <!-- <button class='btn btn-info btn-fill btn-wd' onClick="updatePin();">Modifică marcaj</button>                                                                     
+                                    <button class='btn btn-info btn-fill btn-wd' onClick="removePin();">Șterge marcaj</button>                                     -->
                                 </div>
                              </div>
                          </div>

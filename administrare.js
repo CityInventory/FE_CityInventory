@@ -62,12 +62,14 @@ function loadPins() {
         popup.appendChild(changeBtn);
 
         var deletePinBtn = L.DomUtil.create('a');
-        deletePinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        deletePinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn delete");
         deletePinBtn.innerHTML = "Șterge marcaj"
         deletePinBtn.style.color = "white";
         deletePinBtn.style.display = "flex";
         deletePinBtn.style.marginTop = "4px";
-        deletePinBtn.addEventListener('click', removePin)
+        deletePinBtn.addEventListener('click', () => {
+          removePin(results.data[i].id);
+        });
         popup.appendChild(deletePinBtn);
 
         newMarker.bindPopup(popup);
@@ -78,18 +80,26 @@ function loadPins() {
 
 function onMapClick(e) {
   let coordinates = e.latlng;
-  var latElement = document.getElementById('latitude');
-  latElement.value = coordinates.lat;
-  latElement.style.border = '1px solid black';
-  var lngElement = document.getElementById('longitude');
-  lngElement.value = coordinates.lng;
-  lngElement.style.border = '1px solid black';
 
-  L.popup()
-    .setLatLng(coordinates)
-    .setContent("<a href='administrare.html#editForm' id='saveBtn' class='btn btn-info btn-fill btn-wd'>Adaugă marcaj</a>")
-    .openOn(mymap);
+  var addPinBtn = L.DomUtil.create('a');
+  addPinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");   
+  addPinBtn.innerHTML = "Adaugă marcaj nou"
+  addPinBtn.style.color = "white";
+  addPinBtn.addEventListener('click', () => { 
+    showInputForm(true, coordinates);
+    document.location.href = "#editForm";
+  });
+
+  var optionList = L.DomUtil.create('LI', 'options');
+  optionList.style.listStyle ="none";
+  optionList.appendChild(addPinBtn);
+
+  L.popup().setLatLng(coordinates)
+           .setContent(optionList)
+           .openOn(mymap);
 }
+
+
 
 //DATA TABLES
 function showSelectedTable(){
@@ -174,13 +184,13 @@ function removeIssue(e){
       .then(response => response.text())
       .then(result => {
         alert('Solicitatea a fost inregistrata.');
+        location.reload();
       })
       .catch(error => {
         console.log('error', error)
-        alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+        alert('Sesizarea nu a fost stearsa. Te rugăm sa încerci din nou.');
       });
   }
-  location.reload();
 }
 
 
@@ -193,7 +203,7 @@ function loadPinTypes() {
     .then(response => response.json())
     .then(results=> {
       var selector = document.getElementById("categoryMaster");
-      for(let i = 0; i < results.data.length; i++) {
+      for(let i = 0; i < 4; i++) {
         var option = document.createElement("option");
         option.text = results.data[i].id + "_" + results.data[i].name;
         selector.add(option);
@@ -202,17 +212,40 @@ function loadPinTypes() {
     .catch(error => console.log('error', error));
 }
 
-function showInputForm(isVisible) {
+function showInputForm(isVisible, coordinates=null) {
   var formElement = document.getElementById("editForm");
   if (isVisible) {
     formElement.style.display = "block";
+    showClickedCoordonates(coordinates);
+    document.getElementById('createPinBtn').addEventListener('click', addNewPin);
+    document.getElementById('cancelBtn').addEventListener('click', cancelNewPinForm);
+
   } else {
     formElement.style.display = "none";
   }
 }
 
-function handleSubmit() {
+function cancelNewPinForm() {
+  var formElement = document.getElementById("editForm");
+  formElement.style.display = "none";
+  location.reload();
+}
+
+function showClickedCoordonates(coordinates) {
+  var latElement = document.getElementById('latitude');
+  latElement.value = coordinates.lat;
+  latElement.style.border = '1px solid black';
+
+  var lngElement = document.getElementById('longitude');
+  lngElement.value = coordinates.lng;
+  lngElement.style.border = '1px solid black';
+}
+
+
+function addNewPin() {
   const description = document.getElementById('pinDescription').value;
+  const name = document.getElementById('nume').value;
+  const isHeritage = document.getElementById('isHeritage').checked;
 
   var selector = document.getElementById("categoryMaster");
   const selectedOption = selector.value;
@@ -231,11 +264,11 @@ function handleSubmit() {
       "pinTypeId": pinType,
       "gpsCoordX": latitude,
       "gpsCoordY": longitude,
-      "description": description
+      "name": name,
+      "description": description,
+      "isHeritage": isHeritage
     });
     postPin(message);
-    location.reload();
-
   }
 }
 
@@ -251,6 +284,7 @@ function postPin(message) {
   .then(response => response.text())
   .then(result => {
     alert('Solicitatea a fost înregistrată.');
+    location.reload();
   })
   .catch(error => {
     console.log('error', error)
@@ -259,27 +293,27 @@ function postPin(message) {
 }
 
 //PIN ACTIONS
-function removePin(e){
-  if(e.target.classList.contains('delete')){
-    const id = e.target.id;
+function removePin(pinId){
+
     var requestOptions = {
       method: 'DELETE',
       redirect: 'follow',
       mode: 'cors'
     };
 
-    fetch(`https://cityinventory.azure-api.net/Pins/${id}`+markers[i].id, requestOptions)
+    fetch(`https://cityinventory.azure-api.net/Pins/${pinId}`, requestOptions)
     .then(response => response.text())
     .then(result => {
       alert('Solicitatea a fost înregistrată.');
+      location.reload();
     })
     .catch(error => {
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+      alert('Marcajul nu a fost sters de pe harta. Te rugăm sa încerci din nou.');
     });
-  }
-  location.reload();
 }
+  
+
 
 
 //OTHER
