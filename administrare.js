@@ -55,8 +55,9 @@ function loadPins() {
         changeBtn.style.color = "white";
         changeBtn.style.display = "flex";
         changeBtn.addEventListener('click', () => {
-          document.getElementById('pinID').value = results.data[i].id;
           showInputForm(true);
+          showClickedPin(results.data[i]);
+          setUpdatePinBtnVisibility(true);
           document.location.href = "#editForm";
         });
         popup.appendChild(changeBtn);
@@ -86,7 +87,9 @@ function onMapClick(e) {
   addPinBtn.innerHTML = "Adaugă marcaj nou"
   addPinBtn.style.color = "white";
   addPinBtn.addEventListener('click', () => { 
-    showInputForm(true, coordinates);
+    showInputForm(true);
+    showClickedCoordonates(coordinates);
+    setAddPinBtnVisibility(true);
     document.location.href = "#editForm";
   });
 
@@ -212,16 +215,33 @@ function loadPinTypes() {
     .catch(error => console.log('error', error));
 }
 
-function showInputForm(isVisible, coordinates=null) {
+function showInputForm(isVisible) {
   var formElement = document.getElementById("editForm");
   if (isVisible) {
     formElement.style.display = "block";
-    showClickedCoordonates(coordinates);
-    document.getElementById('createPinBtn').addEventListener('click', addNewPin);
     document.getElementById('cancelBtn').addEventListener('click', cancelNewPinForm);
-
   } else {
     formElement.style.display = "none";
+  }
+}
+
+function setAddPinBtnVisibility(isVisible) {
+  var btn = document.getElementById("createPinBtn");
+  if (isVisible) {
+    btn.style.display = "inline";
+    btn.addEventListener('click', addNewPin);    
+  } else {
+    btn.style.display = "none";
+  }
+}
+
+function setUpdatePinBtnVisibility(isVisible) {
+  var btn = document.getElementById("modifyBtn");
+  if (isVisible) {
+    btn.style.display = "inline";
+    btn.addEventListener('click', updatePin);   
+  } else {
+    btn.style.display = "none";
   }
 }
 
@@ -241,8 +261,38 @@ function showClickedCoordonates(coordinates) {
   lngElement.style.border = '1px solid black';
 }
 
+function showClickedPin (pin) {
+  var idElement = document.getElementById('pinCode');
+  idElement.value = pin.id;
+
+  var pinTypeId = document.getElementById('categoryMaster');
+  for (var i=0; i<pinTypeId.options.length; i++ ) {
+    if (pinTypeId[i].text.startsWith(pin.pinTypeId)) {
+      pinTypeId.selectedIndex = i;
+    }
+  }
+
+  var titleElement = document.getElementById('nume');
+  titleElement.value = pin.name;
+
+  var descriptionElement = document.getElementById('pinDescription');
+  descriptionElement.value = pin.description;
+
+  var coordinates = {lat: pin.gpsCoordX, lng: pin.gpsCoordY }
+  showClickedCoordonates(coordinates);
+}
 
 function addNewPin() {
+    var message = getFormData();
+    if (message) {
+      postPin(message);
+    }
+}
+
+function getFormData() {
+  var idElement = document.getElementById('pinCode');
+  const pinId = idElement.value;
+
   const description = document.getElementById('pinDescription').value;
   const name = document.getElementById('nume').value;
   const isHeritage = document.getElementById('isHeritage').checked;
@@ -257,24 +307,51 @@ function addNewPin() {
   if(latitude==null || latitude=='' || longitude==null || longitude=='') {
     document.getElementById('latitude').style.border = '2px solid red';
     document.getElementById('longitude').style.border = '2px solid red';
-  } else {
+    return null;
+  } 
 
-    var message = JSON.stringify({
-      "id": 0,
-      "pinTypeId": pinType,
-      "gpsCoordX": latitude,
-      "gpsCoordY": longitude,
-      "name": name,
-      "description": description,
-      "isHeritage": isHeritage
-    });
-    postPin(message);
-  }
+  return JSON.stringify({
+    "id": pinId,
+    "pinTypeId": pinType,
+    "gpsCoordX": latitude,
+    "gpsCoordY": longitude,
+    "name": name,
+    "description": description,
+    "isHeritage": isHeritage
+  });
 }
 
 function postPin(message) {
   fetch("https://cityinventory.azure-api.net/Pins", {
     method: 'POST',
+    headers: {
+      "Content-Type": "text/json"
+    },
+    mode: 'cors',
+    body: message
+  })
+  .then(response => response.text())
+  .then(result => {
+    alert('Solicitatea a fost înregistrată.');
+    location.reload();
+  })
+  .catch(error => {
+    console.log('error', error)
+    alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+  });
+}
+
+function updatePin() {
+  var message = getFormData();
+  if (message) {
+    putPin(message);
+  }
+}
+
+function putPin(message) {
+  var idPin = JSON.parse(message).id;
+  fetch(`https://cityinventory.azure-api.net/Pins/`+idPin, {
+    method: 'PUT',
     headers: {
       "Content-Type": "text/json"
     },
@@ -313,45 +390,3 @@ function removePin(pinId){
     });
 }
   
-
-
-
-//OTHER
-// function updatePin() {
-//   var latElement = document.getElementById('latitude');
-//   var lngElement = document.getElementById('longitude');
-//   for(let i = 0; i < markers.length; i++) {
-//     if (markers[i].gpsCoordX == latElement.value && markers[i].gpsCoordY == lngElement.value) {
-//       var description = document.getElementById('pinDescription').value;
-//       var foundMarker = markers[i];
-//       foundMarker.description = description;
-
-//       var requestOptions = {
-//         method: 'PUT',
-//         headers: {
-//           "Content-Type": "application/json",
-//           "Access-Control-Allow-Origin": '*'},
-//         mode: 'cors',
-//         body: JSON.stringify(foundMarker),
-//         redirect: 'follow'
-//       };
-
-//       fetch("https://cityinventory.azure-api.net/Pins/"+foundMarker.id, requestOptions)
-//       .then(response => response.text())
-//       .then(result => {
-//         console.log(result);
-//       })
-//       .catch(error => {
-//         console.log('error', error);
-//       });
-//       alert('Solicitatea a fost inregistrata.');
-
-//       break;
-//     }
-//   }
-//   location.reload();
-// }
-
-
-
-

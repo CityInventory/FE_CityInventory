@@ -6,6 +6,6 @@
     height: 5em;
 }
 
-#pinsList, #issuesList, #worksList{
+#pinsList, #issuesList, #worksList, #createPinBtn, #modifyBtn{
     display : none;
 }

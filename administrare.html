@@ -139,6 +139,10 @@
                                  <div id="editForm" class="card-body" style="display: none;">
                                     <form id="pinCreateForm" >
                                         <div class="form-group">
+                                            <label class="formLabel">Cod marcaj</label>
+                                            <input type="text" readonly id="pinCode" class="form-control"/>
+                                        </div>                                        
+                                        <div class="form-group">
                                             <label class="formLabel">Tip marcaj</label>
                                             <select id="categoryMaster" class="form-control"></select>
                                         </div>
@@ -163,8 +167,9 @@
                                             <textarea name="message" id="pinDescription" class="form-control"></textarea>
                                         </div>
                                     </form>   
-                                    <button class='btn btn-info btn-fill btn-wd' id="createPinBtn" onClick="addNewPin();">Adaugă marcaj</button>
-                                    <button class='btn btn-info btn-fill btn-wd' id="cancelBtn" onClick="cancelNewPinForm();">Renunta</button>
+                                    <button class='btn btn-info btn-fill btn-wd' id="createPinBtn">Adaugă marcaj</button>
+                                    <button class='btn btn-info btn-fill btn-wd' id="modifyBtn">Modifică</button>
+                                    <button class='btn btn-info btn-fill btn-wd' id="cancelBtn">Renuntă</button>
                                     <!-- <button class='btn btn-info btn-fill btn-wd' onClick="updatePin();">Modifică marcaj</button>                                                                     
                                     <button class='btn btn-info btn-fill btn-wd' onClick="removePin();">Șterge marcaj</button>                                     -->
                                 </div>
