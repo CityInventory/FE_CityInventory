@@ -71,6 +71,8 @@ function startTimers() {
          setInterval(showNews, 180000);
 }
 
+// PieChart
+
 $(document).ready(function(){
 
     google.charts.load("current", {packages:["corechart"]});

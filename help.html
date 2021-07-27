@@ -38,111 +38,106 @@
     <link href="style.css" rel="stylesheet">
  </head>
  
- <body onload="realtimeClock()">
-     <div class="wrapper">
+ <!-- <body onload="realtimeClock()"> -->
+<body>
+    <div class="wrapper">
         <div class="sidebar" data-image="../assets/img/home.jpg">
              <!--
          Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
  
          Tip 2: you can also add an image using data-image tag
      -->
-             <div class="sidebar-wrapper">
-                 <div class="logo">
+            <div class="sidebar-wrapper">
+                <div class="logo">
                     HARTA INTERACTIVĂ
-                 </div>
-                 <ul class="nav">
-                     <li class="nav-item">
-                         <a class="nav-link" href="index.html">
-                             <i class="nc-icon nc-chart-pie-35"></i>
-                             <p>Acasa</p>
-                         </a>
-                     </li>
-                     <!-- <li>
-                         <a class="nav-link" href="patrimoniu.html">
-                             <i class="nc-icon nc-notes"></i>
-                             <p>Patrimoniu</p>
-                         </a>
-                     </li> -->
-                     <li>
-                         <a class="nav-link" href="sesizari.html">
-                             <i class="nc-icon nc-paper-2"></i>
-                             <p>Sesizari</p>
-                         </a>
-                     </li>
-                     <li>
-                         <a class="nav-link" href="administrare.html">
-                             <i class="nc-icon nc-atom"></i>
-                             <p>Administrare</p>
-                         </a>
-                     </li>
-                     <li class="nav-item active">
+                </div>
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="nc-icon nc-chart-pie-35"></i>
+                            <p>Acasa</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="sesizari.html">
+                            <i class="nc-icon nc-paper-2"></i>
+                            <p>Sesizari</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="administrare.html">
+                            <i class="nc-icon nc-atom"></i>
+                            <p>Administrare</p>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link" href="help.html">
                             <i class="fa fa-question-circle"></i>
                             <p>Ajutor</p>
                         </a>
                     </li>
-                 </ul>
-             </div>
-         </div>
-         <div class="main-panel">
-             <!-- Navbar -->
-             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-                 <div class="container-fluid">
-                     <a class="navbar-brand" href="#">
-                         <img src="/images/logo.PNG" alt="" width="30%" height="30%">
-                     </a>
-                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                         <span class="navbar-toggler-bar burger-lines"></span>
-                         <span class="navbar-toggler-bar burger-lines"></span>
-                         <span class="navbar-toggler-bar burger-lines"></span>
-                     </button>
-                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                         <ul class="navbar-nav ml-auto">                           
-                             <li class="nav-item">
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">
+                        <img src="/images/logo.PNG" alt="" width="30%" height="30%">
+                    </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="navbar-nav ml-auto">                           
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">
                                     <div id="loginBtn" class="customGPlusSignIn">
                                         <span class="buttonText">Autentificare cu Google</span>
                                     </div>
                                 </a>
-                             </li>
-                             <li class="nav-item">
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">                             
                                     <div id="name"></div>                            
                                 </a>
                             </li>                             
-                             <li class="nav-item">
-                                 <a class="nav-link" href="#">
-                                     <span id="logoutBtn" class="no-icon" onclick="signOut();">Deconectare</span>
-                                 </a>
-                             </li>
-                         </ul>
-                     </div>
-                 </div>
-             </nav>
-             <!-- End Navbar -->
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span id="logoutBtn" class="no-icon" onclick="signOut();">Deconectare</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
             <div class="content">
-                 <div class="container-fluid">
-                     <div class="row">
-                         <div class="col-md-12">
-                             <div class="card">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- <div class="col-md-12">
+                            <div class="card">
                                     <div class="card-header">
                                         <h2 class="card-title">Ora locală este:</h2>
                                         <div id="clock"></div>
                                         <img class="img-clock-background" src="/images/clock.jpg">
                                     </div>
-                             </div>
-                         </div>
-                         <div class="column">
+                            </div>
+                        </div> -->
+                        <div class="column">
+                            <h2>
+                                <i class="nc-icon nc-zoom-split"></i> Cum se face o sesizare?
+                             </h2>
                             <div class="cardhelp">
+                                <div id="video">
+                                    <video width="520" height="440" controls autoplay muted>
+                                        <source src="assets/City Inventory - Google Chrome 2021-07-11 16-08-46.mp4" type="video/mp4">
+                                    </video>
+                                </div>
                                 <div class="instructions">
-                                    <h1>
-                                       <i class="nc-icon nc-zoom-split">  Cum se face o sesizare?</i>
-                                    </h1>
-                                    <div id="video">
-                                        <video width="520" height="440" controls autoplay muted>
-                                            <source src="assets/City Inventory - Google Chrome 2021-07-11 16-08-46.mp4" type="video/mp4">
-                                          </video>
-                                    </div>
                                     <ul class="blockquote blockquote-primary">
                                        <li>Loghează-te folosind butonul <span id="help-auth">“Autentificare cu Google"</span>;</li>
                                        <li>Accesează ramura “Sesizări”;</li>
@@ -152,78 +147,72 @@
                                        <li>Pentru a vizualiza sesizarea trimisă: click pe marcajul de pe hartă, apoi click pe "Listă sesizări". Aceasta va apărea în lista de sesizari de sub hartă.</li>
                                        <li><a href="sesizari.html#issueList">Spre sesizări</a></li>
                                     </ul>
-                                    </div>
+                                </div>
                             </div>
                             <!-- FAQ Section -->
-
-                            <div class="faq-header">Frequently Asked Questions</div>
-
-<div class="faq-content">
-  <div class="faq-question">
-    <input id="q1" type="checkbox" class="panel">
-    <div class="plus">+</div>
-    <label for="q1" class="panel-title">De ce nu pot adăuga un marcaj nou</label>
-    <div class="panel-content">Adăugarea unui marcaj poate fi efectuata doar de către persoanele autorizate din cardul Consiliului Judetean Timiș.</div>
-  </div>
-  
-  <div class="faq-question">
-    <input id="q2" type="checkbox" class="panel">
-    <div class="plus">+</div>
-    <label for="q2" class="panel-title">Ce se intampla daca ma autentific?</label>
-    <div class="panel-content">Daca te autentifici, ai posibilitatea de a crea o sesizare noua.</div>
-  </div>
-  
-  <div class="faq-question">
-    <input id="q3" type="checkbox" class="panel">
-    <div class="plus">+</div>
-    <label for="q3" class="panel-title">Cum adaug o sesizare?</label>
-    <div class="panel-content">Vizionand simularea din video si urmand pasii mai sus descrisi.</div>
-  </div>
-
-  <div class="faq-question">
-    <input id="q4" type="checkbox" class="panel">
-    <div class="plus">+</div>
-    <label for="q4" class="panel-title">Cat timp dureaza pana se vizualizeaza sesizariile, respectiv se vor lua masuri in ceea ce le priveste?</label>
-    <div class="panel-content">Depinde de sesizare. Fiecare problema raportata va fi analizata de catre functionarii din cadrul Consiliului Judetean, iar ulterior se va trece la actiunea necesara pentru a putea fi finalizata.</div>
-  </div>
-</div>
-
+                            <div class="faq-header">Întrebări frecvente</div>
+                                <div class="faq-content">
+                                    <div class="faq-question">
+                                        <input id="q1" type="checkbox" class="panel">
+                                        <div class="plus">+</div>
+                                        <label for="q1" class="panel-title">De ce nu pot adăuga un marcaj nou</label>
+                                        <div class="panel-content">Adăugarea unui marcaj poate fi efectuata doar de către persoanele autorizate din cardul Consiliului Judetean Timiș.</div>
+                                    </div>
+                                    <div class="faq-question">
+                                        <input id="q2" type="checkbox" class="panel">
+                                        <div class="plus">+</div>
+                                        <label for="q2" class="panel-title">Ce se intampla daca ma autentific?</label>
+                                        <div class="panel-content">Daca te autentifici, ai posibilitatea de a crea o sesizare noua.</div>
+                                    </div>
+                                    <div class="faq-question">
+                                        <input id="q3" type="checkbox" class="panel">
+                                        <div class="plus">+</div>
+                                        <label for="q3" class="panel-title">Cum adaug o sesizare?</label>
+                                        <div class="panel-content">Vizionand simularea din video si urmand pasii mai sus descrisi.</div>
+                                    </div>
+                                    <div class="faq-question">
+                                        <input id="q4" type="checkbox" class="panel">
+                                        <div class="plus">+</div>
+                                        <label for="q4" class="panel-title">Cat timp dureaza pana se vizualizeaza sesizariile, respectiv se vor lua masuri in ceea ce le priveste?</label>
+                                        <div class="panel-content">Depinde de sesizare. Fiecare problema raportata va fi analizata de catre functionarii din cadrul Consiliului Judetean, iar ulterior se va trece la actiunea necesara pentru a putea fi finalizata.</div>
+                                    </div>
+                                </div>
+                        </div>
                     </div>
-                </div>
+                </div> 
             </div>
-             <footer class="footer">
-                 <div class="container-fluid">
-                     <nav>
-                         <p class="copyright text-center">
-                             ©
-                             <script>
-                                 document.write(new Date().getFullYear())
-                             </script> | 
-                             <a href="https://scoalainformala.ro/events/challenge-accepted-paperhack-25-27-iunie-2021-editia-vii/">Challenge Accepted</a> de a pune .ro la birocrație
-                         </p>
-                     </nav>
-                 </div>
-             </footer>
-         </div>
-     </div>
- </body>
- <!--   Core JS Files   -->
- <script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
- <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
- <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
- <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
- <script src="../assets/js/plugins/bootstrap-switch.js"></script>
- <!--  Notifications Plugin    -->
- <script src="../assets/js/plugins/bootstrap-notify.js"></script>
- <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
- <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
- <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
- <script src="../assets/js/demo.js"></script>
-<!-- Google login -->
-<script src="https://apis.google.com/js/platform.js" async defer></script> 
- <!-- Custom code -->
-<script src="auth.js"></script>
-<script src="clock.js"></script>
- 
- </html>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav>
+                        <p class="copyright text-center">
+                            ©
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> | 
+                            <a href="https://scoalainformala.ro/events/challenge-accepted-paperhack-25-27-iunie-2021-editia-vii/">Challenge Accepted</a> de a pune .ro la birocrație
+                        </p>
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+    <script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
+    <script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+    <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+    <script src="../assets/js/plugins/bootstrap-switch.js"></script>
+    <!--  Notifications Plugin    -->
+    <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+    <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+    <script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
+    <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+    <script src="../assets/js/demo.js"></script>
+    <!-- Google login -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script> 
+    <!-- Custom code -->
+    <script src="auth.js"></script>
+    <script src="clock.js"></script>
+</body>
+</html>
  
