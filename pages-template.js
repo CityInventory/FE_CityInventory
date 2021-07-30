@@ -24,10 +24,8 @@ showPinDetails(pin) {
 let output = '';
 
     output += `
-    <div class="pin-details-card">
         <h2 class="card-title1">${pin.name}</h2>
         <h5 class="card-description">${pin.description}</h5>
-    </div>
     `
     this.pinDetails.innerHTML = output;
 
