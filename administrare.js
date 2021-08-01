@@ -291,7 +291,10 @@ function addNewPin() {
 
 function getFormData() {
   var idElement = document.getElementById('pinCode');
-  const pinId = idElement.value;
+  var pinId = parseInt(idElement.value);
+  if (isNaN(pinId)) {
+    pinId = 0;
+  }
 
   const description = document.getElementById('pinDescription').value;
   const name = document.getElementById('nume').value;
