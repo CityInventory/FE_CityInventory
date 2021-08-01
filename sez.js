@@ -23,7 +23,7 @@ function showInputForm(isVisible) {
 
 var allPins =[];
 function loadPins() {
-  fetch("https://cityinventory.azure-api.net/Pins", {
+  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins", {
     method: 'GET',
     redirect: 'follow'
   })
@@ -102,7 +102,7 @@ function postIssue(message) {
     body: message,
     redirect: 'follow'
   };    
-  fetch("https://cityinventory.azure-api.net/Issues", requestOptions)
+  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues", requestOptions)
   .then(response => response.text())
   .then(result => { 
     alert('Solicitatea a fost înregistrată.');
@@ -129,7 +129,7 @@ function getPinName(pinCollection, pinId) {
 
 function loadIssues() {
   var issuesList = document.getElementById('issueList');
-  fetch("https://cityinventory.azure-api.net/Issues", {
+  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues", {
     method: 'GET',
     redirect: 'follow'
   })

@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 export function showIssuesByPinType(selectedPinType) {
-    let url = "https://cityinventory.azure-api.net/Issues/pinType/"+ selectedPinType
+    let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues/pinType/"+ selectedPinType
     showIssuesList(url);
 }
 
 export function showAllIssues() {
-    showIssuesList("https://cityinventory.azure-api.net/Issues");
+    showIssuesList("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues");
 }
 
 function showIssuesList(url){
@@ -32,12 +32,12 @@ fetch ( url ,{
 //added by ale
 document.getElementById('pinsTableBody')
 function showPinsbyPinType(selectedPinType) {
-    let url = "https://cityinventory.azure-api.net/Pins/type/"+ selectedPinType
+    let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/type/"+ selectedPinType
     showPinsList(url);
 }
 
 function showAllPins() {
-    showPinsList("https://cityinventory.azure-api.net/Pins");
+    showPinsList("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins");
 }
 
 function showPinsList(url){
@@ -55,12 +55,12 @@ fetch ( url ,{
 //added by ale
 document.getElementById('worksTableBody')
 function showWorksByPinId(selectedStatus) {
-    let url = "https://cityinventory.azure-api.net/Works/pinID"+ selectedPinId
+    let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Works/pinID"+ selectedPinId
     showWorkList(url);
 }
 
 function showAllWorks() {
-    showWorkList("https://cityinventory.azure-api.net/Works");
+    showWorkList("https://92xjz4ismg.eu-west-1.awsapprunner.com/Works");
 }
 
 function showWorkList(url){

@@ -4,7 +4,7 @@ window.onload = () => {
 	if (window.location.search !== '') {
 		const id = window.location.search.split('=')[1];
         console.log("found id="+id);
-        fetch("https://cityinventory.azure-api.net/Pins/"+id, {
+        fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/"+id, {
             method: 'GET',
             redirect: 'follow'
         })

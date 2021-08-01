@@ -29,7 +29,7 @@ function loadMap() {
 
 var allPins =[];
 function loadPins() {
-  fetch("https://cityinventory.azure-api.net/Pins", {
+  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins", {
     method: 'GET',
     redirect: 'follow'
   })
@@ -183,7 +183,7 @@ function removeIssue(e){
       mode: 'cors'
     };
 
-    fetch(`https://cityinventory.azure-api.net/Issues/${id}`, requestOptions)
+    fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues/${id}`, requestOptions)
       .then(response => response.text())
       .then(result => {
         alert('Solicitatea a fost inregistrata.');
@@ -199,7 +199,7 @@ function removeIssue(e){
 
 //PIN EDITOR FORM
 function loadPinTypes() {
-  fetch("https://cityinventory.azure-api.net/PinTypes", {
+  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/PinTypes", {
     method: 'GET',
     redirect: 'follow'
   })
@@ -322,7 +322,7 @@ function getFormData() {
 }
 
 function postPin(message) {
-  fetch("https://cityinventory.azure-api.net/Pins", {
+  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins", {
     method: 'POST',
     headers: {
       "Content-Type": "text/json"
@@ -350,7 +350,7 @@ function updatePin() {
 
 function putPin(message) {
   var idPin = JSON.parse(message).id;
-  fetch(`https://cityinventory.azure-api.net/Pins/`+idPin, {
+  fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/`+idPin, {
     method: 'PUT',
     headers: {
       "Content-Type": "text/json"
@@ -378,7 +378,7 @@ function removePin(pinId){
       mode: 'cors'
     };
 
-    fetch(`https://cityinventory.azure-api.net/Pins/${pinId}`, requestOptions)
+    fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/${pinId}`, requestOptions)
     .then(response => response.text())
     .then(result => {
       alert('Solicitatea a fost înregistrată.');

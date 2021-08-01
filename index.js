@@ -31,7 +31,7 @@ function showPage (data, startIndex) {
 }
 
 function showNews() {
-    fetch ("https://cityinventory.azure-api.net/Issues", {
+    fetch ("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues", {
         method: 'GET',
         redirect: 'follow'
     })
