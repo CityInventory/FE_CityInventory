@@ -78,8 +78,8 @@ let output = '';
             output = `
             <tr>
                 <td>${pin.id}</td>
-                <td>${pin.pinTypeId}<td>
-                <td>${pin.name}<td>
+                <td>${pin.pinTypeId}</td>
+                <td>${pin.name}</td>
                 <td class="btn-group">
                     <button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'" class="btn btn-sm btn-round btn-fill btn-default table-btn">Detalii</button>
 <!--                    <button id=${pin.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
@@ -97,9 +97,9 @@ let output = '';
         let output = '';
         worksArray.forEach((work) => {
             output = `
-                <tr>
+            <tr>
                 <td>${work.pinId}</td>
-                <td>${work.statusId}<td>
+                <td>${work.statusId}</td>
                 <td>${work.details}</td>
                 <td class="btn-group">
 <!--                    <button id=${work.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
