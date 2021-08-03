@@ -33,7 +33,6 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
   <link href="auth.css" rel="stylesheet"/>
-  <link href="admin_page.css" rel="stylesheet"/>
   <!--Map-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -41,6 +40,8 @@
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           crossorigin=""></script>
+  <!--Page styles-->
+  <link href="admin_page.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -192,10 +193,12 @@ Tip 2: you can also add an image using data-image tag
               <div class="pins-list card-body table-full-width table-responsive" id="pinsList">
                 <table class="table table-hover" id="pins-table">
                   <thead id="table-head">
+                  <tr>
                     <th>Id marcaj</th>
                     <th>Tip marcaj</th>
                     <th>Denumire marcaj</th>
                     <th>Optiuni</th>
+                  </tr>
                   </thead>
                   <tbody id="pinsTableBody"></tbody>
                 </table>
@@ -205,9 +208,11 @@ Tip 2: you can also add an image using data-image tag
                 <div class="issues-list card-body table-full-width table-responsive">
                   <table class="table table-hover" id="issues-table">
                     <thead id="issuesTable-head">
+                    <tr>
                       <th>Tip marcaj</th>
                       <th>Descriere sesizare</th>
                       <th>Optiuni</th>
+                    </tr>
                     </thead>
                     <tbody id="issuesTableBody"></tbody>
                   </table>
@@ -217,10 +222,12 @@ Tip 2: you can also add an image using data-image tag
               <div class="works-list card-body table-full-width table-responsive" id="worksList">
                 <table class="table table-hover" id="works-table">
                   <thead id="worksTable-head">
+                  <tr>
                     <th>Id marcaj</th>
                     <th>Status</th>
                     <th>Detalii</th>
                     <th>Optiuni</th>
+                  </tr>
                   </thead>
                   <tbody id="worksTableBody"></tbody>
                 </table>

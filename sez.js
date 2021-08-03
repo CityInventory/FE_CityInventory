@@ -15,7 +15,7 @@ function loadMap() {
 function showInputForm(isVisible) {
   var formElement = document.getElementById("editForm");
   if (isVisible) {
-    formElement.style.display = "block"; 
+    formElement.style.display = "block";
   } else {
     formElement.style.display = "none";
   }
@@ -48,10 +48,10 @@ function loadPins() {
         popup.appendChild(details);
 
         var addIssueBtn = L.DomUtil.create('a');
-        addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");   
+        addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
         addIssueBtn.innerHTML = "Adaugă sesizare"
         addIssueBtn.style.color = "white";
-        addIssueBtn.addEventListener('click', () => { 
+        addIssueBtn.addEventListener('click', () => {
           document.getElementById('pinID').value = results.data[i].id;
           showInputForm(true);
           document.location.href = "#editForm";
@@ -73,7 +73,7 @@ function loadPins() {
 function handleSubmit(event) {
   event.preventDefault();
   const data = new FormData(event.target);
-  
+
   const pinId = data.get('pinID');
   const description = data.get('message');
   if (!description) {
@@ -82,7 +82,7 @@ function handleSubmit(event) {
 
     return;
   }
-  
+
   var message = JSON.stringify({
     "id": 0,
     "details": description,
@@ -96,20 +96,20 @@ function postIssue(message) {
   var requestOptions = {
     method: 'POST',
     headers: {
-      "Content-Type": "application/json", 
+      "Content-Type": "application/json",
       "Access-Control-Allow-Origin": '*'},
     mode: 'cors',
     body: message,
     redirect: 'follow'
-  };    
+  };
   fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues", requestOptions)
   .then(response => response.text())
-  .then(result => { 
+  .then(result => {
     alert('Solicitatea a fost înregistrată.');
     showInputForm(false);
     window.location= window.location.origin + window.location.pathname;
   })
-  .catch(error => { 
+  .catch(error => {
     console.log('error', error)
     alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
     clear();
@@ -128,21 +128,25 @@ function getPinName(pinCollection, pinId) {
 };
 
 function loadIssues() {
-  var issuesList = document.getElementById('issueList');
   fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues", {
     method: 'GET',
     redirect: 'follow'
   })
   .then(response => response.json())
   .then(results=> {
-      for(let i = 0; i < results.data.length; i++) {
-        var record = document.createElement("LI");
-        record.innerHTML = '<b>Marcaj:</b> ' + getPinName(allPins, results.data[i].pinId) + "     <b>Descriere:</b> "+ results.data[i].details;
-        issuesList.appendChild(record);   
-      }
-      if (results.data.length > 0) {
-        document.getElementById("issueList").style.display = "block";
-      }
+    if (results.data.length > 0) {
+      document.getElementById("issues-section").style.display = "block";
+    }
+    let issueList = document.getElementById('issue-list');
+    for(let i = 0; i < results.data.length; i++) {
+      output = `
+            <tr>
+                <td>${getPinName(allPins, results.data[i].pinId)}</td>
+                <td>${results.data[i].details}<td>
+            <tr>
+        `;
+      issueList.innerHTML += output;
+    }
   })
   .catch(error => console.log('error', error));
 }
