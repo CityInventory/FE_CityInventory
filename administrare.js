@@ -12,7 +12,7 @@ function init() {
   // document.getElementById('pinsTableBody').addEventListener('click', removePin);
   // document.getElementById('issuesTableBody').addEventListener('click', removeIssue);
   loadPinTypes();
-  document.getElementById('selectedList').addEventListener('change', showSelectedTable);
+  initTableSelector();
 }
 
 //MAP FUNCTIONS
@@ -27,7 +27,6 @@ function loadMap() {
   }).addTo(mymap);
 }
 
-var allPins =[];
 function loadPins() {
   fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins", {
     method: 'GET',
@@ -36,8 +35,6 @@ function loadPins() {
   .then(response => response.json())
   .then(results=> {
       for(let i = 0; i < results.data.length; i++) {
-        allPins.push(results.data[i]);
-
         var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
         .addTo(mymap);
 
@@ -83,10 +80,10 @@ function onMapClick(e) {
   let coordinates = e.latlng;
 
   var addPinBtn = L.DomUtil.create('a');
-  addPinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");   
+  addPinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
   addPinBtn.innerHTML = "Adaugă marcaj nou"
   addPinBtn.style.color = "white";
-  addPinBtn.addEventListener('click', () => { 
+  addPinBtn.addEventListener('click', () => {
     showInputForm(true);
     showClickedCoordonates(coordinates);
     setAddPinBtnVisibility(true);
@@ -105,8 +102,14 @@ function onMapClick(e) {
 
 
 //DATA TABLES
+function initTableSelector() {
+  const selector = document.getElementById("selectedList");
+  selector.value = "Selectează un tabel";
+  selector.addEventListener('change', showSelectedTable);
+}
+
 function showSelectedTable(){
-  var selectedOption = document.getElementById("selectedList").value;
+  const selectedOption = document.getElementById("selectedList").value;
   if(selectedOption=='sesizari'){
     showIssuesTable();
     hidePinsTable();
@@ -124,12 +127,15 @@ function showSelectedTable(){
   }else{
     hideIssuesTable();
     hidePinsTable();
-    showWorksTable();
+    hideWorksTable();
   }
 }
 
 function showIssuesTable() {
-  var issuesList = document.getElementById('issuesList');
+  const issuesListSelector = document.getElementById('issues-list-selector');
+  issuesListSelector.style.display="inline-block";
+
+  const issuesList = document.getElementById('issuesList');
   issuesList.style.display="block";
 
   document.getElementById('toate').addEventListener('click', showAllIssues)
@@ -150,27 +156,29 @@ function showIssuesTable() {
 }
 
 function hideIssuesTable() {
-  var issuesList = document.getElementById('issuesList');
+  const issuesList = document.getElementById('issuesList');
   issuesList.style.display="none";
+  const issuesListSelector = document.getElementById('issues-list-selector');
+  issuesListSelector.style.display="none";
 }
 
 function showPinsTable() {
-  var pinsList = document.getElementById('pinsList');
+  const pinsList = document.getElementById('pinsList');
   pinsList.style.display="block";
 }
 
 function hidePinsTable() {
-  var pinsList = document.getElementById('pinsList');
+  const pinsList = document.getElementById('pinsList');
   pinsList.style.display="none";
 }
 
 function showWorksTable() {
-  var worksList = document.getElementById('worksList');
+  const worksList = document.getElementById('worksList');
   worksList.style.display="block";
 }
 
 function hideWorksTable() {
-  var worksList = document.getElementById('worksList');
+  const worksList = document.getElementById('worksList');
   worksList.style.display="none";
 }
 
@@ -229,7 +237,7 @@ function setAddPinBtnVisibility(isVisible) {
   var btn = document.getElementById("createPinBtn");
   if (isVisible) {
     btn.style.display = "inline";
-    btn.addEventListener('click', addNewPin);    
+    btn.addEventListener('click', addNewPin);
   } else {
     btn.style.display = "none";
   }
@@ -239,7 +247,7 @@ function setUpdatePinBtnVisibility(isVisible) {
   var btn = document.getElementById("modifyBtn");
   if (isVisible) {
     btn.style.display = "inline";
-    btn.addEventListener('click', updatePin);   
+    btn.addEventListener('click', updatePin);
   } else {
     btn.style.display = "none";
   }
@@ -311,7 +319,7 @@ function getFormData() {
     document.getElementById('latitude').style.border = '2px solid red';
     document.getElementById('longitude').style.border = '2px solid red';
     return null;
-  } 
+  }
 
   return JSON.stringify({
     "id": pinId,
@@ -392,4 +400,3 @@ function removePin(pinId){
       alert('Marcajul nu a fost sters de pe harta. Te rugăm sa încerci din nou.');
     });
 }
-  

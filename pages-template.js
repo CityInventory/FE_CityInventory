@@ -32,12 +32,12 @@ let output = '';
 }
 
 // showAllPins(pinsArray) {
-    
+
 //         let output = '';
 //         pinsArray.forEach((pin) => {
 //             output = `
 //             <table id="table-admin">
-//             <tbody> 
+//             <tbody>
 //             <tr>
 //                 <td>${pin.id}</td>
 //                 <td><a href = "mapid" ${pin.gpsCoordx + pin.gpsCoordY}>${pin.name}</a></td>
@@ -45,8 +45,8 @@ let output = '';
 //                 <td><button id=${pin.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
 //                 <td><button id=${pin.id} type="button" class="card-button delete">Șterge</button></td>
 //            </tr>
-//         </tbody>   
-//         </table> 
+//         </tbody>
+//         </table>
 //         `;
 //         this.tableBody.innerHTML += output;
 //         });
@@ -60,8 +60,10 @@ let output = '';
             <tr>
                 <td>${pinType.id}</td>
                 <td>${pinType.details}</td>
-                <td><button id=${pinType.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
-                <td><button id=${pinType.id} type="button" class="card-button delete">Șterge</button></td>
+                <td class="btn-group">
+<!--                    <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${pinType.id} type="button" href='detalii.html'>Modifică</button>-->
+<!--                    <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${pinType.id} type="button">Șterge</button>-->
+                </td>
            </tr>
         `;
         this.issuesTableBody.innerHTML += output;
@@ -76,11 +78,13 @@ let output = '';
             output = `
             <tr>
                 <td>${pin.id}</td>
-                <td>${pin.name}<td>
                 <td>${pin.pinTypeId}<td>
-                <td><button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'" class="card-button">Detalii</button></td>
-                <td><button id=${pin.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
-                <td><button id=${pin.id} type="button" class="card-button delete">Șterge</button></td>
+                <td>${pin.name}<td>
+                <td class="btn-group">
+                    <button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'" class="btn btn-sm btn-round btn-fill btn-default table-btn">Detalii</button>
+<!--                    <button id=${pin.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
+<!--                    <button id=${pin.id} type="button" class="btn btn-sm btn-round btn-fill btn-default table-btn">Șterge</button>-->
+                </td>
             <tr>
         `;
         this.pinsTableBody.innerHTML += output;
@@ -92,13 +96,15 @@ let output = '';
         this.worksTableBody.innerHTML = '';
         let output = '';
         worksArray.forEach((work) => {
-            output = `           
+            output = `
                 <tr>
                 <td>${work.pinId}</td>
                 <td>${work.statusId}<td>
                 <td>${work.details}</td>
-                <td><button id=${work.id} type="button" href='detalii.html' class="card-button">Modifică</button></td>
-                <td><button id=${work.id} type="button" class="card-button delete">Șterge</button></td>
+                <td class="btn-group">
+<!--                    <button id=${work.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
+<!--                    <button id=${work.id} type="button" class="btn btn-sm btn-round btn-fill btn-default table-btn">Șterge</button>-->
+                </td>
             <tr>
             `;
         this.worksTableBody.innerHTML += output;
