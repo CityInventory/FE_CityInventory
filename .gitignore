@@ -12,3 +12,5 @@ _site
 /.vs
 /.vscode
 /.devlocals
+
+package-lock.json

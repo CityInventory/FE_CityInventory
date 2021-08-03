@@ -6,6 +6,19 @@
     height: 5em;
 }
 
-#pinsList, #issuesList, #worksList, #createPinBtn, #modifyBtn{
+#pinsList, #issuesList, #worksList, #createPinBtn, #modifyBtn, .pin-type-selector{
     display : none;
 }
+
+#selectedList {
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgrey;
+  background-color: #FFFFFF;
+  color: #333333;
+}
+
+.table-btn {
+  margin-right: 0.5em;
+}
+
