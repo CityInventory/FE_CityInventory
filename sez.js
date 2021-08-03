@@ -142,7 +142,7 @@ function loadIssues() {
       output = `
             <tr>
                 <td>${getPinName(allPins, results.data[i].pinId)}</td>
-                <td>${results.data[i].details}<td>
+                <td>${results.data[i].details}</td>
             <tr>
         `;
       issueList.innerHTML += output;
