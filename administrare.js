@@ -1,5 +1,5 @@
 import { pagestemplate } from './pages-template.js';
-import { showIssuesByPinType, showAllIssues} from './filters.js';
+import { showIssuesByPinType, showAllIssues, showAllPins, showAllWorks} from './filters.js';
 
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
@@ -136,7 +136,8 @@ function showIssuesTable() {
   issuesListSelector.style.display="inline-block";
 
   const issuesList = document.getElementById('issuesList');
-  issuesList.style.display="block";
+  issuesList.style.display = "block";
+  showAllIssues();
 
   document.getElementById('toate').addEventListener('click', showAllIssues)
 
@@ -164,7 +165,8 @@ function hideIssuesTable() {
 
 function showPinsTable() {
   const pinsList = document.getElementById('pinsList');
-  pinsList.style.display="block";
+  pinsList.style.display = "block";
+  showAllPins();  
 }
 
 function hidePinsTable() {
@@ -174,7 +176,8 @@ function hidePinsTable() {
 
 function showWorksTable() {
   const worksList = document.getElementById('worksList');
-  worksList.style.display="block";
+  worksList.style.display = "block";
+  showAllWorks();
 }
 
 function hideWorksTable() {

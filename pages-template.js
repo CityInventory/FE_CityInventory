@@ -52,23 +52,41 @@ let output = '';
 //         });
 //     }
 
-    showIssues(issuesArray) {
+    // showIssuesWithOptionButtons(issuesViewArray) {
+    //     this.issuesTableBody.innerHTML = '';
+    //     let output = '';
+    //     issuesViewArray.forEach((issueView) => {
+    //         output = `
+    //         <tr>
+    //             <td>${issueView.pinName}</td>
+    //             <td>${issueView.description}</td>
+    //             <td>${issueView.status}</td>
+    //             <td>${issueView.date}</td>
+    //             <!-- <td class="btn-group"> -->
+    //             <!-- <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${issueView.id} type="button" href='detalii.html'>Modifică</button> -->
+    //             <!-- <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${issueView.id} type="button">Șterge</button> -->
+    //             <!-- </td>               -->
+    //        </tr>
+    //     `;
+    //     this.issuesTableBody.innerHTML += output;
+    //     });
+    // }    
+
+    showIssues(issuesViewArray) {
         this.issuesTableBody.innerHTML = '';
         let output = '';
-        issuesArray.forEach((pinType) => {
+        issuesViewArray.forEach((issueView) => {
             output = `
             <tr>
-                <td>${pinType.id}</td>
-                <td>${pinType.details}</td>
-                <td class="btn-group">
-<!--                    <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${pinType.id} type="button" href='detalii.html'>Modifică</button>-->
-<!--                    <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${pinType.id} type="button">Șterge</button>-->
-                </td>
+                <td>${issueView.pinName}</td>
+                <td>${issueView.description}</td>
+                <td>${issueView.status}</td>
+                <td>${issueView.date}</td>
            </tr>
         `;
         this.issuesTableBody.innerHTML += output;
         });
-    }
+    }    
 
     //added by Ale
     showPins(pinsArray) {
