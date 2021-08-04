@@ -43,7 +43,7 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <!--Page styles-->
-  <!--  <link href="style.css" rel="stylesheet"/>-->
+  <link href="style.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -152,6 +152,17 @@ Tip 2: you can also add an image using data-image tag
             </div>
           </div>
           <div class="col-md-12">
+
+            <div class="card-body" id="selectTable">
+              <div class="card-body btn-group-lg pin-type-selector" id="issues-list-selector">
+                <button class="btn btn-simple btn-fill btn-default" value="toate" id="toate">Toate</button>
+                <button class="btn btn-simple btn-fill btn-default" value="cladire" id="cladiri">Clădiri</button>
+                <button class="btn btn-simple btn-fill btn-default" value="drumuri" id="drumuri">Drumuri</button>
+                <button class="btn btn-simple btn-fill btn-default" value="spatii_deschise" id="spatiiDeschise">Spații deschise</button>
+                <button class="btn btn-simple btn-fill btn-default" value="altele" id="altele">Altele</button>
+              </div>
+            </div>
+
             <div class="card strpied-tabled-with-hover">
               <div class="issues-list card-body table-full-width table-responsive" id="issues-section">
                 <div class="issues-list card-body table-full-width table-responsive">
@@ -159,15 +170,18 @@ Tip 2: you can also add an image using data-image tag
                     <thead id="issuesTable-head">
                     <tr>
                       <th>Marcaj</th>
-                      <th>Sesizare</th>
+                      <th>Descriere</th>
+                      <th>Status</th>
+                      <th>Data</th>
                     </tr>
                     </thead>
-                    <tbody id="issue-list"></tbody>
+                    <tbody id="issuesTableBody"></tbody>
                   </table>
                 </div>
               </div>
             </div>
             <a class='btn btn-info btn-fill btn-wd' href="sesizari.html#mapid">Înapoi la hartă</a>
+
           </div>
         </div>
       </div>
@@ -207,7 +221,15 @@ Tip 2: you can also add an image using data-image tag
 <script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
 <script src="auth.js"></script>
-<script src="sez.js"></script>
-<script src="detalii.js" type="module"></script>
+<script src="sez.js" type='module'></script>
+<script src='filters.js' type='module'></script>
+<!-- <script src="detalii.js" type="module"></script> -->
+<script src='Services/IssueService.js' type='module'></script>
+<script src='Models/Issue.js' type='module'></script>
+<script src='Services/PinService.js' type='module'></script>
+<script src='Models/Pin.js' type='module'></script>
+<script src='Services/StatusService.js' type='module'></script>
+<script src='Models/Status.js' type='module'></script>
+<script src='Models/IssueView.js' type='module'></script>
 </body>
 </html>

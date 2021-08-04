@@ -1,20 +1,23 @@
 import { pagestemplate } from './pages-template.js';
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (pagestemplate.isAuthorized()) {
-        showAllIssues();
-        showAllPins();
-        showAllWorks();
-    }
-});
+import { getIssuesByPinType, getAllIssues } from './Services/IssueService.js';
+import { getPinsByType, getAllPins } from './Services/PinService.js';
+import { getAllStatuses } from './Services/StatusService.js';
+import { getIssuesViewArray } from './Models/IssueView.js';
 
 export function showIssuesByPinType(selectedPinType) {
-    let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues/pinType/"+ selectedPinType
-    showIssuesList(url);
+    Promise.all([getIssuesByPinType(selectedPinType), getPinsByType(selectedPinType), getAllStatuses()])
+        .then((values) => {
+            let issueViewArray = getIssuesViewArray(values[0], values[1], values[2]);
+            pagestemplate.showIssues(issueViewArray);
+        });
 }
 
 export function showAllIssues() {
-    showIssuesList("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues");
+    Promise.all([getAllIssues(), getAllPins(), getAllStatuses()])
+        .then((values) => {
+            let issueViewArray = getIssuesViewArray(values[0], values[1], values[2]);
+            pagestemplate.showIssues(issueViewArray);
+        });    
 }
 
 function showIssuesList(url){
@@ -24,7 +27,7 @@ fetch ( url ,{
     })
     .then(response => response.json())
     .then(results=> {
-        pagestemplate.showIssues(results.data);
+        //pagestemplate.showIssues(results.data);
     })
     .catch(error => console.log('error', error));       
 }
@@ -36,7 +39,7 @@ function showPinsbyPinType(selectedPinType) {
     showPinsList(url);
 }
 
-function showAllPins() {
+export function showAllPins() {
     showPinsList("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins");
 }
 
@@ -59,7 +62,7 @@ function showWorksByPinId(selectedStatus) {
     showWorkList(url);
 }
 
-function showAllWorks() {
+export function showAllWorks() {
     showWorkList("https://92xjz4ismg.eu-west-1.awsapprunner.com/Works");
 }
 

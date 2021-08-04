@@ -1,3 +1,5 @@
+import { showAllIssues, showIssuesByPinType } from './filters.js';
+
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
 
@@ -119,46 +121,56 @@ function postIssue(message) {
 function getPinName(pinCollection, pinId) {
   for(let i = 0; i < pinCollection.length; i++) {
     if (pinId == pinCollection[i].id ) {
-      console.log(pinCollection[i].id);
-      console.log(pinId);
       return pinCollection[i].name;
     }
   }
   return null;
 };
 
-function loadIssues() {
-  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues", {
-    method: 'GET',
-    redirect: 'follow'
-  })
-  .then(response => response.json())
-  .then(results=> {
-    if (results.data.length > 0) {
-      document.getElementById("issues-section").style.display = "block";
-    }
-    let issueList = document.getElementById('issue-list');
-    for(let i = 0; i < results.data.length; i++) {
-      output = `
-            <tr>
-                <td>${getPinName(allPins, results.data[i].pinId)}</td>
-                <td>${results.data[i].details}</td>
-            <tr>
-        `;
-      issueList.innerHTML += output;
-    }
-  })
-  .catch(error => console.log('error', error));
-}
+//TODO remove
+// function loadIssues() {
+//   fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues", {
+//     method: 'GET',
+//     redirect: 'follow'
+//   })
+//   .then(response => response.json())
+//   .then(results=> {
+//     if (results.data.length > 0) {
+//       document.getElementById("issues-section").style.display = "block";
+//     }
+//     let issueList = document.getElementById('issue-list');
+//     for(let i = 0; i < results.data.length; i++) {
+//       output = `
+//             <tr>
+//                 <td>${getPinName(allPins, results.data[i].pinId)}</td>
+//                 <td>${results.data[i].details}</td>
+//             <tr>
+//         `;
+//       issueList.innerHTML += output;
+//     }
+//   })
+//   .catch(error => console.log('error', error));
+// }
 
 function init() {
-  console.log(window.location.href);
-  console.log(window.location.ancestorOrigins);
-  console.log(window.location.pathname);
-  console.log(window.location.origin);
   loadMap();
   loadPins();
-  loadIssues();
+  showAllIssues();
+
+  document.getElementById('toate').addEventListener('click', showAllIssues)
+
+  document.getElementById('cladiri').addEventListener('click', function(){
+      showIssuesByPinType(1);
+  });
+  document.getElementById('drumuri').addEventListener('click', function(){
+      showIssuesByPinType(2);
+  });
+  document.getElementById('spatiiDeschise').addEventListener('click', function(){
+      showIssuesByPinType(3);
+  });
+  document.getElementById('altele').addEventListener('click', function(){
+      showIssuesByPinType(4);
+  });  
 
   document
   .getElementById('pinCreateForm')

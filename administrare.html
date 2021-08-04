@@ -172,6 +172,7 @@ Tip 2: you can also add an image using data-image tag
           <div class="col-md-12">
 
             <div class="card-body" id="selectTable">
+              
               <select class="btn btn-simple btn-fill btn-default" id="selectedList">
                 <option class="dropdown-item">Selectează un tabel</option>
                 <option class="dropdown-item" value="sesizari" id="sesizari">Sesizări</option>
@@ -209,9 +210,11 @@ Tip 2: you can also add an image using data-image tag
                   <table class="table table-hover" id="issues-table">
                     <thead id="issuesTable-head">
                     <tr>
-                      <th>Tip marcaj</th>
-                      <th>Descriere sesizare</th>
-                      <th>Optiuni</th>
+                      <th>Marcaj</th>
+                      <th>Descriere</th>
+                      <th>Status</th>
+                      <th>Data</th>
+                      <!-- <th>Optiuni</th> -->
                     </tr>
                     </thead>
                     <tbody id="issuesTableBody"></tbody>
@@ -274,5 +277,12 @@ Tip 2: you can also add an image using data-image tag
 <script src="administrare.js" type='module'></script>
 <script src='filters.js' type='module'></script>
 <!-- <script src="admin.js" type="module"></script> -->
+<script src='Services/IssueService.js' type='module'></script>
+<script src='Models/Issue.js' type='module'></script>
+<script src='Services/PinService.js' type='module'></script>
+<script src='Models/Pin.js' type='module'></script>
+<script src='Services/StatusService.js' type='module'></script>
+<script src='Models/Status.js' type='module'></script>
+<script src='Models/IssueView.js' type='module'></script>
 </body>
 </html>
