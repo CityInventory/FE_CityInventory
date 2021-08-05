@@ -7,12 +7,9 @@ class PAGESTEMPLATE {
         this.gpsCoordY = document.getElementById('gpsCoordY');
         this.details = document.getElementById('details');
         this.pinDetails = document.getElementById('pinDetails');
-        // this.tableBody = document.getElementById('tableBody');
         this.pinList = document.getElementById('pinList');
         this.issuesList = document.getElementById('issuesList');
         this.issuesTable = document.getElementById('issues-table');
-        this.issuesTableBody = document.getElementById('issuesTableBody');
-
         this.pinsTableBody = document.getElementById('pinsTableBody');
         this.worksTableBody = document.getElementById('worksTableBody');
 
@@ -52,41 +49,7 @@ let output = '';
 //         });
 //     }
 
-    // showIssuesWithOptionButtons(issuesViewArray) {
-    //     this.issuesTableBody.innerHTML = '';
-    //     let output = '';
-    //     issuesViewArray.forEach((issueView) => {
-    //         output = `
-    //         <tr>
-    //             <td>${issueView.pinName}</td>
-    //             <td>${issueView.description}</td>
-    //             <td>${issueView.status}</td>
-    //             <td>${issueView.date}</td>
-    //             <!-- <td class="btn-group"> -->
-    //             <!-- <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${issueView.id} type="button" href='detalii.html'>Modifică</button> -->
-    //             <!-- <button class="btn btn-sm btn-round btn-fill btn-default table-btn" id=${issueView.id} type="button">Șterge</button> -->
-    //             <!-- </td>               -->
-    //        </tr>
-    //     `;
-    //     this.issuesTableBody.innerHTML += output;
-    //     });
-    // }    
 
-    showIssues(issuesViewArray) {
-        this.issuesTableBody.innerHTML = '';
-        let output = '';
-        issuesViewArray.forEach((issueView) => {
-            output = `
-            <tr>
-                <td>${issueView.pinName}</td>
-                <td>${issueView.description}</td>
-                <td>${issueView.status}</td>
-                <td>${issueView.date}</td>
-           </tr>
-        `;
-        this.issuesTableBody.innerHTML += output;
-        });
-    }    
 
     //added by Ale
     showPins(pinsArray) {

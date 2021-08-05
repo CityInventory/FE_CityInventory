@@ -17,12 +17,10 @@
 
 <head>
   <meta charset="utf-8"/>
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/logo2.PNG">
+  <link rel="icon" type="image/png" href="./assets/img/logo2.PNG">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
   <title>City Inventory</title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-        name='viewport'/>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
@@ -41,12 +39,13 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           crossorigin=""></script>
   <!--Page styles-->
-  <link href="admin_page.css" rel="stylesheet"/>
+  <link href="style.css" rel="stylesheet"/>
+  <link href="administrare.css" rel="stylesheet"/>
 </head>
 
 <body>
 <div class="wrapper">
-  <div class="sidebar" data-image="../assets/img/home.jpg">
+  <div class="sidebar" data-image="./assets/img/home.jpg">
     <!--
 Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -89,7 +88,7 @@ Tip 2: you can also add an image using data-image tag
     <nav class="navbar navbar-expand-lg " color-on-scroll="500">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="/images/logo.PNG" alt="" width="30%" height="30%">
+          <img src="./images/logo.PNG" alt="" width="30%" height="30%">
         </a>
         <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,8 +129,8 @@ Tip 2: you can also add an image using data-image tag
                 <div id="mapid" style="height: 500px"></div>
               </div>
 
-              <div id="editForm" class="card-body" style="display: none;">
-                <form id="pinCreateForm">
+              <div id="pin-create-form" class="card-body">
+                <form id="">
                   <div class="form-group">
                     <label class="formLabel">Cod marcaj</label>
                     <input type="text" readonly id="pinCode" class="form-control"/>
@@ -161,18 +160,32 @@ Tip 2: you can also add an image using data-image tag
                     <textarea name="message" id="pinDescription" class="form-control"></textarea>
                   </div>
                 </form>
-                <button class='btn btn-info btn-fill btn-wd' id="createPinBtn">Adaugă marcaj</button>
+                <button class='btn btn-info btn-fill btn-wd' id="createPinBtn">Salvează</button>
                 <button class='btn btn-info btn-fill btn-wd' id="modifyBtn">Modifică</button>
-                <button class='btn btn-info btn-fill btn-wd' id="cancelBtn">Renuntă</button>
-                <!-- <button class='btn btn-info btn-fill btn-wd' onClick="updatePin();">Modifică marcaj</button>
-                <button class='btn btn-info btn-fill btn-wd' onClick="removePin();">Șterge marcaj</button>                                     -->
+                <button class='btn btn-info btn-fill btn-wd' id="cancelBtn">Renunță</button>
               </div>
+
+              <div class="card-body" id="issue-create-form" >
+                <form>
+                  <div class="form-group">
+                    <label class="formLabel">Număr Marcaj</label>
+                    <input class="form-control" id="issue-form-pin-id" name="pinID" readonly type="text"/>
+                  </div>
+                  <div class="form-group">
+                    <label class="formLabel">Descriere sesizare</label>
+                    <textarea class="form-control" id="issue-description" name="message"></textarea>
+                  </div>
+                </form>
+                <button class='btn btn-info btn-fill btn-wd' id="create-issue-btn">Salvează</button>
+                <button class='btn btn-info btn-fill btn-wd' id="cancel-issue-btn">Renunță</button>
+              </div>
+
             </div>
           </div>
           <div class="col-md-12">
 
-            <div class="card-body" id="selectTable">
-              
+            <div class="card-body" id="filter-select-buttons">
+
               <select class="btn btn-simple btn-fill btn-default" id="selectedList">
                 <option class="dropdown-item">Selectează un tabel</option>
                 <option class="dropdown-item" value="sesizari" id="sesizari">Sesizări</option>
@@ -214,7 +227,7 @@ Tip 2: you can also add an image using data-image tag
                       <th>Descriere</th>
                       <th>Status</th>
                       <th>Data</th>
-                      <!-- <th>Optiuni</th> -->
+                       <th>Optiuni</th>
                     </tr>
                     </thead>
                     <tbody id="issuesTableBody"></tbody>
@@ -259,23 +272,22 @@ Tip 2: you can also add an image using data-image tag
   </div>
 </div>
 <!--   Core JS Files   -->
-<script src="../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="./assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="../assets/js/plugins/bootstrap-switch.js"></script>
+<script src="./assets/js/plugins/bootstrap-switch.js"></script>
 <!--  Notifications Plugin    -->
-<script src="../assets/js/plugins/bootstrap-notify.js"></script>
+<script src="./assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-<script src="../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
-<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
-<script src="../assets/js/demo.js"></script>
+<script src="./assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
 <!-- Google login -->
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <!-- Custom code -->
 <script src="auth.js"></script>
 <script src="administrare.js" type='module'></script>
 <script src='filters.js' type='module'></script>
+<script src='map-page-template.js' type='module'></script>
 <!-- <script src="admin.js" type="module"></script> -->
 <script src='Services/IssueService.js' type='module'></script>
 <script src='Models/Issue.js' type='module'></script>
