@@ -6,7 +6,7 @@ export function IssueView(pin, issue, status) {
     this.statusId = status.id;
     this.status = status.name;
     this.description = issue.details;
-    this.date = issue.date;
+    this.date = new Date(issue.date);
 }
 
 export function getIssuesViewArray(issues, pins, status) {

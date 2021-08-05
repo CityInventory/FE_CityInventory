@@ -1,29 +1,29 @@
 #actions {
-    display: flex;
+  display: flex;
 }
 
 #filtre {
-flex: 1;
+  flex: 1;
 }
 
 #sesizare {
-flex: 1;
+  flex: 1;
 }
 
 #filtre label {
-    display: block;
+  display: block;
 }
 
 #sesizare form select {
-    display: block;
+  display: block;
 }
 
 .formLabel {
-    padding-right: 2em;
+  padding-right: 2em;
 }
 
 #pinDescription {
-    height: 5em;
+  height: 5em;
 }
 
 .options-btn {
@@ -255,7 +255,7 @@ flex: 1;
   z-index: 5;
   font-size: 42px;
   line-height: 100%;
-  -webkit-user-select: none;    
+  -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
@@ -285,15 +285,23 @@ flex: 1;
 
 .details-body {
   background:url('/assets/img/Old_document.jpg') center no-repeat;
-  background-size: 100% 100%; 
+  background-size: 100% 100%;
 }
 
 #pinDetails {
   padding: 100px;
   text-align: center;
 }
- 
+
 .details-buttons {
   float: right;
+}
+
+.table-btn {
+  margin-right: 0.5em;
+}
+
+#issue-create-form {
+  display: none;
 }
 

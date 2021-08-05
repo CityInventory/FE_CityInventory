@@ -1,5 +1,10 @@
 import { pagestemplate } from './pages-template.js';
-import { showIssuesByPinType, showAllIssues, showAllPins, showAllWorks} from './filters.js';
+import { showAllPins, showAllWorks} from './filters.js';
+import {
+  createEventsForIssueFormButtons,
+  showAllIssues,
+  showIssuesByPinType
+} from './map-page-template.js';
 
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
@@ -10,9 +15,10 @@ function init() {
   loadPins();
   mymap.on('click', onMapClick);
   // document.getElementById('pinsTableBody').addEventListener('click', removePin);
-  // document.getElementById('issuesTableBody').addEventListener('click', removeIssue);
   loadPinTypes();
   initTableSelector();
+
+  createEventsForIssueFormButtons();
 }
 
 //MAP FUNCTIONS
@@ -55,7 +61,7 @@ function loadPins() {
           showInputForm(true);
           showClickedPin(results.data[i]);
           setUpdatePinBtnVisibility(true);
-          document.location.href = "#editForm";
+          document.location.href = "#pin-create-form";
         });
         popup.appendChild(changeBtn);
 
@@ -87,7 +93,7 @@ function onMapClick(e) {
     showInputForm(true);
     showClickedCoordonates(coordinates);
     setAddPinBtnVisibility(true);
-    document.location.href = "#editForm";
+    document.location.href = "#pin-create-form";
   });
 
   var optionList = L.DomUtil.create('LI', 'options');
@@ -166,7 +172,7 @@ function hideIssuesTable() {
 function showPinsTable() {
   const pinsList = document.getElementById('pinsList');
   pinsList.style.display = "block";
-  showAllPins();  
+  showAllPins();
 }
 
 function hidePinsTable() {
@@ -184,29 +190,6 @@ function hideWorksTable() {
   const worksList = document.getElementById('worksList');
   worksList.style.display="none";
 }
-
-function removeIssue(e){
-  if(e.target.classList.contains('delete')){
-    const id = e.target.id;
-    var requestOptions = {
-      method: 'DELETE',
-      redirect: 'follow',
-      mode: 'cors'
-    };
-
-    fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues/${id}`, requestOptions)
-      .then(response => response.text())
-      .then(result => {
-        alert('Solicitatea a fost inregistrata.');
-        location.reload();
-      })
-      .catch(error => {
-        console.log('error', error)
-        alert('Sesizarea nu a fost stearsa. Te rugăm sa încerci din nou.');
-      });
-  }
-}
-
 
 //PIN EDITOR FORM
 function loadPinTypes() {
@@ -227,7 +210,7 @@ function loadPinTypes() {
 }
 
 function showInputForm(isVisible) {
-  var formElement = document.getElementById("editForm");
+  var formElement = document.getElementById("pin-create-form");
   if (isVisible) {
     formElement.style.display = "block";
     document.getElementById('cancelBtn').addEventListener('click', cancelNewPinForm);
@@ -257,7 +240,7 @@ function setUpdatePinBtnVisibility(isVisible) {
 }
 
 function cancelNewPinForm() {
-  var formElement = document.getElementById("editForm");
+  var formElement = document.getElementById("pin-create-form");
   formElement.style.display = "none";
   location.reload();
 }

@@ -6,7 +6,9 @@
     height: 5em;
 }
 
-#pinsList, #issuesList, #worksList, #createPinBtn, #modifyBtn, .pin-type-selector{
+#pinsList, #issuesList, #worksList,
+#createPinBtn, #modifyBtn, .pin-type-selector,
+#pin-create-form {
     display : none;
 }
 
@@ -18,7 +20,4 @@
   color: #333333;
 }
 
-.table-btn {
-  margin-right: 0.5em;
-}
 

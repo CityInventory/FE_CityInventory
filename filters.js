@@ -1,36 +1,4 @@
 import { pagestemplate } from './pages-template.js';
-import { getIssuesByPinType, getAllIssues } from './Services/IssueService.js';
-import { getPinsByType, getAllPins } from './Services/PinService.js';
-import { getAllStatuses } from './Services/StatusService.js';
-import { getIssuesViewArray } from './Models/IssueView.js';
-
-export function showIssuesByPinType(selectedPinType) {
-    Promise.all([getIssuesByPinType(selectedPinType), getPinsByType(selectedPinType), getAllStatuses()])
-        .then((values) => {
-            let issueViewArray = getIssuesViewArray(values[0], values[1], values[2]);
-            pagestemplate.showIssues(issueViewArray);
-        });
-}
-
-export function showAllIssues() {
-    Promise.all([getAllIssues(), getAllPins(), getAllStatuses()])
-        .then((values) => {
-            let issueViewArray = getIssuesViewArray(values[0], values[1], values[2]);
-            pagestemplate.showIssues(issueViewArray);
-        });    
-}
-
-function showIssuesList(url){
-fetch ( url ,{
-    method: 'GET',
-    redirect: 'follow'
-    })
-    .then(response => response.json())
-    .then(results=> {
-        //pagestemplate.showIssues(results.data);
-    })
-    .catch(error => console.log('error', error));       
-}
 
 //added by ale
 document.getElementById('pinsTableBody')
@@ -52,7 +20,7 @@ fetch ( url ,{
     .then(results=> {
         pagestemplate.showPins(results.data);
     })
-    .catch(error => console.log('error', error));       
+    .catch(error => console.log('error', error));
 }
 
 //added by ale
@@ -75,5 +43,5 @@ fetch ( url ,{
     .then(results=> {
         pagestemplate.showWorks(results.data);
     })
-    .catch(error => console.log('error', error));       
+    .catch(error => console.log('error', error));
 }
