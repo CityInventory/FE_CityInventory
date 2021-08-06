@@ -87,7 +87,6 @@ $(document).ready(function(){
     ]);
     
     var options = {
-    title: 'Status sesizări',
     pieHole: 0.4,
     };
     

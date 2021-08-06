@@ -80,8 +80,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-    background-size: cover ;
-    height: 50px;
+  background-size: cover ;
 }
 
 .card-contor {
