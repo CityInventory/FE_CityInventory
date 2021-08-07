@@ -1,17 +1,19 @@
-import { pagestemplate } from './pages-template.js';
-import { showAllPins, showAllWorks} from './filters.js';
+import {pagestemplate} from './pages-template.js';
+import {showAllPins, showAllWorks} from './filters.js';
 import {
   createEventsForIssueFormButtons,
   showAllIssues,
-  showIssuesByPinType
+  showIssuesByPinType,
+  loadMap
 } from './map-page-template.js';
+import {getAllPins} from "./Services/PinService";
 
 var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
 
 function init() {
   pagestemplate.validateAuthorization();
-  loadMap();
+  loadMap(mymap);
   loadPins();
   mymap.on('click', onMapClick);
   // document.getElementById('pinsTableBody').addEventListener('click', removePin);
@@ -22,33 +24,18 @@ function init() {
 }
 
 //MAP FUNCTIONS
-function loadMap() {
-  L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-    maxZoom: 18,
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1
-  }).addTo(mymap);
-}
-
 function loadPins() {
-  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins", {
-    method: 'GET',
-    redirect: 'follow'
-  })
-  .then(response => response.json())
-  .then(results=> {
-      for(let i = 0; i < results.data.length; i++) {
-        var newMarker = L.marker([results.data[i].gpsCoordX, results.data[i].gpsCoordY])
-        .addTo(mymap);
+  getAllPins()
+    .then(pinsList => {
+      pinsList.forEach(pin => {
+        var newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY])
+          .addTo(mymap);
 
         var popup = L.DomUtil.create('LI', 'options');
         popup.style.listStyle = "none";
 
         var title = L.DomUtil.create('h5');
-        title.innerHTML = results.data[i].name;
+        title.innerHTML = pin.name;
         popup.appendChild(title);
 
 
@@ -59,7 +46,7 @@ function loadPins() {
         changeBtn.style.display = "flex";
         changeBtn.addEventListener('click', () => {
           showInputForm(true);
-          showClickedPin(results.data[i]);
+          showClickedPin(pin);
           setUpdatePinBtnVisibility(true);
           document.location.href = "#pin-create-form";
         });
@@ -72,14 +59,14 @@ function loadPins() {
         deletePinBtn.style.display = "flex";
         deletePinBtn.style.marginTop = "4px";
         deletePinBtn.addEventListener('click', () => {
-          removePin(results.data[i].id);
+          removePin(pin.id);
         });
         popup.appendChild(deletePinBtn);
 
         newMarker.bindPopup(popup);
-      }
-  })
-  .catch(error => console.log('error', error));
+      })
+    })
+    .catch(error => console.log('error', error));
 }
 
 function onMapClick(e) {
@@ -97,14 +84,13 @@ function onMapClick(e) {
   });
 
   var optionList = L.DomUtil.create('LI', 'options');
-  optionList.style.listStyle ="none";
+  optionList.style.listStyle = "none";
   optionList.appendChild(addPinBtn);
 
   L.popup().setLatLng(coordinates)
-           .setContent(optionList)
-           .openOn(mymap);
+    .setContent(optionList)
+    .openOn(mymap);
 }
-
 
 
 //DATA TABLES
@@ -114,23 +100,21 @@ function initTableSelector() {
   selector.addEventListener('change', showSelectedTable);
 }
 
-function showSelectedTable(){
+function showSelectedTable() {
   const selectedOption = document.getElementById("selectedList").value;
-  if(selectedOption=='sesizari'){
+  if (selectedOption == 'sesizari') {
     showIssuesTable();
     hidePinsTable();
     hideWorksTable();
-  }
-  else if(selectedOption=='marcaj'){
+  } else if (selectedOption == 'marcaj') {
     hideIssuesTable();
     showPinsTable();
     hideWorksTable();
-  }
-  else if(selectedOption=='lucrari'){
+  } else if (selectedOption == 'lucrari') {
     hideIssuesTable();
     hidePinsTable();
     showWorksTable();
-  }else{
+  } else {
     hideIssuesTable();
     hidePinsTable();
     hideWorksTable();
@@ -139,7 +123,7 @@ function showSelectedTable(){
 
 function showIssuesTable() {
   const issuesListSelector = document.getElementById('issues-list-selector');
-  issuesListSelector.style.display="inline-block";
+  issuesListSelector.style.display = "inline-block";
 
   const issuesList = document.getElementById('issuesList');
   issuesList.style.display = "block";
@@ -147,26 +131,26 @@ function showIssuesTable() {
 
   document.getElementById('toate').addEventListener('click', showAllIssues)
 
-  document.getElementById('cladiri').addEventListener('click', function(){
-      showIssuesByPinType(1);
+  document.getElementById('cladiri').addEventListener('click', function () {
+    showIssuesByPinType(1);
   });
-  document.getElementById('drumuri').addEventListener('click', function(){
-      showIssuesByPinType(2);
+  document.getElementById('drumuri').addEventListener('click', function () {
+    showIssuesByPinType(2);
   });
-  document.getElementById('spatiiDeschise').addEventListener('click', function(){
-      showIssuesByPinType(3);
+  document.getElementById('spatiiDeschise').addEventListener('click', function () {
+    showIssuesByPinType(3);
   });
-  document.getElementById('altele').addEventListener('click', function(){
-      showIssuesByPinType(4);
+  document.getElementById('altele').addEventListener('click', function () {
+    showIssuesByPinType(4);
   });
 
 }
 
 function hideIssuesTable() {
   const issuesList = document.getElementById('issuesList');
-  issuesList.style.display="none";
+  issuesList.style.display = "none";
   const issuesListSelector = document.getElementById('issues-list-selector');
-  issuesListSelector.style.display="none";
+  issuesListSelector.style.display = "none";
 }
 
 function showPinsTable() {
@@ -177,7 +161,7 @@ function showPinsTable() {
 
 function hidePinsTable() {
   const pinsList = document.getElementById('pinsList');
-  pinsList.style.display="none";
+  pinsList.style.display = "none";
 }
 
 function showWorksTable() {
@@ -188,7 +172,7 @@ function showWorksTable() {
 
 function hideWorksTable() {
   const worksList = document.getElementById('worksList');
-  worksList.style.display="none";
+  worksList.style.display = "none";
 }
 
 //PIN EDITOR FORM
@@ -198,9 +182,9 @@ function loadPinTypes() {
     redirect: 'follow'
   })
     .then(response => response.json())
-    .then(results=> {
+    .then(results => {
       var selector = document.getElementById("categoryMaster");
-      for(let i = 0; i < 4; i++) {
+      for (let i = 0; i < 4; i++) {
         var option = document.createElement("option");
         option.text = results.data[i].id + "_" + results.data[i].name;
         selector.add(option);
@@ -255,12 +239,12 @@ function showClickedCoordonates(coordinates) {
   lngElement.style.border = '1px solid black';
 }
 
-function showClickedPin (pin) {
+function showClickedPin(pin) {
   var idElement = document.getElementById('pinCode');
   idElement.value = pin.id;
 
   var pinTypeId = document.getElementById('categoryMaster');
-  for (var i=0; i<pinTypeId.options.length; i++ ) {
+  for (var i = 0; i < pinTypeId.options.length; i++) {
     if (pinTypeId[i].text.startsWith(pin.pinTypeId)) {
       pinTypeId.selectedIndex = i;
     }
@@ -272,15 +256,15 @@ function showClickedPin (pin) {
   var descriptionElement = document.getElementById('pinDescription');
   descriptionElement.value = pin.description;
 
-  var coordinates = {lat: pin.gpsCoordX, lng: pin.gpsCoordY }
+  var coordinates = {lat: pin.gpsCoordX, lng: pin.gpsCoordY}
   showClickedCoordonates(coordinates);
 }
 
 function addNewPin() {
-    var message = getFormData();
-    if (message) {
-      postPin(message);
-    }
+  var message = getFormData();
+  if (message) {
+    postPin(message);
+  }
 }
 
 function getFormData() {
@@ -301,7 +285,7 @@ function getFormData() {
   let latitude = document.getElementById('latitude').value;
   let longitude = document.getElementById('longitude').value;
 
-  if(latitude==null || latitude=='' || longitude==null || longitude=='') {
+  if (latitude == null || latitude == '' || longitude == null || longitude == '') {
     document.getElementById('latitude').style.border = '2px solid red';
     document.getElementById('longitude').style.border = '2px solid red';
     return null;
@@ -327,15 +311,15 @@ function postPin(message) {
     mode: 'cors',
     body: message
   })
-  .then(response => response.text())
-  .then(result => {
-    alert('Solicitatea a fost înregistrată.');
-    location.reload();
-  })
-  .catch(error => {
-    console.log('error', error)
-    alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
-  });
+    .then(response => response.text())
+    .then(result => {
+      alert('Solicitatea a fost înregistrată.');
+      location.reload();
+    })
+    .catch(error => {
+      console.log('error', error)
+      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+    });
 }
 
 function updatePin() {
@@ -347,7 +331,7 @@ function updatePin() {
 
 function putPin(message) {
   var idPin = JSON.parse(message).id;
-  fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/`+idPin, {
+  fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/` + idPin, {
     method: 'PUT',
     headers: {
       "Content-Type": "text/json"
@@ -355,27 +339,27 @@ function putPin(message) {
     mode: 'cors',
     body: message
   })
-  .then(response => response.text())
-  .then(result => {
-    alert('Solicitatea a fost înregistrată.');
-    location.reload();
-  })
-  .catch(error => {
-    console.log('error', error)
-    alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
-  });
+    .then(response => response.text())
+    .then(result => {
+      alert('Solicitatea a fost înregistrată.');
+      location.reload();
+    })
+    .catch(error => {
+      console.log('error', error)
+      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+    });
 }
 
 //PIN ACTIONS
-function removePin(pinId){
+function removePin(pinId) {
 
-    var requestOptions = {
-      method: 'DELETE',
-      redirect: 'follow',
-      mode: 'cors'
-    };
+  var requestOptions = {
+    method: 'DELETE',
+    redirect: 'follow',
+    mode: 'cors'
+  };
 
-    fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/${pinId}`, requestOptions)
+  fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/${pinId}`, requestOptions)
     .then(response => response.text())
     .then(result => {
       alert('Solicitatea a fost înregistrată.');
