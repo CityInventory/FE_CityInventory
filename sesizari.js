@@ -7,12 +7,12 @@ import {
 } from './map-page-template.js';
 import {getAllPins} from "./Services/PinService.js";
 
-var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
+var pageMap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
 
 function init() {
-  loadMap(mymap);
-  loadPins();
+  loadMap(pageMap);
+  loadMapPins();
   showAllIssues();
 
   document.getElementById('toate').addEventListener('click', showAllIssues)
@@ -34,11 +34,11 @@ function init() {
 }
 
 //MAP FUNCTIONS
-function loadPins() {
+function loadMapPins() {
   getAllPins()
     .then(pinsList => {
       pinsList.forEach(pin => {
-        var newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(mymap);
+        var newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
 
         var popup = L.DomUtil.create('LI', 'options');
         popup.style.listStyle = "none";

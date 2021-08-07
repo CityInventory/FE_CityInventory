@@ -6,16 +6,17 @@ import {
   showIssuesByPinType,
   loadMap
 } from './map-page-template.js';
-import {getAllPins} from "./Services/PinService";
+import {getAllPins} from "./Services/PinService.js";
+import {getAllPinTypes} from "./Services/PinTypeService.js";
 
-var mymap = L.map('mapid').setView([45.7489, 21.2087], 13);
+var pageMap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
 
 function init() {
   pagestemplate.validateAuthorization();
-  loadMap(mymap);
-  loadPins();
-  mymap.on('click', onMapClick);
+  loadMap(pageMap);
+  loadMapPins();
+  pageMap.on('click', onMapClick);
   // document.getElementById('pinsTableBody').addEventListener('click', removePin);
   loadPinTypes();
   initTableSelector();
@@ -24,12 +25,12 @@ function init() {
 }
 
 //MAP FUNCTIONS
-function loadPins() {
+function loadMapPins() {
   getAllPins()
     .then(pinsList => {
       pinsList.forEach(pin => {
         var newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY])
-          .addTo(mymap);
+          .addTo(pageMap);
 
         var popup = L.DomUtil.create('LI', 'options');
         popup.style.listStyle = "none";
@@ -78,6 +79,7 @@ function onMapClick(e) {
   addPinBtn.style.color = "white";
   addPinBtn.addEventListener('click', () => {
     showInputForm(true);
+    setPinIdInputValue(0);
     showClickedCoordonates(coordinates);
     setAddPinBtnVisibility(true);
     document.location.href = "#pin-create-form";
@@ -89,7 +91,7 @@ function onMapClick(e) {
 
   L.popup().setLatLng(coordinates)
     .setContent(optionList)
-    .openOn(mymap);
+    .openOn(pageMap);
 }
 
 
@@ -177,18 +179,14 @@ function hideWorksTable() {
 
 //PIN EDITOR FORM
 function loadPinTypes() {
-  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/PinTypes", {
-    method: 'GET',
-    redirect: 'follow'
-  })
-    .then(response => response.json())
-    .then(results => {
+  getAllPinTypes()
+    .then(pinTypeList => {
       var selector = document.getElementById("categoryMaster");
-      for (let i = 0; i < 4; i++) {
+      pinTypeList.forEach( pinType => {
         var option = document.createElement("option");
-        option.text = results.data[i].id + "_" + results.data[i].name;
+        option.text = pinType.id + "_" + pinType.name;
         selector.add(option);
-      }
+      });
     })
     .catch(error => console.log('error', error));
 }
@@ -239,9 +237,13 @@ function showClickedCoordonates(coordinates) {
   lngElement.style.border = '1px solid black';
 }
 
-function showClickedPin(pin) {
+function setPinIdInputValue(id) {
   var idElement = document.getElementById('pinCode');
-  idElement.value = pin.id;
+  idElement.value = id;
+}
+
+function showClickedPin(pin) {
+  setPinIdInputValue(pin.id);
 
   var pinTypeId = document.getElementById('categoryMaster');
   for (var i = 0; i < pinTypeId.options.length; i++) {
