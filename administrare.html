@@ -17,13 +17,14 @@
 
 <head>
   <meta charset="utf-8"/>
-  <link rel="icon" type="image/png" href="./assets/img/logo2.PNG">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <link href="./assets/img/logo2.PNG" rel="icon" type="image/png">
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
   <title>City Inventory</title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+        name='viewport'/>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"/>
   <!-- CSS Files -->
   <link href="./assets/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="./assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet"/>
@@ -32,12 +33,12 @@
   <script src="https://apis.google.com/js/api:client.js"></script>
   <link href="auth.css" rel="stylesheet"/>
   <!--Map-->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  <link crossorigin="" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        rel="stylesheet"/>
+  <script crossorigin=""
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-          crossorigin=""></script>
+          src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <!--Page styles-->
   <link href="style.css" rel="stylesheet"/>
   <link href="administrare.css" rel="stylesheet"/>
@@ -88,10 +89,10 @@ Tip 2: you can also add an image using data-image tag
     <nav class="navbar navbar-expand-lg " color-on-scroll="500">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="./images/logo.PNG" alt="" width="30%" height="30%">
+          <img alt="" height="30%" src="./images/logo.PNG" width="30%">
         </a>
-        <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+        <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"
+                data-toggle="collapse" href="" type="button">
           <span class="navbar-toggler-bar burger-lines"></span>
           <span class="navbar-toggler-bar burger-lines"></span>
           <span class="navbar-toggler-bar burger-lines"></span>
@@ -100,7 +101,7 @@ Tip 2: you can also add an image using data-image tag
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <div id="loginBtn" class="customGPlusSignIn">
+                <div class="customGPlusSignIn" id="loginBtn">
                   <span class="buttonText">Autentificare cu Google</span>
                 </div>
               </a>
@@ -112,7 +113,7 @@ Tip 2: you can also add an image using data-image tag
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">
-                <span id="logoutBtn" class="no-icon" onclick="signOutAndRefresh();">Deconectare</span>
+                <span class="no-icon" id="logoutBtn" onclick="signOutAndRefresh();">Deconectare</span>
               </a>
             </li>
           </ul>
@@ -129,55 +130,40 @@ Tip 2: you can also add an image using data-image tag
                 <div id="mapid" style="height: 500px"></div>
               </div>
 
-              <div id="pin-create-form" class="card-body">
+              <div class="card-body" id="pin-create-form">
                 <form id="">
                   <div class="form-group">
                     <label class="formLabel">Cod marcaj</label>
-                    <input type="text" readonly id="pinCode" class="form-control"/>
+                    <input class="form-control" id="pinCode" readonly type="text" value="0"/>
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Tip marcaj</label>
-                    <select id="categoryMaster" class="form-control"></select>
+                    <select class="form-control" id="categoryMaster"></select>
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Este acesta un obiectiv de patrimoniu?</label>
-                    <input type="checkbox" id="isHeritage"/>
+                    <input id="isHeritage" type="checkbox"/>
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Latitudine</label>
-                    <input type="text" readonly id="latitude" name="latitude" class="form-control"/>
+                    <input class="form-control" id="latitude" name="latitude" readonly type="text"/>
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Longitudine</label>
-                    <input type="text" readonly id="longitude" name="longitude" class="form-control"/>
+                    <input class="form-control" id="longitude" name="longitude" readonly type="text"/>
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Denumire obiectiv</label>
-                    <input type="text" id="nume" name="nume" class="form-control"/>
+                    <input class="form-control" id="nume" name="nume" type="text"/>
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Descriere</label>
-                    <textarea name="message" id="pinDescription" class="form-control"></textarea>
+                    <textarea class="form-control" id="pinDescription" name="message"></textarea>
                   </div>
                 </form>
                 <button class='btn btn-info btn-fill btn-wd' id="createPinBtn">Salvează</button>
                 <button class='btn btn-info btn-fill btn-wd' id="modifyBtn">Modifică</button>
                 <button class='btn btn-info btn-fill btn-wd' id="cancelBtn">Renunță</button>
-              </div>
-
-              <div class="card-body" id="issue-create-form" >
-                <form>
-                  <div class="form-group">
-                    <label class="formLabel">Număr Marcaj</label>
-                    <input class="form-control" id="issue-form-pin-id" name="pinID" readonly type="text"/>
-                  </div>
-                  <div class="form-group">
-                    <label class="formLabel">Descriere sesizare</label>
-                    <textarea class="form-control" id="issue-description" name="message"></textarea>
-                  </div>
-                </form>
-                <button class='btn btn-info btn-fill btn-wd' id="create-issue-btn">Salvează</button>
-                <button class='btn btn-info btn-fill btn-wd' id="cancel-issue-btn">Renunță</button>
               </div>
 
             </div>
@@ -188,17 +174,19 @@ Tip 2: you can also add an image using data-image tag
 
               <select class="btn btn-simple btn-fill btn-default" id="selectedList">
                 <option class="dropdown-item">Selectează un tabel</option>
-                <option class="dropdown-item" value="sesizari" id="sesizari">Sesizări</option>
-                <option class="dropdown-item" value="marcaj" id="marcaj">Marcaje</option>
-                <option class="dropdown-item" value="lucrari" id="lucrari">Lucrări</option>
+                <option class="dropdown-item" id="sesizari" value="sesizari">Sesizări</option>
+                <option class="dropdown-item" id="marcaj" value="marcaj">Marcaje</option>
+                <option class="dropdown-item" id="lucrari" value="lucrari">Lucrări</option>
               </select>
 
               <div class="card-body btn-group pin-type-selector" id="issues-list-selector">
-                <button class="btn btn-simple btn-fill btn-default" value="toate" id="toate">Toate</button>
-                <button class="btn btn-simple btn-fill btn-default" value="cladire" id="cladiri">Clădiri</button>
-                <button class="btn btn-simple btn-fill btn-default" value="drumuri" id="drumuri">Drumuri</button>
-                <button class="btn btn-simple btn-fill btn-default" value="spatii_deschise" id="spatiiDeschise">Spații deschise</button>
-                <button class="btn btn-simple btn-fill btn-default" value="altele" id="altele">Altele</button>
+                <button class="btn btn-simple btn-fill btn-default" id="toate" value="toate">Toate</button>
+                <button class="btn btn-simple btn-fill btn-default" id="cladiri" value="cladire">Clădiri</button>
+                <button class="btn btn-simple btn-fill btn-default" id="drumuri" value="drumuri">Drumuri</button>
+                <button class="btn btn-simple btn-fill btn-default" id="spatiiDeschise" value="spatii_deschise">Spații
+                  deschise
+                </button>
+                <button class="btn btn-simple btn-fill btn-default" id="altele" value="altele">Altele</button>
               </div>
 
             </div>
@@ -223,11 +211,12 @@ Tip 2: you can also add an image using data-image tag
                   <table class="table table-hover" id="issues-table">
                     <thead id="issuesTable-head">
                     <tr>
+                      <th>Numar de ordine</th>
                       <th>Marcaj</th>
                       <th>Descriere</th>
                       <th>Status</th>
                       <th>Data</th>
-                       <th>Optiuni</th>
+                      <th>Optiuni</th>
                     </tr>
                     </thead>
                     <tbody id="issuesTableBody"></tbody>
@@ -282,12 +271,12 @@ Tip 2: you can also add an image using data-image tag
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
 <script src="./assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
 <!-- Google login -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
 <script src="auth.js"></script>
 <script src="administrare.js" type='module'></script>
 <script src='filters.js' type='module'></script>
-<script src='map-page-template.js' type='module'></script>
+<script src='MapPageTemplate.js' type='module'></script>
 <!-- <script src="admin.js" type="module"></script> -->
 <script src='Services/IssueService.js' type='module'></script>
 <script src='Models/Issue.js' type='module'></script>
@@ -298,5 +287,6 @@ Tip 2: you can also add an image using data-image tag
 <script src='Models/IssueView.js' type='module'></script>
 <script src='Services/PinTypeService.js' type='module'></script>
 <script src='Models/PinType.js' type='module'></script>
+<script src='Utils/StringOperations.js' type='module'></script>
 </body>
 </html>
