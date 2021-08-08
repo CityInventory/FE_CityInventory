@@ -6,3 +6,13 @@ export function Issue(rawData) {
     this.statusId = rawData.statusId ? rawData.statusId : 1;
     this.date = rawData.date ? rawData.date : new Date().toISOString();
 }
+
+export function IssueFromIssueView(issueView) {
+  this.id = issueView.issueId;
+  this.details = issueView.description;
+  this.photo = "";
+  this.pinId = issueView.pinId;
+  this.statusId = issueView.statusId;
+  this.date = issueView.date;
+}
+

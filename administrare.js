@@ -1,13 +1,15 @@
 import {pagestemplate} from './pages-template.js';
 import {showAllPins, showAllWorks} from './filters.js';
 import {
-  createEventsForIssueFormButtons,
-  showAllIssues,
-  showIssuesByPinType,
-  loadMap
-} from './map-page-template.js';
+  loadMap,
+  initIssueTableFilters
+} from './MapPageTemplate.js';
 import {getAllPins} from "./Services/PinService.js";
 import {getAllPinTypes} from "./Services/PinTypeService.js";
+import {
+  arrayToSeparatedString,
+  separatedStringToArray
+} from "./Utils/StringOperations.js";
 
 var pageMap = L.map('mapid').setView([45.7489, 21.2087], 13);
 window.addEventListener('load', init());
@@ -21,7 +23,7 @@ function init() {
   loadPinTypes();
   initTableSelector();
 
-  createEventsForIssueFormButtons();
+  initIssueTableFilters();
 }
 
 //MAP FUNCTIONS
@@ -129,23 +131,6 @@ function showIssuesTable() {
 
   const issuesList = document.getElementById('issuesList');
   issuesList.style.display = "block";
-  showAllIssues();
-
-  document.getElementById('toate').addEventListener('click', showAllIssues)
-
-  document.getElementById('cladiri').addEventListener('click', function () {
-    showIssuesByPinType(1);
-  });
-  document.getElementById('drumuri').addEventListener('click', function () {
-    showIssuesByPinType(2);
-  });
-  document.getElementById('spatiiDeschise').addEventListener('click', function () {
-    showIssuesByPinType(3);
-  });
-  document.getElementById('altele').addEventListener('click', function () {
-    showIssuesByPinType(4);
-  });
-
 }
 
 function hideIssuesTable() {
@@ -182,9 +167,9 @@ function loadPinTypes() {
   getAllPinTypes()
     .then(pinTypeList => {
       var selector = document.getElementById("categoryMaster");
-      pinTypeList.forEach( pinType => {
+      pinTypeList.forEach(pinType => {
         var option = document.createElement("option");
-        option.text = pinType.id + "_" + pinType.name;
+        option.text = arrayToSeparatedString(pinType.id, pinType.name);
         selector.add(option);
       });
     })
@@ -282,7 +267,7 @@ function getFormData() {
 
   var selector = document.getElementById("categoryMaster");
   const selectedOption = selector.value;
-  const pinType = parseInt(selectedOption.split('_')[0]);
+  const pinType = parseInt(separatedStringToArray(selectedOption)[0]);
 
   let latitude = document.getElementById('latitude').value;
   let longitude = document.getElementById('longitude').value;

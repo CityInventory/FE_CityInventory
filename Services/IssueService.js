@@ -51,3 +51,20 @@ export async function deleteIssue(id) {
 
   return response.json();
 }
+
+export async function putIssue(message) {
+  let issueId = JSON.parse(message).id;
+  let url = `https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues/${issueId}`;
+
+  let requestOptions = {
+    method: 'PUT',
+    headers: {
+      "Content-Type": "text/json"
+    },
+    mode: 'cors',
+    body: message
+  };
+
+  const response = await fetch(url, requestOptions);
+  return response.json();
+}
