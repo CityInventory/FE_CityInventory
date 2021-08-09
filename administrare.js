@@ -300,7 +300,7 @@ function postPin(message) {
   })
     .then(response => response.text())
     .then(result => {
-      alert('Solicitatea a fost înregistrată.');
+      alert('Solicitarea a fost înregistrată.');
       location.reload();
     })
     .catch(error => {
@@ -328,7 +328,7 @@ function putPin(message) {
   })
     .then(response => response.text())
     .then(result => {
-      alert('Solicitatea a fost înregistrată.');
+      alert('Solicitarea a fost înregistrată.');
       location.reload();
     })
     .catch(error => {
@@ -349,7 +349,7 @@ function removePin(pinId) {
   fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/${pinId}`, requestOptions)
     .then(response => response.text())
     .then(result => {
-      alert('Solicitatea a fost înregistrată.');
+      alert('Solicitarea a fost înregistrată.');
       location.reload();
     })
     .catch(error => {
