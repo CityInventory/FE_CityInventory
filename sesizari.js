@@ -57,11 +57,11 @@ function loadMapPins() {
         });
         popup.appendChild(addIssueBtn);
 
-        var issues = L.DomUtil.create('a');
-        issues.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
-        issues.setAttribute("href", "#filter-select-buttons");
-        issues.innerHTML = "Listă sesizări"
-        popup.appendChild(issues);
+        // var issues = L.DomUtil.create('a');
+        // issues.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
+        // issues.setAttribute("href", "#filter-select-buttons");
+        // issues.innerHTML = "Listă sesizări"
+        // popup.appendChild(issues);
 
         newMarker.bindPopup(popup);
       })
