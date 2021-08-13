@@ -1,7 +1,8 @@
 {
   "dependencies": {
-    "bootstrap": "^5.0.1",
-    "font-awesome": "^4.7.0",
-    "live-server": "^1.2.1"
+    "bootstrap": "*",
+    "font-awesome": "*",
+    "live-server": "*",
+    "npm-check-updates": "^11.8.3"
   }
 }
