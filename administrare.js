@@ -2,7 +2,7 @@ import {pagestemplate} from './pages-template.js';
 import {showAllPins, showAllWorks} from './filters.js';
 import {
   loadMap,
-  initIssueTableFilters
+  initIssueTableFilters, setActiveFilterButton
 } from './MapPageTemplate.js';
 import {getAllPins} from "./Services/PinService.js";
 import {getAllPinTypes} from "./Services/PinTypeService.js";
@@ -19,7 +19,6 @@ function init() {
   loadMap(pageMap);
   loadMapPins();
   pageMap.on('click', onMapClick);
-  // document.getElementById('pinsTableBody').addEventListener('click', removePin);
   loadPinTypes();
   initTableSelector();
 
@@ -131,6 +130,8 @@ function showIssuesTable() {
 
   const issuesList = document.getElementById('issuesList');
   issuesList.style.display = "block";
+
+  setActiveFilterButton('toate');
 }
 
 function hideIssuesTable() {
@@ -299,7 +300,7 @@ function postPin(message) {
     body: message
   })
     .then(response => response.text())
-    .then(result => {
+    .then(_ => {
       alert('Solicitarea a fost înregistrată.');
       location.reload();
     })
@@ -327,7 +328,7 @@ function putPin(message) {
     body: message
   })
     .then(response => response.text())
-    .then(result => {
+    .then(_ => {
       alert('Solicitarea a fost înregistrată.');
       location.reload();
     })
@@ -348,7 +349,7 @@ function removePin(pinId) {
 
   fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/${pinId}`, requestOptions)
     .then(response => response.text())
-    .then(result => {
+    .then(_ => {
       alert('Solicitarea a fost înregistrată.');
       location.reload();
     })

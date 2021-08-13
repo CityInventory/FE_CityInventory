@@ -2,7 +2,8 @@ import {
   loadMap,
   loadIssueStatusOptions,
   initIssueTableFilters,
-  getIssueStatusValues
+  getIssueStatusValues,
+  setActiveFilterButton
 } from './MapPageTemplate.js';
 import {getAllPins} from "./Services/PinService.js";
 import {postNewIssue} from "./Services/IssueService.js";
@@ -25,6 +26,8 @@ function init() {
 
   addIssueFormCreateEvent();
   addIssueFormCancelEvent();
+
+  setActiveFilterButton('toate');
 }
 
 //MAP FUNCTIONS

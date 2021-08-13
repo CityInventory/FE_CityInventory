@@ -62,7 +62,10 @@ let output = '';
                 <td>${pin.pinTypeId}</td>
                 <td>${pin.name}</td>
                 <td class="btn-group">
-                    <button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'" class="btn btn-sm btn-round btn-fill btn-default table-btn">Detalii</button>
+                    <button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'"
+                    class="btn btn-sm btn-round btn-primary table-btn btn-primary-customization">
+                        Detalii
+                    </button>
 <!--                    <button id=${pin.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
 <!--                    <button id=${pin.id} type="button" class="btn btn-sm btn-round btn-fill btn-default table-btn">Șterge</button>-->
                 </td>

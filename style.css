@@ -304,3 +304,8 @@
   display: none;
 }
 
+.btn-primary-customization{
+  color: #202020;
+  border-width: thin;
+}
+
