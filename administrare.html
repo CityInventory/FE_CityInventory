@@ -138,32 +138,32 @@ Tip 2: you can also add an image using data-image tag
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Tip marcaj</label>
-                    <select class="form-control" id="categoryMaster"></select>
+                    <select class="form-control" id="pin-type-input"></select>
                   </div>
                   <div class="form-group">
                     <label class="formLabel">Este acesta un obiectiv de patrimoniu?</label>
                     <input id="isHeritage" type="checkbox"/>
                   </div>
                   <div class="form-group">
-                    <label class="formLabel">Latitudine</label>
-                    <input class="form-control" id="latitude" name="latitude"/>
+                    <label class="formLabel">Latitudine*</label>
+                    <input class="form-control requires-validation" id="latitude" name="latitude"/>
                   </div>
                   <div class="form-group">
-                    <label class="formLabel">Longitudine</label>
-                    <input class="form-control" id="longitude" name="longitude"/>
+                    <label class="formLabel">Longitudine*</label>
+                    <input class="form-control requires-validation" id="longitude" name="longitude"/>
                   </div>
                   <div class="form-group">
-                    <label class="formLabel">Denumire obiectiv</label>
-                    <input class="form-control" id="nume" name="nume" type="text"/>
+                    <label class="formLabel">Denumire obiectiv*</label>
+                    <input class="form-control requires-validation" id="pin-name" name="pin-name"/>
                   </div>
                   <div class="form-group">
-                    <label class="formLabel">Descriere</label>
-                    <textarea class="form-control" id="pinDescription" name="message"></textarea>
+                    <label class="formLabel">Descriere*</label>
+                    <textarea class="form-control requires-validation" id="pin-description" name="message"></textarea>
                   </div>
                 </form>
-                <button class='btn btn-info btn-fill btn-wd' id="createPinBtn">Salvează</button>
-                <button class='btn btn-info btn-fill btn-wd' id="modifyBtn">Modifică</button>
-                <button class='btn btn-info btn-fill btn-wd' id="cancelBtn">Renunță</button>
+                <button class='btn btn-info btn-fill btn-wd' id="create-pin">Salvează</button>
+                <button class='btn btn-info btn-fill btn-wd' id="modify-pin">Modifică</button>
+                <button class='btn btn-info btn-fill btn-wd' id="close-pin-form">Renunță</button>
               </div>
 
             </div>
