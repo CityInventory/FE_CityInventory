@@ -6,7 +6,7 @@ export function getIssuesByPinType(pinTypeId) {
 }
 
 export function getAllIssues() {
-  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues";
+  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Issues/";
   return getMultiple(url);
 }
 

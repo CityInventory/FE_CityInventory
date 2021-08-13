@@ -1,10 +1,24 @@
 import {pagestemplate} from './pages-template.js';
-import {showAllPins, showAllWorks} from './filters.js';
+import {
+  showAllPins,
+  showAllWorks
+} from './filters.js';
 import {
   loadMap,
-  initIssueTableFilters, setActiveFilterButton
+  initIssueTableFilters,
+  setActiveFilterButton,
+  setMapButtonStyle,
+  getPinOptionsPopup,
+  addInputFieldValidations,
+  setValidityStyle,
+  hasInvalidValue
 } from './MapPageTemplate.js';
-import {getAllPins} from "./Services/PinService.js";
+import {
+  deletePin,
+  getAllPins,
+  postNewPin,
+  putPin
+} from "./Services/PinService.js";
 import {getAllPinTypes} from "./Services/PinTypeService.js";
 import {
   arrayToSeparatedString,
@@ -16,13 +30,21 @@ window.addEventListener('load', init());
 
 function init() {
   pagestemplate.validateAuthorization();
+
   loadMap(pageMap);
   loadMapPins();
+
   pageMap.on('click', onMapClick);
   loadPinTypes();
   initTableSelector();
 
   initIssueTableFilters();
+
+  addCreatePinEvent();
+  addUpdatePinEvent();
+  addClosePinFormEvent();
+
+  addInputFieldValidations();
 }
 
 //MAP FUNCTIONS
@@ -30,40 +52,11 @@ function loadMapPins() {
   getAllPins()
     .then(pinsList => {
       pinsList.forEach(pin => {
-        var newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY])
-          .addTo(pageMap);
+        let newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
 
-        var popup = L.DomUtil.create('LI', 'options');
-        popup.style.listStyle = "none";
-
-        var title = L.DomUtil.create('h5');
-        title.innerHTML = pin.name;
-        popup.appendChild(title);
-
-
-        var changeBtn = L.DomUtil.create('a');
-        changeBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
-        changeBtn.innerHTML = "Modifică marcaj"
-        changeBtn.style.color = "white";
-        changeBtn.style.display = "flex";
-        changeBtn.addEventListener('click', () => {
-          showInputForm(true);
-          showClickedPin(pin);
-          setUpdatePinBtnVisibility(true);
-          document.location.href = "#pin-create-form";
-        });
-        popup.appendChild(changeBtn);
-
-        var deletePinBtn = L.DomUtil.create('a');
-        deletePinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn delete");
-        deletePinBtn.innerHTML = "Șterge marcaj"
-        deletePinBtn.style.color = "white";
-        deletePinBtn.style.display = "flex";
-        deletePinBtn.style.marginTop = "4px";
-        deletePinBtn.addEventListener('click', () => {
-          removePin(pin.id);
-        });
-        popup.appendChild(deletePinBtn);
+        let popup = getPinOptionsPopup(pin.name);
+        popup.appendChild(getUpdatePinButton(pin));
+        popup.appendChild(getRemovePinButton(pin));
 
         newMarker.bindPopup(popup);
       })
@@ -71,28 +64,66 @@ function loadMapPins() {
     .catch(error => console.log('error', error));
 }
 
-function onMapClick(e) {
-  let coordinates = e.latlng;
+function getUpdatePinButton(selectedPin) {
+  let changeBtn = L.DomUtil.create('a');
 
-  var addPinBtn = L.DomUtil.create('a');
-  addPinBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
-  addPinBtn.innerHTML = "Adaugă marcaj nou"
-  addPinBtn.style.color = "white";
-  addPinBtn.addEventListener('click', () => {
+  setMapButtonStyle(changeBtn);
+
+  changeBtn.innerHTML = "Modifică marcaj"
+
+  changeBtn.addEventListener('click', () => {
     showInputForm(true);
-    setPinIdInputValue(0);
-    showClickedCoordonates(coordinates);
-    setAddPinBtnVisibility(true);
+    showClickedPin(selectedPin);
+    setUpdatePinBtnVisibility(true);
+    setAddPinBtnVisibility(false);
     document.location.href = "#pin-create-form";
   });
 
-  var optionList = L.DomUtil.create('LI', 'options');
-  optionList.style.listStyle = "none";
-  optionList.appendChild(addPinBtn);
+  return changeBtn;
+}
 
-  L.popup().setLatLng(coordinates)
-    .setContent(optionList)
-    .openOn(pageMap);
+function getRemovePinButton(pin) {
+  let deletePinBtn = L.DomUtil.create('a');
+
+  setMapButtonStyle(deletePinBtn);
+
+  deletePinBtn.innerHTML = "Șterge marcaj"
+  deletePinBtn.addEventListener('click', () => {
+    removePin(pin.id, pin.name);
+  });
+
+  return deletePinBtn;
+}
+
+function onMapClick(e) {
+  let coordinates = e.latlng;
+
+  let optionList = L.DomUtil.create('LI', 'options');
+  optionList.style.listStyle = "none";
+  optionList.appendChild(getAddPinButton(coordinates));
+
+  L.popup().setLatLng(coordinates).setContent(optionList).openOn(pageMap);
+}
+
+function getAddPinButton(coordinates) {
+  let addPinBtn = L.DomUtil.create('a');
+
+  setMapButtonStyle(addPinBtn);
+
+  addPinBtn.innerHTML = "Adaugă marcaj nou"
+
+  addPinBtn.addEventListener('click', () => {
+    showInputForm(true);
+    setPinIdInputValue(0);
+    showClickedCoordinates(coordinates);
+    setPinNameInputValue('');
+    setPinDescriptionInputValue('');
+    setAddPinBtnVisibility(true);
+    setUpdatePinBtnVisibility(false);
+    document.location.href = "#pin-create-form";
+  });
+
+  return addPinBtn;
 }
 
 
@@ -164,172 +195,179 @@ function hideWorksTable() {
 }
 
 //PIN EDITOR FORM
+function addCreatePinEvent() {
+  document.getElementById("create-pin").addEventListener('click',
+    () => {
+      let message = getFormData();
+      if (message) {
+        createPin(message);
+      }
+    });
+}
+
+function addUpdatePinEvent() {
+  document.getElementById("modify-pin").addEventListener('click',
+    () => {
+      let message = getFormData();
+      if (message) {
+        updatePin(message);
+      }
+    });
+}
+
+function addClosePinFormEvent() {
+  document.getElementById('close-pin-form').addEventListener('click',
+    () => {
+      let formElement = document.getElementById("pin-create-form");
+      formElement.style.display = "none";
+      location.reload();
+    });
+}
+
 function loadPinTypes() {
-  getAllPinTypes()
-    .then(pinTypeList => {
-      var selector = document.getElementById("categoryMaster");
-      pinTypeList.forEach(pinType => {
-        var option = document.createElement("option");
-        option.text = arrayToSeparatedString(pinType.id, pinType.name);
-        selector.add(option);
-      });
-    })
-    .catch(error => console.log('error', error));
+  getAllPinTypes().then( pinTypeList => {
+    let selector = document.getElementById("pin-type-input");
+
+    pinTypeList.forEach(pinType => {
+      let option = document.createElement("option");
+      option.text = arrayToSeparatedString(pinType.id, pinType.name);
+      selector.add(option);
+    });
+
+  }).catch(error => console.log('error', error));
 }
 
 function showInputForm(isVisible) {
-  var formElement = document.getElementById("pin-create-form");
+  let formElement = document.getElementById("pin-create-form");
   if (isVisible) {
     formElement.style.display = "block";
-    document.getElementById('cancelBtn').addEventListener('click', cancelNewPinForm);
   } else {
     formElement.style.display = "none";
   }
 }
 
 function setAddPinBtnVisibility(isVisible) {
-  var btn = document.getElementById("createPinBtn");
+  let btn = document.getElementById("create-pin");
   if (isVisible) {
     btn.style.display = "inline";
-    btn.addEventListener('click', addNewPin);
   } else {
     btn.style.display = "none";
   }
 }
 
 function setUpdatePinBtnVisibility(isVisible) {
-  var btn = document.getElementById("modifyBtn");
+  let btn = document.getElementById("modify-pin");
   if (isVisible) {
     btn.style.display = "inline";
-    btn.addEventListener('click', updatePin);
   } else {
     btn.style.display = "none";
   }
 }
 
-function cancelNewPinForm() {
-  var formElement = document.getElementById("pin-create-form");
-  formElement.style.display = "none";
-  location.reload();
-}
-
-function showClickedCoordonates(coordinates) {
-  var latElement = document.getElementById('latitude');
+function showClickedCoordinates(coordinates) {
+  let latElement = document.getElementById('latitude');
   latElement.value = coordinates.lat;
   latElement.style.border = '1px solid black';
 
-  var lngElement = document.getElementById('longitude');
+  let lngElement = document.getElementById('longitude');
   lngElement.value = coordinates.lng;
   lngElement.style.border = '1px solid black';
 }
 
 function setPinIdInputValue(id) {
-  var idElement = document.getElementById('pinCode');
+  let idElement = document.getElementById('pinCode');
   idElement.value = id;
+}
+
+function setPinNameInputValue(name) {
+  let titleElement = document.getElementById('pin-name');
+  titleElement.value = name;
+  setValidityStyle(titleElement);
+}
+
+function setPinDescriptionInputValue(description) {
+  let descriptionElement = document.getElementById('pin-description');
+  descriptionElement.value = description;
+  setValidityStyle(descriptionElement);
 }
 
 function showClickedPin(pin) {
   setPinIdInputValue(pin.id);
 
-  var pinTypeId = document.getElementById('categoryMaster');
-  for (var i = 0; i < pinTypeId.options.length; i++) {
+  let pinTypeId = document.getElementById('pin-type-input');
+  for (let i = 0; i < pinTypeId.options.length; i++) {
     if (pinTypeId[i].text.startsWith(pin.pinTypeId)) {
       pinTypeId.selectedIndex = i;
     }
   }
 
-  var titleElement = document.getElementById('nume');
-  titleElement.value = pin.name;
+  setPinNameInputValue(pin.name);
+  setPinDescriptionInputValue(pin.description);
 
-  var descriptionElement = document.getElementById('pinDescription');
-  descriptionElement.value = pin.description;
-
-  var coordinates = {lat: pin.gpsCoordX, lng: pin.gpsCoordY}
-  showClickedCoordonates(coordinates);
-}
-
-function addNewPin() {
-  var message = getFormData();
-  if (message) {
-    postPin(message);
-  }
+  let coordinates = {lat: pin.gpsCoordX, lng: pin.gpsCoordY}
+  showClickedCoordinates(coordinates);
 }
 
 function getFormData() {
-  var idElement = document.getElementById('pinCode');
-  var pinId = parseInt(idElement.value);
+  let latitudeElement = document.getElementById('latitude');
+  if (hasInvalidValue(latitudeElement)) {
+    return null;
+  }
+
+  let longitudeElement = document.getElementById('longitude');
+  if (hasInvalidValue(longitudeElement)) {
+    return null;
+  }
+
+  let descriptionElement = document.getElementById('pin-description');
+  if (hasInvalidValue(descriptionElement)) {
+    return null;
+  }
+
+  let nameElement = document.getElementById('pin-name');
+  if (hasInvalidValue(nameElement)) {
+    return null;
+  }
+
+  let idElement = document.getElementById('pinCode');
+  let pinId = parseInt(idElement.value);
   if (isNaN(pinId)) {
     pinId = 0;
   }
 
-  const description = document.getElementById('pinDescription').value;
-  const name = document.getElementById('nume').value;
   const isHeritage = document.getElementById('isHeritage').checked;
 
-  var selector = document.getElementById("categoryMaster");
+  let selector = document.getElementById("pin-type-input");
   const selectedOption = selector.value;
   const pinType = parseInt(separatedStringToArray(selectedOption)[0]);
-
-  let latitude = document.getElementById('latitude').value;
-  let longitude = document.getElementById('longitude').value;
-
-  if (latitude == null || latitude == '' || longitude == null || longitude == '') {
-    document.getElementById('latitude').style.border = '2px solid red';
-    document.getElementById('longitude').style.border = '2px solid red';
-    return null;
-  }
 
   return JSON.stringify({
     "id": pinId,
     "pinTypeId": pinType,
-    "gpsCoordX": latitude,
-    "gpsCoordY": longitude,
-    "name": name,
-    "description": description,
+    "gpsCoordX": latitudeElement.value,
+    "gpsCoordY": longitudeElement.value,
+    "name": nameElement.value,
+    "description": descriptionElement.value,
     "isHeritage": isHeritage
   });
 }
 
-function postPin(message) {
-  fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins", {
-    method: 'POST',
-    headers: {
-      "Content-Type": "text/json"
-    },
-    mode: 'cors',
-    body: message
-  })
-    .then(response => response.text())
-    .then(_ => {
-      alert('Solicitarea a fost înregistrată.');
+function createPin(message) {
+  postNewPin(message)
+    .then(response => {
+      alert(`Marcajul cu numele "${response.data.name}" fost salvat.`);
       location.reload();
     })
     .catch(error => {
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+      alert('Ceva nu a mers bine. Te rugăm să încerci din nou.');
     });
 }
 
-function updatePin() {
-  var message = getFormData();
-  if (message) {
-    putPin(message);
-  }
-}
-
-function putPin(message) {
-  var idPin = JSON.parse(message).id;
-  fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/` + idPin, {
-    method: 'PUT',
-    headers: {
-      "Content-Type": "text/json"
-    },
-    mode: 'cors',
-    body: message
-  })
-    .then(response => response.text())
-    .then(_ => {
-      alert('Solicitarea a fost înregistrată.');
+function updatePin(message) {
+  putPin(message)
+    .then(response => {
+      alert(`Marcajul cu numele "${response.data.name}" fost modificat.`);
       location.reload();
     })
     .catch(error => {
@@ -339,22 +377,14 @@ function putPin(message) {
 }
 
 //PIN ACTIONS
-function removePin(pinId) {
-
-  var requestOptions = {
-    method: 'DELETE',
-    redirect: 'follow',
-    mode: 'cors'
-  };
-
-  fetch(`https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/${pinId}`, requestOptions)
-    .then(response => response.text())
+function removePin(pinId, pinName) {
+  deletePin(pinId)
     .then(_ => {
-      alert('Solicitarea a fost înregistrată.');
+      alert(`Marcajul cu numele "${pinName}" a fost șters.`);
       location.reload();
     })
     .catch(error => {
       console.log('error', error)
-      alert('Marcajul nu a fost sters de pe harta. Te rugăm sa încerci din nou.');
+      alert(`Marcajul cu numele "${pinName}" a fost șters. Te rugăm sa încerci din nou.`);
     });
 }

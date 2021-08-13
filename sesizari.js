@@ -3,7 +3,10 @@ import {
   loadIssueStatusOptions,
   initIssueTableFilters,
   getIssueStatusValues,
-  setActiveFilterButton
+  setActiveFilterButton,
+  setMapButtonStyle,
+  getPinOptionsPopup,
+  addInputFieldValidations, setValidityStyle, hasInvalidValue
 } from './MapPageTemplate.js';
 import {getAllPins} from "./Services/PinService.js";
 import {postNewIssue} from "./Services/IssueService.js";
@@ -28,6 +31,8 @@ function init() {
   addIssueFormCancelEvent();
 
   setActiveFilterButton('toate');
+
+  addInputFieldValidations();
 }
 
 //MAP FUNCTIONS
@@ -35,32 +40,13 @@ function loadMapPins() {
   getAllPins()
     .then(pinsList => {
       pinsList.forEach(pin => {
-        var newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
+        let newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
 
-        var popup = L.DomUtil.create('LI', 'options');
-        popup.style.listStyle = "none";
+        let popup = getPinOptionsPopup(pin.name);
+        popup.appendChild(getPinDetailsButton(pin.id));
+        popup.appendChild(getIssueCreateButton(pin.id));
 
-        var title = L.DomUtil.create('h5');
-        title.innerHTML = pin.name;
-        popup.appendChild(title);
-
-        var details = L.DomUtil.create('a');
-        details.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
-        details.setAttribute("href", "detalii.html?id=" + pin.id);
-        details.innerHTML = "Detalii"
-        popup.appendChild(details);
-
-        var addIssueBtn = L.DomUtil.create('a');
-        addIssueBtn.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
-        addIssueBtn.innerHTML = "Adaugă sesizare"
-        addIssueBtn.style.color = "white";
-        addIssueBtn.addEventListener('click', () => {
-          document.getElementById('issue-form-pin-id').value = pin.id;
-          showIssueInputForm();
-        });
-        popup.appendChild(addIssueBtn);
-
-        // var issues = L.DomUtil.create('a');
+        // let issues = L.DomUtil.create('a');
         // issues.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
         // issues.setAttribute("href", "#filter-select-buttons");
         // issues.innerHTML = "Listă sesizări"
@@ -70,6 +56,28 @@ function loadMapPins() {
       })
     })
     .catch(error => console.log('error', error));
+}
+
+function getPinDetailsButton(pinId) {
+  let details = L.DomUtil.create('a');
+  details.setAttribute("href", "detalii.html?id=" + pinId);
+  setMapButtonStyle(details);
+  details.innerHTML = "Detalii"
+  return details;
+}
+
+function getIssueCreateButton(pinId) {
+  let addIssueBtn = L.DomUtil.create('a');
+
+  setMapButtonStyle(addIssueBtn);
+  addIssueBtn.innerHTML = "Adaugă sesizare"
+
+  addIssueBtn.addEventListener('click', () => {
+    document.getElementById('issue-form-pin-id').value = pinId;
+    showIssueInputForm();
+  });
+
+  return addIssueBtn;
 }
 
 // ISSUES TABLE
@@ -100,6 +108,7 @@ function showIssueInputForm() {
   let formElement = document.getElementById("issue-create-form");
   formElement.style.display = "block";
   document.location.href = "#issue-create-form";
+  setValidityStyle(document.getElementById('issue-description'));
 }
 
 function hideIssueInputForm() {
@@ -109,14 +118,14 @@ function hideIssueInputForm() {
 }
 
 function addNewIssue() {
-  var message = getIssueFormData();
+  let message = getIssueFormData();
   if (!message) {
     return;
   }
 
   postNewIssue(message)
     .then(result => {
-      alert(`Sesizarea cu numărul ${result.data.id} a fost înregistrată.`);
+      alert(`Sesizarea cu numărul "${result.data.id}" a fost înregistrată.`);
       hideIssueInputForm();
     })
     .catch(error => {
@@ -126,25 +135,27 @@ function addNewIssue() {
 }
 
 function getIssueFormData() {
+  const descriptionElement = document.getElementById('issue-description');
+  if(hasInvalidValue(descriptionElement)) {
+    return null;
+  }
+  const description = descriptionElement.value;
+
   let issueIdElement = document.getElementById('issue-form-issue-id');
   let issueId = parseInt(issueIdElement.value);
   if (isNaN(issueId)) {
-    issueIdElement.style.border = '2px solid red';
-    return;
+    return null;
   }
 
   let pinIdElement = document.getElementById('issue-form-pin-id');
   let pinId = parseInt(pinIdElement.value);
   if (isNaN(pinId)) {
-    pinIdElement.style.border = '2px solid red';
-    return;
+    return null;
   }
 
   let selector = document.getElementById("issue-status-selector");
   const selectedOption = selector.value;
   const statusId = parseInt(separatedStringToArray(selectedOption)[0]);
-
-  const description = document.getElementById('issue-description').value;
 
   return JSON.stringify(
     new Issue({
