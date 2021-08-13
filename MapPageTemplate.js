@@ -35,20 +35,37 @@ export function initIssueTableFilters(customStyles = () => {
 
   document.getElementById('toate').addEventListener('click', function () {
     getAllIssuesView().then(issueList => showStyledIssues(issueList, customStyles));
+    setActiveFilterButton('toate');
   })
 
   document.getElementById('cladiri').addEventListener('click', function () {
     getIssuesViewByPinType(1).then(issueList => showStyledIssues(issueList, customStyles));
+    setActiveFilterButton('cladiri');
   });
   document.getElementById('drumuri').addEventListener('click', function () {
     getIssuesViewByPinType(2).then(issueList => showStyledIssues(issueList, customStyles));
+    setActiveFilterButton('drumuri');
   });
   document.getElementById('spatiiDeschise').addEventListener('click', function () {
     getIssuesViewByPinType(3).then(issueList => showStyledIssues(issueList, customStyles));
+    setActiveFilterButton('spatiiDeschise');
   });
   document.getElementById('altele').addEventListener('click', function () {
     getIssuesViewByPinType(4).then(issueList => showStyledIssues(issueList, customStyles));
+    setActiveFilterButton('altele');
   });
+}
+
+export function setActiveFilterButton(elementId) {
+  let filterButtons = document.getElementById("issues-list-selector").children;
+  for (let button of filterButtons) {
+    if (button.id == elementId) {
+      button.classList.add('active')
+    }
+    else  {
+      button.classList.remove('active')
+    }
+  }
 }
 
 async function showStyledIssues(issueList, customStyles) {
@@ -90,9 +107,9 @@ async function showIssues(issuesViewArray) {
     let statusSelector = document.createElement("select")
     statusSelector.classList.add("issue-status-form-selector");
     statusSelector.classList.add("btn");
-    statusSelector.classList.add("btn-simple");
-    statusSelector.classList.add("btn-fill");
+    statusSelector.classList.add("btn-primary");
     statusSelector.classList.add("btn-default");
+    statusSelector.classList.add("btn-primary-customization");
     loadIssueStatusOptions(statusSelector, statusList, issueView.statusId);
     statusSelector.addEventListener('change', (event) => {
       updateIssueStatus(event.target.value, issueView);
@@ -108,7 +125,7 @@ async function showIssues(issuesViewArray) {
     optionsCell.classList.add("btn-group");
     optionsCell.classList.add("table-options");
 
-    let buttonClasses = "btn btn-sm btn-round btn-fill btn-default table-btn".split(" ");
+    let buttonClasses = "btn btn-sm btn-round btn-primary table-btn btn-primary-customization".split(" ");
     let removeButton = document.createElement("button");
     buttonClasses.forEach(cssClass => removeButton.classList.add(cssClass));
     removeButton.innerHTML = "Șterge";
@@ -135,7 +152,7 @@ function updateIssueStatus(selectValue, issueView) {
 
 function removeIssue(issueId, callback) {
   deleteIssue(issueId)
-    .then(result => {
+    .then(_ => {
       alert(`Sesizarea cu numărul ${issueId} a fost ștearsă.`);
       callback(true);
     })
