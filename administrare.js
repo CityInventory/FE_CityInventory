@@ -1,7 +1,6 @@
 import {pagestemplate} from './pages-template.js';
 import {
-  showAllPins,
-  showAllWorks
+  showAllPins
 } from './filters.js';
 import {
   loadMap,
@@ -11,9 +10,9 @@ import {
   getPinOptionsPopup,
   addInputFieldValidations,
   hasInvalidValue,
-  getIssueStatusValues,
   loadInputFormOptions,
-  setInputElementValue
+  setInputElementValue,
+  showAllWorks
 } from './MapPageTemplate.js';
 import {
   deletePin,
@@ -30,6 +29,7 @@ import {getAllDepartments} from "./Services/DepartmentService.js";
 import {Pin} from "./Models/Pin.js";
 import {Work} from "./Models/Work.js";
 import {postNewWork} from "./Services/WorkService.js";
+import {getAllStatuses} from "./Services/StatusService.js";
 
 var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init());
@@ -46,7 +46,7 @@ function init() {
 
   initIssueTableFilters();
 
-  getIssueStatusValues().then(statusList => {
+  getAllStatuses().then(statusList => {
     let issueStatusSelector = document.getElementById("work-status");
     loadInputFormOptions(issueStatusSelector, statusList);
   });
@@ -330,8 +330,8 @@ function showClickedPin(pin) {
   setInputElementValue('pin-name', pin.name);
   setInputElementValue('pin-description', pin.description);
 
-  let coordinates = {lat: pin.gpsCoordX, lng: pin.gpsCoordY}
-  showClickedCoordinates(coordinates);
+  setInputElementValue('latitude', pin.gpsCoordX);
+  setInputElementValue('longitude', pin.gpsCoordY);
 }
 
 function getPinFormData() {
