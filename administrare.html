@@ -168,7 +168,33 @@ Tip 2: you can also add an image using data-image tag
 
             </div>
           </div>
+
           <div class="col-md-12">
+
+            <div class="card-body" id="work-create-form">
+              <div class="form-group">
+                <label class="formLabel">Cod lucrare</label>
+                <input class="form-control" id="work-id" readonly type="text" value="0"/>
+              </div>
+              <div class="form-group">
+                <label class="formLabel">Cod marcaj</label>
+                <input class="form-control" id="work-pin-id" readonly type="text" value="0"/>
+              </div>
+              <div class="form-group">
+                <label class="formLabel">Departament</label>
+                <select class="form-control" id="work-department"></select>
+              </div>
+              <div class="form-group">
+                <label class="formLabel">Status</label>
+                <select class="form-control" id="work-status"></select>
+              </div>
+              <div class="form-group">
+                <label class="formLabel">Detalii*</label>
+                <textarea class="form-control requires-validation" id="work-details" name="message"></textarea>
+              </div>
+              <button class='btn btn-info btn-fill btn-wd' id="create-work">Salvează</button>
+              <button class='btn btn-info btn-fill btn-wd' id="close-work-form">Renunță</button>
+            </div>
 
             <div class="card-body" id="filter-select-buttons">
 
@@ -176,7 +202,7 @@ Tip 2: you can also add an image using data-image tag
                 <option class="dropdown-item">Selectează un tabel</option>
                 <option class="dropdown-item" id="sesizari" value="sesizari">Sesizări</option>
                 <option class="dropdown-item" id="marcaj" value="marcaj">Marcaje</option>
-                <!-- <option class="dropdown-item" id="lucrari" value="lucrari">Lucrări</option> -->
+                <option class="dropdown-item" id="lucrari" value="lucrari">Lucrări</option>
               </select>
 
               <div class="card-body btn-group pin-type-selector" id="issues-list-selector">
@@ -286,5 +312,9 @@ Tip 2: you can also add an image using data-image tag
 <script src='Services/PinTypeService.js' type='module'></script>
 <script src='Models/PinType.js' type='module'></script>
 <script src='Utils/StringOperations.js' type='module'></script>
+<script src='Models/Department.js' type='module'></script>
+<script src='Models/Work.js' type='module'></script>
+<script src='Services/DepartmentService.js' type='module'></script>
+<script src='Services/WorkService.js' type='module'></script>
 </body>
 </html>

@@ -229,7 +229,7 @@
 
 .panel-content {
   font-size: 20px;
-  padding: 0px 14px;
+  padding: 0 14px;
   margin: 0 40px;
   height: 0;
   overflow: hidden;
@@ -316,3 +316,6 @@ input:invalid {
   border-width: 2px;
 }
 
+textarea {
+  min-height: 5em;
+}
