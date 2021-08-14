@@ -14,7 +14,7 @@ var startApp = function() {
 };
 
 function setUserNameLabel(userName) {
-    document.getElementById('name').innerText = userName;
+    document.getElementById('user-name').innerText = userName;
 }
 
 function attachSignin(element) {
@@ -31,7 +31,7 @@ function signOut() {
     auth2.signOut().then(function () {
         removeCookie(cookieName);
         setUserNameLabel('');
-        loginVisibility(false); 
+        loginVisibility(false);
     });
 }
 
@@ -45,8 +45,8 @@ function signIn(googleUser) {
     var userName =  googleUser.getBasicProfile().getName();
     let daysToExpiration = 30;
     setCookie(cookieName, userName, daysToExpiration);
-    setUserNameLabel(userName);   
-    loginVisibility(true); 
+    setUserNameLabel(userName);
+    loginVisibility(true);
 }
 
 startApp();
@@ -60,19 +60,17 @@ startApp();
 
 function loginVisibility(isLoggedIn) {
     if (isLoggedIn) {
-        document.getElementById('name').style.display = 'block';
-        document.getElementById('logoutBtn').style.display = 'block';
-        document.getElementById('loginBtn').style.display = 'none';
+        document.getElementById('log-out-container').style.display = 'block';
+        document.getElementById('log-in-container').style.display = 'none';
     } else {
-        document.getElementById('name').style.display = 'none';
-        document.getElementById('logoutBtn').style.display = 'none';
-        document.getElementById('loginBtn').style.display = 'block';
+      document.getElementById('log-out-container').style.display = 'none';
+      document.getElementById('log-in-container').style.display = 'block';
     }
 }
 
 function setCookie(cookieName, value="", expirationDays=-1) {
   let newDate = new Date('01 Jan 1970');
-  if (expirationDays >= 0) {  
+  if (expirationDays >= 0) {
     newDate = new Date();
     newDate.setTime(newDate.getTime() + convertDaysToMiliseconds(expirationDays));
   }
