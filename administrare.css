@@ -8,7 +8,7 @@
 
 #pinsList, #issuesList, #worksList,
 #createPinBtn, #modifyBtn, .pin-type-selector,
-#pin-create-form {
+#pin-create-form, #work-create-form {
     display : none;
 }
 

@@ -10,8 +10,10 @@ import {
   setMapButtonStyle,
   getPinOptionsPopup,
   addInputFieldValidations,
-  setValidityStyle,
-  hasInvalidValue
+  hasInvalidValue,
+  getIssueStatusValues,
+  loadInputFormOptions,
+  setInputElementValue
 } from './MapPageTemplate.js';
 import {
   deletePin,
@@ -24,8 +26,12 @@ import {
   arrayToSeparatedString,
   separatedStringToArray
 } from "./Utils/StringOperations.js";
+import {getAllDepartments} from "./Services/DepartmentService.js";
+import {Pin} from "./Models/Pin.js";
+import {Work} from "./Models/Work.js";
+import {postNewWork} from "./Services/WorkService.js";
 
-var pageMap = L.map('mapid').setView([45.7489, 21.2087], 13);
+var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init());
 
 function init() {
@@ -40,9 +46,22 @@ function init() {
 
   initIssueTableFilters();
 
+  getIssueStatusValues().then(statusList => {
+    let issueStatusSelector = document.getElementById("work-status");
+    loadInputFormOptions(issueStatusSelector, statusList);
+  });
+
   addCreatePinEvent();
   addUpdatePinEvent();
   addClosePinFormEvent();
+
+  getAllDepartments().then(departmentList => {
+    let departmentSelector = document.getElementById("work-department");
+    loadInputFormOptions(departmentSelector, departmentList);
+  });
+
+  addCloseWorkFormEvent();
+  addCreateWorkEvent();
 
   addInputFieldValidations();
 }
@@ -57,6 +76,7 @@ function loadMapPins() {
         let popup = getPinOptionsPopup(pin.name);
         popup.appendChild(getUpdatePinButton(pin));
         popup.appendChild(getRemovePinButton(pin));
+        popup.appendChild(getAddWorkPinButton(pin));
 
         newMarker.bindPopup(popup);
       })
@@ -72,7 +92,7 @@ function getUpdatePinButton(selectedPin) {
   changeBtn.innerHTML = "Modifică marcaj"
 
   changeBtn.addEventListener('click', () => {
-    showInputForm(true);
+    showPinInputForm(true);
     showClickedPin(selectedPin);
     setUpdatePinBtnVisibility(true);
     setAddPinBtnVisibility(false);
@@ -95,6 +115,23 @@ function getRemovePinButton(pin) {
   return deletePinBtn;
 }
 
+function getAddWorkPinButton(pin) {
+  let button = L.DomUtil.create('a');
+
+  setMapButtonStyle(button);
+
+  button.innerHTML = "Adaugă o lucrare"
+  button.addEventListener('click', () => {
+    showWorkInputForm(true);
+    setInputElementValue('work-id', 0);
+    setInputElementValue('work-pin-id', pin.id);
+    setInputElementValue('work-details', "");
+    document.location.href = "#work-create-form";
+  });
+
+  return button;
+}
+
 function onMapClick(e) {
   let coordinates = e.latlng;
 
@@ -113,11 +150,16 @@ function getAddPinButton(coordinates) {
   addPinBtn.innerHTML = "Adaugă marcaj nou"
 
   addPinBtn.addEventListener('click', () => {
-    showInputForm(true);
-    setPinIdInputValue(0);
-    showClickedCoordinates(coordinates);
-    setPinNameInputValue('');
-    setPinDescriptionInputValue('');
+    showPinInputForm(true);
+    showClickedPin(new Pin({
+      id: 0,
+      pinTypeId: 1,
+      gpsCoordX: coordinates.lat,
+      gpsCoordY: coordinates.lng,
+      description: '',
+      name: '',
+      isHeritage: false
+    }));
     setAddPinBtnVisibility(true);
     setUpdatePinBtnVisibility(false);
     document.location.href = "#pin-create-form";
@@ -126,6 +168,17 @@ function getAddPinButton(coordinates) {
   return addPinBtn;
 }
 
+function removePin(pinId, pinName) {
+  deletePin(pinId)
+    .then(_ => {
+      alert(`Marcajul cu numele "${pinName}" a fost șters.`);
+      location.reload();
+    })
+    .catch(error => {
+      console.log('error', error)
+      alert(`Marcajul cu numele "${pinName}" a fost șters. Te rugăm sa încerci din nou.`);
+    });
+}
 
 //DATA TABLES
 function initTableSelector() {
@@ -198,7 +251,7 @@ function hideWorksTable() {
 function addCreatePinEvent() {
   document.getElementById("create-pin").addEventListener('click',
     () => {
-      let message = getFormData();
+      let message = getPinFormData();
       if (message) {
         createPin(message);
       }
@@ -208,7 +261,7 @@ function addCreatePinEvent() {
 function addUpdatePinEvent() {
   document.getElementById("modify-pin").addEventListener('click',
     () => {
-      let message = getFormData();
+      let message = getPinFormData();
       if (message) {
         updatePin(message);
       }
@@ -237,7 +290,7 @@ function loadPinTypes() {
   }).catch(error => console.log('error', error));
 }
 
-function showInputForm(isVisible) {
+function showPinInputForm(isVisible) {
   let formElement = document.getElementById("pin-create-form");
   if (isVisible) {
     formElement.style.display = "block";
@@ -264,35 +317,8 @@ function setUpdatePinBtnVisibility(isVisible) {
   }
 }
 
-function showClickedCoordinates(coordinates) {
-  let latElement = document.getElementById('latitude');
-  latElement.value = coordinates.lat;
-  latElement.style.border = '1px solid black';
-
-  let lngElement = document.getElementById('longitude');
-  lngElement.value = coordinates.lng;
-  lngElement.style.border = '1px solid black';
-}
-
-function setPinIdInputValue(id) {
-  let idElement = document.getElementById('pinCode');
-  idElement.value = id;
-}
-
-function setPinNameInputValue(name) {
-  let titleElement = document.getElementById('pin-name');
-  titleElement.value = name;
-  setValidityStyle(titleElement);
-}
-
-function setPinDescriptionInputValue(description) {
-  let descriptionElement = document.getElementById('pin-description');
-  descriptionElement.value = description;
-  setValidityStyle(descriptionElement);
-}
-
 function showClickedPin(pin) {
-  setPinIdInputValue(pin.id);
+  setInputElementValue('pinCode', pin.id);
 
   let pinTypeId = document.getElementById('pin-type-input');
   for (let i = 0; i < pinTypeId.options.length; i++) {
@@ -301,14 +327,14 @@ function showClickedPin(pin) {
     }
   }
 
-  setPinNameInputValue(pin.name);
-  setPinDescriptionInputValue(pin.description);
+  setInputElementValue('pin-name', pin.name);
+  setInputElementValue('pin-description', pin.description);
 
   let coordinates = {lat: pin.gpsCoordX, lng: pin.gpsCoordY}
   showClickedCoordinates(coordinates);
 }
 
-function getFormData() {
+function getPinFormData() {
   let latitudeElement = document.getElementById('latitude');
   if (hasInvalidValue(latitudeElement)) {
     return null;
@@ -376,15 +402,78 @@ function updatePin(message) {
     });
 }
 
-//PIN ACTIONS
-function removePin(pinId, pinName) {
-  deletePin(pinId)
-    .then(_ => {
-      alert(`Marcajul cu numele "${pinName}" a fost șters.`);
+//WORK EDIT FORM
+function addCreateWorkEvent() {
+  document.getElementById("create-work").addEventListener('click',
+    () => {
+      let message = getWorkFormData();
+      if (message) {
+        createWork(message);
+      }
+    });
+}
+
+function addCloseWorkFormEvent() {
+  document.getElementById('close-work-form').addEventListener('click',
+    () => {
+      let formElement = document.getElementById("work-create-form");
+      formElement.style.display = "none";
+      location.reload();
+    });
+}
+
+function showWorkInputForm(isVisible) {
+  let formElement = document.getElementById("work-create-form");
+  if (isVisible) {
+    formElement.style.display = "block";
+  } else {
+    formElement.style.display = "none";
+  }
+}
+
+function getWorkFormData() {
+  let detailsElement = document.getElementById('work-details');
+  if (hasInvalidValue(detailsElement)) {
+    return null;
+  }
+
+  let idElement = document.getElementById('work-pin-id');
+  let pinId = parseInt(idElement.value);
+  if (isNaN(pinId)) {
+    return null;
+  }
+
+  idElement = document.getElementById('work-id');
+  let workId = parseInt(idElement.value);
+  if (isNaN(pinId)) {
+    workId = 0;
+  }
+
+  let selector = document.getElementById("work-department");
+  let selectedOption = selector.value;
+  const department = parseInt(separatedStringToArray(selectedOption)[0]);
+
+  selector = document.getElementById("work-status");
+  selectedOption = selector.value;
+  const status = parseInt(separatedStringToArray(selectedOption)[0]);
+
+  return JSON.stringify(new Work({
+    "id": workId,
+    "details": detailsElement.value,
+    "statusId": status,
+    "pinId": pinId,
+    "departmentId": department
+  }));
+}
+
+function createWork(message) {
+  postNewWork(message)
+    .then(response => {
+      alert(`Lucararea cu id "${response.data.id}" fost înregistrată.`);
       location.reload();
     })
     .catch(error => {
       console.log('error', error)
-      alert(`Marcajul cu numele "${pinName}" a fost șters. Te rugăm sa încerci din nou.`);
+      alert('Ceva nu a mers bine. Te rugăm să încerci din nou.');
     });
 }

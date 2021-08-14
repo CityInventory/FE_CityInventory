@@ -137,7 +137,7 @@ function getStatusSelect(statusList, selectedStatusId) {
 
   statusSelector.setAttribute("class","issue-status-form-selector btn btn-primary btn-default btn-primary-customization");
 
-  loadIssueStatusOptions(statusSelector, statusList, selectedStatusId);
+  loadInputFormOptions(statusSelector, statusList, selectedStatusId);
 
   statusSelector.addEventListener('change', (event) => {
     updateIssueStatus(event.target.value, issueView);
@@ -198,17 +198,17 @@ export async function getIssueStatusValues() {
   return await getAllStatuses();
 }
 
-export function loadIssueStatusOptions(parentSelectElement, statusList, selectedStatusId = 1) {
-  statusList.forEach(status => {
-    let option = document.createElement("option");
-    option.text = arrayToSeparatedString(status.id, status.name);
-    if (selectedStatusId == status.id)
-      option.selected = true;
-    parentSelectElement.add(option);
+//GENERIC FORM
+export function loadInputFormOptions(parentSelectElement, optionCollection, selectedId = 1) {
+  optionCollection.forEach(option => {
+    let optionElement = document.createElement("option");
+    optionElement.text = arrayToSeparatedString(option.id, option.name);
+    if (selectedId == option.id)
+      optionElement.selected = true;
+    parentSelectElement.add(optionElement);
   });
 }
 
-//GENERIC FORM
 export function addInputFieldValidations() {
   let targetedElements = document.getElementsByClassName("requires-validation");
   for (let element of targetedElements) {
@@ -227,4 +227,10 @@ export function setValidityStyle(element) {
   else {
     element.style.border = '1px solid black';
   }
+}
+
+export function setInputElementValue(elementId, value) {
+  let element = document.getElementById(elementId);
+  element.value = value;
+  setValidityStyle(element);
 }

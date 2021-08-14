@@ -1,19 +1,22 @@
 import {
   loadMap,
-  loadIssueStatusOptions,
+  loadInputFormOptions,
   initIssueTableFilters,
   getIssueStatusValues,
   setActiveFilterButton,
   setMapButtonStyle,
   getPinOptionsPopup,
-  addInputFieldValidations, setValidityStyle, hasInvalidValue
+  addInputFieldValidations,
+  setValidityStyle,
+  hasInvalidValue,
+  setInputElementValue
 } from './MapPageTemplate.js';
 import {getAllPins} from "./Services/PinService.js";
 import {postNewIssue} from "./Services/IssueService.js";
 import {separatedStringToArray} from "./Utils/StringOperations.js";
 import {Issue} from "./Models/Issue.js";
 
-var pageMap = L.map('mapid').setView([45.7489, 21.2087], 13);
+var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init());
 
 function init() {
@@ -24,7 +27,7 @@ function init() {
 
   getIssueStatusValues().then(statusList => {
     let issueStatusSelector = document.getElementById("issue-status-selector");
-    loadIssueStatusOptions(issueStatusSelector, statusList);
+    loadInputFormOptions(issueStatusSelector, statusList);
   });
 
   addIssueFormCreateEvent();
@@ -73,7 +76,7 @@ function getIssueCreateButton(pinId) {
   addIssueBtn.innerHTML = "Adaugă sesizare"
 
   addIssueBtn.addEventListener('click', () => {
-    document.getElementById('issue-form-pin-id').value = pinId;
+    setInputElementValue(issue-form-pin-id, pinId);
     showIssueInputForm();
   });
 
