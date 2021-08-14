@@ -51,39 +51,6 @@ class PAGESTEMPLATE {
       this.pinsTableBody.innerHTML += output;
     });
   }
-
-  //added by Ale
-  showWorks(worksArray) {
-    this.worksTableBody.innerHTML = '';
-    let output = '';
-    worksArray.forEach((work) => {
-      output = `
-            <tr>
-                <td>${work.pinId}</td>
-                <td>${work.statusId}</td>
-                <td>${work.details}</td>
-                <td class="btn-group">
-<!--                    <button id=${work.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
-<!--                    <button id=${work.id} type="button" class="btn btn-sm btn-round btn-fill btn-default table-btn">Șterge</button>-->
-                </td>
-            <tr>
-            `;
-      this.worksTableBody.innerHTML += output;
-    });
-  }
-
-
-  isAuthorized() {
-    var userName = getCookie(cookieName);
-    return (userName != null)
-  }
-
-  validateAuthorization() {
-    if (!this.isAuthorized()) {
-      alert("Nu ai acces la acest conținut. Loghează-te folosind butonul de 'Autentificare'")
-      window.location.href = "index.html";
-    }
-  }
 }
 
 export const pagestemplate = new PAGESTEMPLATE();

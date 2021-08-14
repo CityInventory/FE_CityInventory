@@ -24,6 +24,19 @@ import {
 } from "./Services/WorkService.js";
 import {WorkFromWorkView} from "./Models/Work.js";
 
+// AUTHORIZATION
+export function isAuthorized() {
+  var userName = getCookie(cookieName);
+  return (userName != null)
+}
+
+export function validateAuthorization(refusalCallback = ()=>{} ) {
+  if (!isAuthorized()) {
+    alert("Trebuie să fii autentificat pentru a putea accesa acest conținut.");
+    refusalCallback();
+  }
+}
+
 // MAP FUNCTIONS
 export function loadMap(mapToLoad) {
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {

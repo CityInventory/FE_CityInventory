@@ -1,4 +1,3 @@
-import {pagestemplate} from './pages-template.js';
 import {
   showAllPins
 } from './filters.js';
@@ -12,8 +11,9 @@ import {
   hasInvalidValue,
   loadInputFormOptions,
   setInputElementValue,
-  showAllWorks
-} from './MapPageTemplate.js';
+  showAllWorks,
+  validateAuthorization
+} from './map-page-template.js';
 import {
   deletePin,
   getAllPins,
@@ -35,7 +35,7 @@ var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init());
 
 function init() {
-  pagestemplate.validateAuthorization();
+  validateAuthorization(() => { window.location.href = "index.html"; } );
 
   loadMap(pageMap);
   loadMapPins();

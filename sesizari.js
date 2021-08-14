@@ -8,8 +8,9 @@ import {
   addInputFieldValidations,
   setValidityStyle,
   hasInvalidValue,
-  setInputElementValue
-} from './MapPageTemplate.js';
+  setInputElementValue,
+  isAuthorized
+} from './map-page-template.js';
 import {getAllPins} from "./Services/PinService.js";
 import {postNewIssue} from "./Services/IssueService.js";
 import {separatedStringToArray} from "./Utils/StringOperations.js";
@@ -76,8 +77,12 @@ function getIssueCreateButton(pinId) {
   addIssueBtn.innerHTML = "Adaugă sesizare"
 
   addIssueBtn.addEventListener('click', () => {
-    setInputElementValue(issue-form-pin-id, pinId);
-    showIssueInputForm();
+    if(isAuthorized()) {
+      setInputElementValue(issue - form - pin - id, pinId);
+      showIssueInputForm();
+    } else {
+      alert("Doar utilizatorii autentificați pot adăuga sesizări.")
+    }
   });
 
   return addIssueBtn;
