@@ -78,7 +78,7 @@ function getIssueCreateButton(pinId) {
 
   addIssueBtn.addEventListener('click', () => {
     if(isAuthorized()) {
-      setInputElementValue(issue - form - pin - id, pinId);
+      setInputElementValue("issue-form-pin-id", pinId);
       showIssueInputForm();
     } else {
       alert("Doar utilizatorii autentificați pot adăuga sesizări.")
