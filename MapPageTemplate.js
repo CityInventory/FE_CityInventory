@@ -15,6 +15,14 @@ import {
   arrayToSeparatedString,
   separatedStringToArray
 } from "./Utils/StringOperations.js";
+import {getAllDepartments} from "./Services/DepartmentService.js";
+import {getWorkViewArray} from "./Models/WorkView.js";
+import {
+  deleteWork,
+  getAllWorks,
+  putWork
+} from "./Services/WorkService.js";
+import {WorkFromWorkView} from "./Models/Work.js";
 
 // MAP FUNCTIONS
 export function loadMap(mapToLoad) {
@@ -105,15 +113,23 @@ async function showIssues(issuesViewArray) {
   let issuesTableBody = document.getElementById('issuesTableBody');
   issuesTableBody.innerHTML = '';
 
-  let statusList = await getIssueStatusValues();
+  let statusList = await getAllStatuses();
   issuesViewArray.forEach((issueView) => {
     let row = document.createElement("tr");
 
     let statusCell = document.createElement("td");
-    statusCell.append(getStatusSelect(statusList, issueView.statusId));
+    statusCell.append(getSelectElementInTable(statusList, issueView.statusId, (event) => {
+      updateIssueStatus(event.target.value, issueView);
+    }));
 
     let optionsCell = document.createElement("td");
-    optionsCell.append(getRemoveIssueButton(issueView.issueId, row));
+    optionsCell.append(getRemoveButtonInTable(row, () => {
+      removeIssue(issueView.issueId, (operationSucceeded) => {
+        if (operationSucceeded) {
+          row.remove();
+        }
+      })
+    }));
 
     row.append(getTableCellWithContent(issueView.issueId));
     row.append(getTableCellWithContent(issueView.pinName));
@@ -130,37 +146,6 @@ function getTableCellWithContent(content) {
   let newCell = document.createElement("td");
   newCell.innerHTML = content;
   return newCell;
-}
-
-function getStatusSelect(statusList, selectedStatusId) {
-  let statusSelector = document.createElement("select")
-
-  statusSelector.setAttribute("class","issue-status-form-selector btn btn-primary btn-default btn-primary-customization");
-
-  loadInputFormOptions(statusSelector, statusList, selectedStatusId);
-
-  statusSelector.addEventListener('change', (event) => {
-    updateIssueStatus(event.target.value, issueView);
-  });
-
-  return statusSelector;
-}
-
-function getRemoveIssueButton(issueId, tableRow) {
-  let removeButton = document.createElement("button");
-
-  removeButton.setAttribute("class", "btn btn-sm btn-round btn-primary table-btn btn-primary-customization");
-  removeButton.innerHTML = "Șterge";
-
-  removeButton.addEventListener('click', () => {
-    removeIssue(issueId, (operationSucceeded) => {
-      if (operationSucceeded) {
-        tableRow.remove();
-      }
-    })
-  });
-
-  return removeButton;
 }
 
 function updateIssueStatus(selectValue, issueView) {
@@ -193,9 +178,118 @@ function updateIssue(message) {
     });
 }
 
-// ISSUES TABLE + ISSUES INPUT FORM
-export async function getIssueStatusValues() {
-  return await getAllStatuses();
+// WORKS TABLE
+export function showAllWorks(customStyles = () => {}) {
+  getAllWorksView().then(worksList => showStyledWorks(worksList, customStyles));
+}
+
+async function getAllWorksView() {
+  let values = await Promise.all([getAllWorks(), getAllPins(), getAllStatuses(), getAllDepartments()]);
+  return getWorkViewArray(values[0], values[1], values[2], values[3]);
+}
+
+async function showStyledWorks(workList, customStyles) {
+  await showWorks(workList);
+  customStyles();
+}
+
+async function showWorks(workViewArray) {
+  let tableBody = document.getElementById('works-table-body');
+  tableBody.innerHTML = '';
+
+  let statusList = await getAllStatuses();
+  let departmentList = await getAllDepartments();
+  workViewArray.forEach((workView) => {
+    let row = document.createElement("tr");
+
+    let statusCell = document.createElement("td");
+    statusCell.append(getSelectElementInTable(statusList, workView.statusId, (event) => {
+      updateWorkStatus(event.target.value, workView);
+    }));
+
+    let departmentCell = document.createElement("td");
+    departmentCell.append(getSelectElementInTable(departmentList, workView.departmentId, (event) => {
+      updateWorkDepartment(event.target.value, workView);
+    }));
+
+    let optionsCell = document.createElement("td");
+    optionsCell.append(getRemoveButtonInTable(row, () => {
+      removeWork(workView.id, (operationSucceeded) => {
+        if (operationSucceeded) {
+          row.remove();
+        }
+      })
+    }));
+
+    row.append(getTableCellWithContent(workView.id));
+    row.append(getTableCellWithContent(workView.pinName));
+    row.append(getTableCellWithContent(workView.details));
+    row.append(statusCell)
+    row.append(departmentCell)
+    row.append(optionsCell)
+
+    tableBody.append(row);
+  });
+}
+
+function removeWork(workId, callback) {
+  deleteWork(workId)
+    .then(_ => {
+      alert(`Lucrarea cu numărul "${workId}" a fost ștearsă.`);
+      callback(true);
+    })
+    .catch(error => {
+      console.log('error', error)
+      alert(`Lucrarea cu numărul "${workId}" nu a fost ștearsă. Te rugăm să încerci din nou.`);
+      callback(false);
+    });
+}
+
+function updateWorkStatus(selectValue, workView) {
+  workView.statusId = separatedStringToArray(selectValue)[0];
+  let newWork = new WorkFromWorkView(workView);
+  updateWork(JSON.stringify(newWork));
+}
+
+function updateWorkDepartment(selectValue, workView) {
+  workView.departmentId = separatedStringToArray(selectValue)[0];
+  let newWork = new WorkFromWorkView(workView);
+  updateWork(JSON.stringify(newWork));
+}
+
+function updateWork(message) {
+  putWork(message)
+    .then(result => {
+      alert(`Lucrarea cu numărul "${result.data.id}" a fost modificată.`);
+    })
+    .catch(error => {
+      console.log('error', error)
+      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+    });
+}
+
+//GENERIC TABLE
+function getSelectElementInTable(optionsList, selectedOptionId, selectCallback) {
+  let selector = document.createElement("select")
+
+  selector.setAttribute("class","selector-in-table btn btn-primary btn-default btn-primary-customization");
+
+  loadInputFormOptions(selector, optionsList, selectedOptionId);
+
+  selector.addEventListener('change', selectCallback);
+
+  return selector;
+}
+
+function getRemoveButtonInTable(tableRow, clickCallback) {
+  let removeButton = document.createElement("button");
+
+  removeButton.setAttribute("class", "btn btn-sm btn-round btn-primary table-btn btn-primary-customization");
+  removeButton.innerHTML = "Șterge";
+
+  removeButton.addEventListener('click', clickCallback);
+
+  return removeButton;
 }
 
 //GENERIC FORM

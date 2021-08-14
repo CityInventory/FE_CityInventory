@@ -2,7 +2,6 @@ import {
   loadMap,
   loadInputFormOptions,
   initIssueTableFilters,
-  getIssueStatusValues,
   setActiveFilterButton,
   setMapButtonStyle,
   getPinOptionsPopup,
@@ -15,6 +14,7 @@ import {getAllPins} from "./Services/PinService.js";
 import {postNewIssue} from "./Services/IssueService.js";
 import {separatedStringToArray} from "./Utils/StringOperations.js";
 import {Issue} from "./Models/Issue.js";
+import {getAllStatuses} from "./Services/StatusService.js";
 
 var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init());
@@ -25,7 +25,7 @@ function init() {
 
   initIssueTableFilters(disableIssueStatusSelectors);
 
-  getIssueStatusValues().then(statusList => {
+  getAllStatuses().then(statusList => {
     let issueStatusSelector = document.getElementById("issue-status-selector");
     loadInputFormOptions(issueStatusSelector, statusList);
   });
@@ -85,7 +85,7 @@ function getIssueCreateButton(pinId) {
 
 // ISSUES TABLE
 function disableIssueStatusSelectors() {
-  let selectors = document.getElementsByClassName('issue-status-form-selector');
+  let selectors = document.getElementsByClassName('selector-in-table');
   for (let element of selectors) {
     element.disabled = true;
   }
