@@ -27,172 +27,34 @@
 }
 
 .options-btn {
-    display: block;
-    margin-top: 0.5em;
-    min-width: 10em;
-    color: white;
+  display: block;
+  margin-top: 0.5em;
+  min-width: 10em;
+  color: white;
 }
 
 #issueList {
-    display: none;
-    margin: 1em;
-}
-
-/* Homepage */
-
-.homepage-container {
-	display: flex;
-	flex-direction: row-reverse;
-  background-color: white;
-}
-
-/* Video Timisoara - Homepage */
-
-#about-Timisoara {
-  display: flex;
-  margin: 10px;
-  align-items: center;
-}
-
-.text-Timisoara {
-  margin-left: 20px;
-  text-align: justify;
+  display: none;
+  margin: 1em;
 }
 
 /* Ultimele sesizari - Homepage */
 
 .dot1, .dot2, .dot3 {
-    cursor:pointer;
-    height: 13px;
-    width: 13px;
-    margin:2px;
-    background-color: black;
-    border-radius: 50%;
-    transition: background-color 0.6s ease;
-}
-
-#issues-home-list {
-    width: 500px;
-    height: 300px;
-    margin: 20px;
-}
-
-#banner {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-  background-size: cover ;
+  cursor: pointer;
+  height: 13px;
+  width: 13px;
+  margin: 2px;
+  background-color: black;
+  border-radius: 50%;
+  transition: background-color 0.6s ease;
 }
 
 .card-contor {
-	list-style: none;
-	margin-top: 10px;
+  list-style: none;
+  margin-top: 10px;
 }
 
-/* Carousel - Homepage */
-
-.container-carousel {
-	margin: 4% auto;
-	width: 210px;
-	height: 200px;
-	position: relative;
-	perspective: 1000px;
-}
-
-	@keyframes typing {
-		from {width:0} to {width: 100%;}
-	}
-	@keyframes blink-caret {
-		from, to {border-color:transparent}
-		50% {border-color:white}
-	}
-
-
-#carousel {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	transform-style: preserve-3d;
-	animation: rotation 20s infinite linear;
-}
-
-#carousel:hover {
-	animation-play-state: paused;
-}
-
-#carousel figure {
-	display: block;
-	position: absolute;
-	width: 186px;
-	height: 116px;
-	left: 10px;
-	top: 10px;
-	background: black;
-	overflow: hidden;
-	border: solid 5px black;
-}
-
-#carousel figure:nth-child(1){transform: rotateY(0deg) translateZ(288px);}
-#carousel figure:nth-child(2) { transform: rotateY(40deg) translateZ(288px);}
-#carousel figure:nth-child(3) { transform: rotateY(80deg) translateZ(288px);}
-#carousel figure:nth-child(4) { transform: rotateY(120deg) translateZ(288px);}
-#carousel figure:nth-child(5) { transform: rotateY(160deg) translateZ(288px);}
-#carousel figure:nth-child(6) { transform: rotateY(200deg) translateZ(288px);}
-#carousel figure:nth-child(7) { transform: rotateY(240deg) translateZ(288px);}
-#carousel figure:nth-child(8) { transform: rotateY(280deg) translateZ(288px);}
-#carousel figure:nth-child(9) { transform: rotateY(320deg) translateZ(288px);}
-
-.carousel-img {
-	-webkit-filter: sepia(1);
-	cursor: pointer;
-	transition: all .5s ease;
-}
-
-.carousel-img:hover {
-	-webkit-filter: sepia(0);
-  transform: scale(1.2,1.2);
-}
-
-@keyframes rotation{
-	from{
-		transform: rotateY(0deg);
-	}
-	to{
-		transform: rotateY(360deg);
-	}
-}
-
-@media (max-width: 980px){
-    .homepage-container {
-        flex-direction: column;
-		align-items: center;
-    }
-}
-@media (max-width: 600px){
-    #video video{
-		width: 420px;
-		height: 340px;
-	}
-}
-@media (max-width: 560px){
-	#issues-home-list {
-		width: 300px;
-		height: 200px;
-	}
-	#news{
-		width: 400px;
-	}
-	#carousel figure{
-		width: 90px;
-		height: 70px;
-	}
-}
-@media (max-width: 460px){
-    #video video{
-		width: 320px;
-		height: 240px;
-	}
-}
 
 /* Help */
 
@@ -202,7 +64,7 @@
 
 /* FAQ */
 
-.faq-header{
+.faq-header {
   font-size: 42px;
   border-bottom: 1px dotted #ccc;
   padding: 24px;
@@ -242,7 +104,7 @@
   transition: .4s ease;
 }
 
-.panel:checked ~ .panel-content{
+.panel:checked ~ .panel-content {
   height: auto;
   opacity: 1;
   padding: 14px;
@@ -284,7 +146,7 @@
 }
 
 .details-body {
-  background:url('/assets/img/Old_document.jpg') center no-repeat;
+  background: url('/assets/img/Old_document.jpg') center no-repeat;
   background-size: 100% 100%;
 }
 
@@ -305,7 +167,7 @@
   display: none;
 }
 
-.btn-primary-customization{
+.btn-primary-customization {
   color: #202020;
   border-width: thin;
 }
