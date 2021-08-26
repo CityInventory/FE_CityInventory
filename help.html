@@ -34,7 +34,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
     <script src="https://apis.google.com/js/api:client.js"></script>
     <link href="auth.css" rel="stylesheet" />
-    <link href="style_help.css" rel="stylesheet">
+    <link href="help.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
  </head>
 
@@ -116,69 +116,71 @@
             <div class="content">
                 <div class="container-fluid">
                     <div class="row">
-                        <!-- <div class="col-md-12">
-                            <div class="card">
-                                    <div class="card-header">
-                                        <h2 class="card-title">Ora locală este:</h2>
-                                        <div id="clock"></div>
-                                        <img class="img-clock-background" src="/images/clock.jpg">
-                                    </div>
-                            </div>
-                        </div> -->
-                        <div class="column">
-                            <h2>
-                                <i class="nc-icon nc-zoom-split"></i> Cum se face o sesizare?
-                             </h2>
-                            <div class="cardhelp">
-                                <div id="video">
-                                    <video width="520" height="440" controls autoplay muted>
-                                        <source src="assets/City Inventory - Google Chrome 2021-07-11 16-08-46.mp4" type="video/mp4">
-                                    </video>
-                                </div>
-                                <div class="instructions">
-                                    <ul class="blockquote blockquote-primary">
-                                       <li>Loghează-te folosind butonul <span id="help-auth">“Autentificare cu Google"</span>;</li>
-                                       <li>Accesează ramura “Sesizări”;</li>
-                                       <li>Selectează marcajul pentru care dorești să faci sesizarea. În fereastra marcajului selectează “Adaugă sesizare”;</li>
-                                       <li>In formularul de sub hartă completează câmpul "Descriere sesizare"(informațiile trebuie să fie cât mai complete);</li>
-                                       <li>Apasă butonul "Trimite". Vei primi un mesaj de confirmare;</li>
-                                       <li>Pentru a vizualiza sesizarea trimisă: click pe marcajul de pe hartă, apoi click pe "Listă sesizări". Aceasta va apărea în lista de sesizari de sub hartă.</li>
-                                       <li><a href="sesizari.html#issueList">Spre sesizări</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <!-- FAQ Section -->
+                      <div class="col-md-12">
+                        <div class="card">
+                          <div class="card-body">
+
                             <div class="faq-header">Întrebări frecvente</div>
-                                <div class="faq-content">
-                                    <div class="faq-question">
-                                        <input id="q1" type="checkbox" class="panel">
-                                        <div class="plus">+</div>
-                                        <label for="q1" class="panel-title">De ce nu pot adăuga un marcaj nou</label>
-                                        <div class="panel-content">Adăugarea unui marcaj poate fi efectuata doar de către persoanele autorizate din cardul Consiliului Judetean Timiș.</div>
-                                    </div>
-                                    <div class="faq-question">
-                                        <input id="q2" type="checkbox" class="panel">
-                                        <div class="plus">+</div>
-                                        <label for="q2" class="panel-title">Ce se intampla daca ma autentific?</label>
-                                        <div class="panel-content">Daca te autentifici, ai posibilitatea de a crea o sesizare noua.</div>
-                                    </div>
-                                    <div class="faq-question">
-                                        <input id="q3" type="checkbox" class="panel">
-                                        <div class="plus">+</div>
-                                        <label for="q3" class="panel-title">Cum adaug o sesizare?</label>
-                                        <div class="panel-content">Vizionand simularea din video si urmand pasii descrisi mai sus.</div>
-                                    </div>
-                                    <div class="faq-question">
-                                        <input id="q4" type="checkbox" class="panel">
-                                        <div class="plus">+</div>
-                                        <label for="q4" class="panel-title">Cat timp dureaza pana se vizualizeaza sesizarile, respectiv se vor lua masuri in ceea ce le priveste?</label>
-                                        <div class="panel-content">Depinde de sesizare. Fiecare problema raportata va fi analizata de catre functionarii din cadrul Consiliului Judetean, iar ulterior se va trece la actiunea necesara pentru a putea fi finalizata.</div>
-                                    </div>
+                            <div class="faq-content">
+                              <div class="faq-question">
+                                <input class="panel" id="q1" type="checkbox">
+                                <div class="plus">+</div>
+                                <label for="q1" class="panel-title">De ce nu pot adăuga un marcaj nou </label>
+                                <div class="panel-content">Adăugarea unui marcaj poate fi efectuata doar de către persoanele autorizate din cardul Consiliului Judetean Timiș.</div>
+                              </div>
+                              <div class="faq-question">
+                                <input class="panel" id="q2" type="checkbox">
+                                <div class="plus">+</div>
+                                <label for="q2" class="panel-title">De ce nu pot adăuga un marcaj nou </label>
+                                <div class="panel-content">Adăugarea unui marcaj poate fi efectuata doar de către persoanele autorizate din cardul Consiliului Judetean Timiș.</div>
+                              </div>
+                              <div class="faq-question">
+                                <input id="q3" type="checkbox" class="panel">
+                                <div class="plus">+</div>
+                                <label for="q3" class="panel-title">Ce se intampla daca ma autentific?</label>
+                                <div class="panel-content">Daca te autentifici, ai posibilitatea de a crea o sesizare noua.</div>
+                              </div>
+                              <div class="faq-question">
+                                <input id="q4" type="checkbox" class="panel">
+                                <div class="plus">+</div>
+                                <label for="q4" class="panel-title">Cum adaug o sesizare?</label>
+                                <div class="panel-content">
+                                  <div class="grid-media-container">
+                                    <span>
+                                      <video controls autoplay muted>
+                                        <source src="assets/City Inventory - Google Chrome 2021-07-11 16-08-46.mp4" type="video/mp4">
+                                      </video>
+                                    </span>
+                                    <span>
+                                      <ul class="blockquote blockquote-primary">
+                                        <li>Loghează-te folosind butonul <span id="help-auth">“Autentificare cu Google"</span>;</li>
+                                        <li>Accesează ramura “Sesizări”;</li>
+                                        <li>Selectează marcajul pentru care dorești să faci sesizarea. În fereastra marcajului selectează “Adaugă sesizare”;</li>
+                                        <li>In formularul de sub hartă completează câmpul "Descriere sesizare"(informațiile trebuie să fie cât mai complete);</li>
+                                        <li>Apasă butonul "Trimite". Vei primi un mesaj de confirmare;</li>
+                                        <li>Pentru a vizualiza sesizarea trimisă: click pe marcajul de pe hartă, apoi click pe "Listă sesizări". Aceasta va apărea în lista de sesizari de sub hartă.</li>
+                                        <li><a href="sesizari.html#issueList">Spre sesizări</a></li>
+                                      </ul>
+                                    </span>
+                                  </div>
                                 </div>
+                              </div>
+                              <div class="faq-question">
+                                <input id="q5" type="checkbox" class="panel">
+                                <div class="plus">+</div>
+                                <label for="q5" class="panel-title">Cat timp dureaza pana se vizualizeaza sesizarile, respectiv se vor lua masuri in ceea ce le priveste?</label>
+                                <div class="panel-content">Depinde de sesizare. Fiecare problema raportata va fi analizata de catre functionarii din cadrul Consiliului Judetean, iar ulterior se va trece la actiunea necesara pentru a putea fi finalizata.</div>
+                              </div>
+                            </div>
+
+                          </div>
                         </div>
+                      </div>
+
                     </div>
                 </div>
             </div>
+
             <footer class="footer">
                 <div class="container-fluid">
                     <nav>
