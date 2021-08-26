@@ -1,19 +1,24 @@
-import { pagestemplate } from './pages-template.js';
+import {getPinsById} from "./Services/PinService.js";
 
-window.onload = () => {
+window.addEventListener('load', init);
+
+function init() {
 	if (window.location.search !== '') {
 		const id = window.location.search.split('=')[1];
-        console.log("found id="+id);
-        fetch("https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/"+id, {
-            method: 'GET',
-            redirect: 'follow'
-        })
-        .then(response => response.json())
-        .then(results=> {
-            console.log(results.data);
-            pagestemplate.showPinDetails(results.data)
-        })
-        .catch(error => console.log('error', error));        
+    getPinsById(id)
+    .then(results=> {
+        showPinDetails(results.data)
+    })
+    .catch(error => console.log('error', error));
 	}
+}
+
+function showPinDetails(pin) {
+  let output = '';
+  output += `
+        <h2 class="card-title1">${pin.name}</h2>
+        <h5 class="card-description">${pin.description}</h5>
+    `;
+  document.getElementById('pinDetails').innerHTML = output;
 }
 
