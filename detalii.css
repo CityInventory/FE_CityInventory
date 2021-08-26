@@ -1,0 +1,15 @@
+.details-body {
+  background: url('/assets/img/Old_document.jpg') center no-repeat;
+  background-size: 100% 100%;
+}
+
+#pinDetails {
+  padding: 100px;
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .details-body {
+    background: none;
+  }
+}
