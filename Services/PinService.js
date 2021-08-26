@@ -1,5 +1,20 @@
 import { Pin } from "../Models/Pin.js";
 
+export function getPinsById(pinId) {
+  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/" + pinId;
+  return getSingle(url);
+}
+
+async function getSingle(url) {
+  const response = await fetch(url,
+    {
+      method: 'GET',
+      redirect: 'follow'
+    });
+
+  return await response.json();
+}
+
 export function getPinsByType(pinTypeId) {
     let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/type/" + pinTypeId;
     return getMultiple(url);

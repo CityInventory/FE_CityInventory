@@ -1,7 +1,4 @@
 import {
-  showAllPins
-} from './filters.js';
-import {
   loadMap,
   initIssueTableFilters,
   setActiveFilterButton,
@@ -30,9 +27,10 @@ import {Pin} from "./Models/Pin.js";
 import {Work} from "./Models/Work.js";
 import {postNewWork} from "./Services/WorkService.js";
 import {getAllStatuses} from "./Services/StatusService.js";
+import {getPinViewArray} from "./Models/PinView.js";
 
 var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
-window.addEventListener('load', init());
+window.addEventListener('load', init);
 
 function init() {
   validateAuthorization(() => { window.location.href = "index.html"; } );
@@ -245,6 +243,36 @@ function showWorksTable() {
 function hideWorksTable() {
   const worksList = document.getElementById('worksList');
   worksList.style.display = "none";
+}
+
+async function showAllPins() {
+  let values = await Promise.all([getAllPins(), getAllPinTypes()]);
+  let pinViewCollection = getPinViewArray(values[0], values[1]);
+  showPins(pinViewCollection);
+}
+
+function showPins(pinsArray) {
+  let output = '';
+  let pinsTableBody = document.getElementById('pinsTableBody');
+  pinsTableBody.innerHTML = output;
+  pinsArray.forEach((pin) => {
+    output = `
+            <tr>
+                <td>${pin.id}</td>
+                <td>${pin.pinTypeName}</td>
+                <td>${pin.name}</td>
+                <td class="btn-group">
+                    <button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'"
+                    class="btn btn-sm btn-round btn-primary table-btn btn-primary-customization">
+                        Detalii
+                    </button>
+<!--                    <button id=${pin.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
+<!--                    <button id=${pin.id} type="button" class="btn btn-sm btn-round btn-fill btn-default table-btn">Șterge</button>-->
+                </td>
+            <tr>
+        `;
+    pinsTableBody.innerHTML += output;
+  });
 }
 
 //PIN EDITOR FORM
