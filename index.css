@@ -1,18 +1,6 @@
-.presentation-timisoara, .issue-statistics {
-  display: grid;
-  grid-gap: 1em;
-  align-items: start;
-  justify-items: start;
-  grid-template-columns: 1fr 2fr;
-}
-
-.presentation-timisoara h2 {
+.grid-media-container h2 {
   margin-top: 0;
   padding-top: 0;
-}
-
-.presentation-timisoara video {
-  max-width: 500px;
 }
 
 #donutchart {
@@ -142,14 +130,6 @@
 /* Responsive settings*/
 
 @media (max-width: 1100px) {
-  .presentation-timisoara, .issue-statistics {
-    grid-template-columns: 1fr;
-  }
-
-  .presentation-timisoara video {
-    max-width: 500px;
-  }
-
   .latest-issues {
     margin-left: 50px;
   }
@@ -162,17 +142,7 @@
 }
 
 @media (max-width: 600px) {
-  .presentation-timisoara video {
-    max-width: 300px;
-  }
-
   #donutchart {
-    display: none;
-  }
-}
-
-@media (max-width: 400px) {
-  .presentation-timisoara video {
     display: none;
   }
 }
