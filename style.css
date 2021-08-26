@@ -55,25 +55,6 @@
   margin-top: 10px;
 }
 
-/* Details */
-.details-card {
-  height: 85%;
-}
-
-.details-body {
-  background: url('/assets/img/Old_document.jpg') center no-repeat;
-  background-size: 100% 100%;
-}
-
-#pinDetails {
-  padding: 100px;
-  text-align: center;
-}
-
-.details-buttons {
-  float: right;
-}
-
 .table-btn {
   margin-right: 0.5em;
 }
