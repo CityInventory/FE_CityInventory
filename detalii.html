@@ -93,7 +93,7 @@ Tip 2: you can also add an image using data-image tag
                 <span class="no-icon" id="user-name"></span>
               </a>
               <a class="nav-link">
-                <span class="no-icon" id="logoutBtn" onclick="signOut();">Deconectare</span>
+                <span class="no-icon" id="logoutBtn"">Deconectare</span>
               </a>
             </li>
           </ul>
@@ -148,9 +148,14 @@ Tip 2: you can also add an image using data-image tag
 <!-- Google login -->
 <script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
-<script src="auth.js"></script>
+<script src="auth.js" type='module'></script>
+<script src='Models/Token.js' type='module'></script>
+<script src='Models/Userdata.js' type='module'></script>
+<script src='Services/AuthService.js' type='module'></script>    
 <script src="clock.js"></script>
 <script src="detalii.js" type="module"></script>
 <script src='Services/PinService.js' type='module'></script>
+<script src='Utils/Resources.js' type='module'></script>
+<script src='Utils/Memory.js' type='module'></script>
 </body>
 </html>

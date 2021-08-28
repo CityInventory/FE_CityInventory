@@ -22,12 +22,13 @@ import {
   getAllWorks,
   putWork
 } from "./Services/WorkService.js";
-import {WorkFromWorkView} from "./Models/Work.js";
+import { WorkFromWorkView } from "./Models/Work.js";
+import { getUserData } from "./Utils/Memory.js";
 
 // AUTHORIZATION
 export function isAuthorized() {
-  var userName = getCookie(cookieName);
-  return (userName != null)
+  let token = getUserData();
+  return (token != null)
 }
 
 export function validateAuthorization(refusalCallback = ()=>{} ) {

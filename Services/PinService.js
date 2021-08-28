@@ -1,7 +1,9 @@
 import { Pin } from "../Models/Pin.js";
+import { BACKEND_SERVER } from "../Utils/Resources.js";
+import { getUserData } from "../Utils/Memory.js";
 
 export function getPinsById(pinId) {
-  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/" + pinId;
+  let url = `${BACKEND_SERVER}/Pins/${pinId}`;
   return getSingle(url);
 }
 
@@ -16,12 +18,12 @@ async function getSingle(url) {
 }
 
 export function getPinsByType(pinTypeId) {
-    let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/type/" + pinTypeId;
+    let url = `${BACKEND_SERVER}/Pins/type/${pinTypeId}`;
     return getMultiple(url);
 }
 
 export function getAllPins() {
-    let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins";
+    let url = `${BACKEND_SERVER}/Pins`;
     return getMultiple(url);
 }
 
@@ -37,11 +39,12 @@ async function getMultiple(url) {
 }
 
 export async function postNewPin(message) {
-  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/";
+  let url = `${BACKEND_SERVER}/Pins/`;
 
   let requestOptions = {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${getUserData().key}`,          
       "Content-Type": "text/json"
     },
     mode: 'cors',
@@ -54,11 +57,12 @@ export async function postNewPin(message) {
 
 export async function putPin(message) {
   let idPin = JSON.parse(message).id;
-  let url = `https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/${idPin}`;
+  let url = `${BACKEND_SERVER}/Pins/${idPin}`;
 
   let requestOptions = {
     method: 'PUT',
     headers: {
+      'Authorization': `Bearer ${getUserData().key}`,          
       "Content-Type": "text/json"
     },
     mode: 'cors',
@@ -70,10 +74,13 @@ export async function putPin(message) {
 }
 
 export async function deletePin(id) {
-  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Pins/" + id;
+  let url = `${BACKEND_SERVER}/Pins/${id}`;
 
   let requestOptions = {
     method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${getUserData().key}`,          
+    },    
     redirect: 'follow',
     mode: 'cors'
   };

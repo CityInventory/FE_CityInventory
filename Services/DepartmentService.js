@@ -1,7 +1,8 @@
-import { Department } from "../Models/Department.js"
+import { Department } from "../Models/Department.js";
+import { BACKEND_SERVER } from "../Utils/Resources.js";
 
 export function getAllDepartments() {
-  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Departments";
+  let url = `${BACKEND_SERVER}/Departments`;
   return getMultiple(url);
 }
 

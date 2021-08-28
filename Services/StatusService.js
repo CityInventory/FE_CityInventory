@@ -1,7 +1,8 @@
 import { Status } from "../Models/Status.js";
+import { BACKEND_SERVER } from "../Utils/Resources.js";
 
 export function getAllStatuses() {
-    let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/Status";
+    let url = `${BACKEND_SERVER}/Status`;
     return getMultiple(url);
 }
 

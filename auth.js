@@ -1,23 +1,39 @@
-var googleUser = {};
-const cookieName = "username";
-var startApp = function() {
+import {
+  IdToken
+} from "./Models/Token.js";
+import { User } from "./Models/Userdata.js";
+import { postNewToken } from "./Services/AuthService.js"
+import {
+  getUserData,
+  saveUserData,
+  removeUserData
+} from "./Utils/Memory.js";
+
+function startApp() { 
   gapi.load('auth2', function(){
-    // Retrieve the singleton for the GoogleAuth library and set up the client.
-    auth2 = gapi.auth2.init({
+    let auth2 = gapi.auth2.init({
       client_id: '374800921348-2hhko2o7c8iufbp4h4qbpfv7km771qjt.apps.googleusercontent.com',
       cookiepolicy: 'single_host_origin',
-      // Request scopes in addition to 'profile' and 'email'
-      //scope: 'additional_scope'
     });
-    attachSignin(document.getElementById('loginBtn'));
+    attachSignin(auth2, document.getElementById('loginBtn'));
+    document.getElementById("logoutBtn").addEventListener('click', signOutAndRefresh);
   });
+
+  let user = getUserData();
+  if(user != null){
+      setUserNameLabel(user.name);
+      loginVisibility(true);
+  } else {
+      loginVisibility(false);
+  }
 };
+
 
 function setUserNameLabel(userName) {
     document.getElementById('user-name').innerText = userName;
 }
 
-function attachSignin(element) {
+function attachSignin(auth2, element) {
   auth2.attachClickHandler(element, {},
       function(googleUser) {
         signIn(googleUser);
@@ -27,9 +43,9 @@ function attachSignin(element) {
 }
 
 function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
+    let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-        removeCookie(cookieName);
+        removeUserData();
         setUserNameLabel('');
         loginVisibility(false);
     });
@@ -41,22 +57,24 @@ function signOutAndRefresh() {
 }
 
 function signIn(googleUser) {
-    var id_token = googleUser.getAuthResponse().id_token;
-    var userName =  googleUser.getBasicProfile().getName();
-    let daysToExpiration = 30;
-    setCookie(cookieName, userName, daysToExpiration);
-    setUserNameLabel(userName);
-    loginVisibility(true);
-}
+  let token = new IdToken(googleUser.getAuthResponse().id_token);
+  postNewToken(JSON.stringify(token))
+    .then(result => {
+      
+      let userName = googleUser.getBasicProfile().getName();
+      let user = new User(userName, result.authToken);
+      let daysToExpiration = 30;
+      saveUserData(JSON.stringify(user), daysToExpiration);
 
-startApp();
-    var userName = getCookie(cookieName);
-    if(userName != null){
-        setUserNameLabel(userName);
-        loginVisibility(true);
-    } else {
-        loginVisibility(false);
-    }
+      setUserNameLabel(userName);
+      
+      loginVisibility(true);
+      
+    }).catch(error => {
+      console.log(error);
+      alert(`Autentificare eșuată.`);
+    });
+}
 
 function loginVisibility(isLoggedIn) {
     if (isLoggedIn) {
@@ -68,36 +86,5 @@ function loginVisibility(isLoggedIn) {
     }
 }
 
-function setCookie(cookieName, value="", expirationDays=-1) {
-  let newDate = new Date('01 Jan 1970');
-  if (expirationDays >= 0) {
-    newDate = new Date();
-    newDate.setTime(newDate.getTime() + convertDaysToMiliseconds(expirationDays));
-  }
-  let expires = "expires="+ newDate.toUTCString();
-  document.cookie =cookieName + "=" + value + ";" + expires + ";path=/";
-}
+startApp();
 
-function convertDaysToMiliseconds (numberOfDays) {
-      return (numberOfDays*24*60*60*1000);
-}
-
-function getCookie(cookieName) {
-  let name = cookieName + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let cookieArray = decodedCookie.split(';');
-  for(let i = 0; i <cookieArray.length; i++) {
-    let cookie = cookieArray[i];
-    while (cookie.charAt(0) == ' ') {
-      cookie = cookie.substring(1);
-    }
-    if (cookie.indexOf(name) == 0) {
-      return cookie.substring(name.length, cookie.length);
-    }
-  }
-  return null;
-}
-
-function removeCookie (cookieName) {
-  setCookie(cookieName);
-}
