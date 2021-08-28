@@ -1,7 +1,8 @@
-import {PinType} from "../Models/PinType.js";
+import { PinType } from "../Models/PinType.js";
+import { BACKEND_SERVER } from "../Utils/Resources.js";
 
 export function getAllPinTypes() {
-  let url = "https://92xjz4ismg.eu-west-1.awsapprunner.com/PinTypes";
+  let url = `${BACKEND_SERVER}/PinTypes`;
   return getMultiple(url);
 }
 
