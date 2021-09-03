@@ -1,6 +1,6 @@
-import { Work } from "../Models/Work.js";
 import { BACKEND_SERVER } from "../Utils/Resources.js";
 import { getUserData } from "../Utils/Memory.js";
+import { isPositiveResponse } from "../Models/ResponseData.js";
 
 export function getAllWorks() {
   let url = `${BACKEND_SERVER}/Works`;
@@ -14,8 +14,12 @@ async function getMultiple(url) {
       redirect: 'follow'
     });
 
-  const result = await response.json();
-  return result.data.map(raw => new Work(raw));
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 
@@ -33,7 +37,12 @@ export async function postNewWork(message) {
   };
 
   const response = await fetch(url, requestOptions);
-  return response.json();
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export async function deleteWork(id) {
@@ -47,9 +56,14 @@ export async function deleteWork(id) {
     redirect: 'follow',
     mode: 'cors'
   };
-  const response = await fetch(url, requestOptions);
 
-  return response.json();
+  const response = await fetch(url, requestOptions);
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export async function putWork(message) {
@@ -67,5 +81,10 @@ export async function putWork(message) {
   };
 
   const response = await fetch(url, requestOptions);
-  return response.json();
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }

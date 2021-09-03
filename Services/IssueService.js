@@ -1,6 +1,6 @@
-import { Issue } from "../Models/Issue.js";
 import { BACKEND_SERVER } from "../Utils/Resources.js";
 import { getUserData } from "../Utils/Memory.js";
+import { isPositiveResponse } from "../Models/ResponseData.js";
 
 export function getIssuesByPinType(pinTypeId) {
   let url = `${BACKEND_SERVER}/Issues/pinType/${pinTypeId}`;
@@ -19,9 +19,12 @@ async function getMultiple(url) {
   };
 
   const response = await fetch(url, requestOptions);
-
-  const result = await response.json();
-  return result.data.map(raw => new Issue(raw));
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 
@@ -39,7 +42,12 @@ export async function postNewIssue(message) {
   };
 
   const response = await fetch(url, requestOptions);
-  return response.json();
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export async function deleteIssue(id) {
@@ -53,9 +61,14 @@ export async function deleteIssue(id) {
     redirect: 'follow',
     mode: 'cors'
   };
-  const response = await fetch(url, requestOptions);
 
-  return response.json();
+  const response = await fetch(url, requestOptions);
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export async function putIssue(message) {
@@ -73,5 +86,10 @@ export async function putIssue(message) {
   };
 
   const response = await fetch(url, requestOptions);
-  return response.json();
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }

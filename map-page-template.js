@@ -24,6 +24,7 @@ import {
 } from "./Services/WorkService.js";
 import { WorkFromWorkView } from "./Models/Work.js";
 import { getUserData } from "./Utils/Memory.js";
+import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
 
 // AUTHORIZATION
 export function isAuthorized() {
@@ -115,19 +116,63 @@ async function showStyledIssues(issueList, customStyles) {
 
 async function getIssuesViewByPinType(selectedPinType) {
   let values = await Promise.all([getIssuesByPinType(selectedPinType), getPinsByType(selectedPinType), getAllStatuses()]);
-  return getIssuesViewArray(values[0], values[1], values[2]);
+  let getIssuesResult = ResponseDataFromFetchReponse(values[0])
+  if (getIssuesResult.error) {
+    console.log(`Reading issues by pin type failed: ${getIssuesResult.error}`);
+    return [];
+  }
+  let getPinsResult = ResponseDataFromFetchReponse(values[1])
+  if (getPinsResult.error) {
+    console.log(`Reading issues by pin type failed: ${getPinsResult.error}`);
+    return [];
+  }  
+  let getStatusesResult = ResponseDataFromFetchReponse(values[2])
+  if (getStatusesResult.error) {
+    console.log(`Reading statuses failed: ${getStatusesResult.error}`);
+    return [];
+  }  
+  return getIssuesViewArray(getIssuesResult.data, getPinsResult.data, getStatusesResult.data);
 }
 
 async function getAllIssuesView() {
   let values = await Promise.all([getAllIssues(), getAllPins(), getAllStatuses()]);
-  return getIssuesViewArray(values[0], values[1], values[2]);
+  let getIssuesResult = ResponseDataFromFetchReponse(values[0])
+  if (getIssuesResult.error) {
+    console.log(`Reading issues failed: ${getIssuesResult.error}`);
+    return [];
+  }
+  let getPinsResult = ResponseDataFromFetchReponse(values[1])
+  if (getPinsResult.error) {
+    console.log(`Reading pins failed: ${getPinsResult.error}`);
+    return [];
+  }
+  let getStatusesResult = ResponseDataFromFetchReponse(values[2])
+  if (getStatusesResult.error) {
+    console.log(`Reading statuses failed: ${getStatusesResult.error}`);
+    return [];
+  }    
+  return getIssuesViewArray(getIssuesResult.data, getPinsResult.data, getStatusesResult.data);
 }
 
 async function showIssues(issuesViewArray) {
   let issuesTableBody = document.getElementById('issuesTableBody');
   issuesTableBody.innerHTML = '';
 
-  let statusList = await getAllStatuses();
+  let statusList = await getAllStatuses()
+      .then(response => ResponseDataFromFetchReponse(response))
+      .then(result => {
+        if (result.error) {
+          console.log(`Reading statuses failed: ${result.error}`);
+          return [];
+        } else { 
+          return result.data;
+        }
+      })
+      .catch(error => {
+        console.log(error);
+        return [];
+      });
+
   issuesViewArray.forEach((issueView) => {
     let row = document.createElement("tr");
 
@@ -170,9 +215,15 @@ function updateIssueStatus(selectValue, issueView) {
 
 function removeIssue(issueId, callback) {
   deleteIssue(issueId)
-    .then(_ => {
-      alert(`Sesizarea cu numărul "${issueId}" a fost ștearsă.`);
-      callback(true);
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        alert(`Sesizarea cu numărul "${issueId}" nu a fost ștearsă. Eroare ${result.error}.`);
+        callback(false);
+      } else {
+        alert(`Sesizarea cu numărul "${issueId}" a fost ștearsă.`);
+        callback(true);
+      }      
     })
     .catch(error => {
       console.log('error', error)
@@ -183,12 +234,17 @@ function removeIssue(issueId, callback) {
 
 function updateIssue(message) {
   putIssue(message)
+    .then(response => ResponseDataFromFetchReponse(response))
     .then(result => {
-      alert(`Sesizarea cu numărul "${result.data.id}" a fost modificată.`);
+      if (result.error) {
+        alert(`Sesizarea nu a fost modificată. Eroare ${result.error}`);
+      } else {
+        alert(`Sesizarea cu numărul "${result.data.id}" a fost modificată.`);
+      }      
     })
     .catch(error => {
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+      alert(`Sesizarea nu a fost modificată. Te rugăm sa încerci din nou.`);
     });
 }
 
@@ -199,7 +255,27 @@ export function showAllWorks(customStyles = () => {}) {
 
 async function getAllWorksView() {
   let values = await Promise.all([getAllWorks(), getAllPins(), getAllStatuses(), getAllDepartments()]);
-  return getWorkViewArray(values[0], values[1], values[2], values[3]);
+  let getWorksResult = ResponseDataFromFetchReponse(values[0])
+  if (getWorksResult.error) {
+    console.log(`Reading works failed: ${getWorksResult.error}`);
+    return [];
+  }  
+  let getPinsResult = ResponseDataFromFetchReponse(values[1])
+  if (getPinsResult.error) {
+    console.log(`Reading pins failed: ${getPinsResult.error}`);
+    return [];
+  }
+  let getStatusesResult = ResponseDataFromFetchReponse(values[2])
+  if (getStatusesResult.error) {
+    console.log(`Reading statuses failed: ${getStatusesResult.error}`);
+    return [];
+  }
+  let getDepartmentsResult = ResponseDataFromFetchReponse(values[3])
+  if (getDepartmentsResult.error) {
+    console.log(`Reading departments failed: ${getDepartmentsResult.error}`);
+    return [];
+  }  
+  return getWorkViewArray(getWorksResult.data, getPinsResult.data, getStatusesResult.data, getDepartmentsResult.data);
 }
 
 async function showStyledWorks(workList, customStyles) {
@@ -211,8 +287,35 @@ async function showWorks(workViewArray) {
   let tableBody = document.getElementById('works-table-body');
   tableBody.innerHTML = '';
 
-  let statusList = await getAllStatuses();
-  let departmentList = await getAllDepartments();
+  let statusList = await getAllStatuses()
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        console.log(`Reading statuses failed: ${result.error}`);
+        return [];
+      } else {
+        return result.data;
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      return [];
+    });
+  
+  let departmentList = await getAllDepartments()
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        console.log(`Reading departments failed: ${result.error}`);
+        return [];
+      } else {
+        return result.data;
+      }
+    }).catch(error => {
+      console.log(error);
+      return [];
+    })
+
   workViewArray.forEach((workView) => {
     let row = document.createElement("tr");
 
@@ -248,10 +351,16 @@ async function showWorks(workViewArray) {
 
 function removeWork(workId, callback) {
   deleteWork(workId)
-    .then(_ => {
-      alert(`Lucrarea cu numărul "${workId}" a fost ștearsă.`);
-      callback(true);
-    })
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        alert(`Lucrarea cu numărul "${workId}" nu a fost ștearsă. Eroare: ${result.error}`);
+        callback(false);
+      } else {
+        alert(`Lucrarea cu numărul "${workId}" a fost ștearsă.`);
+        callback(true);
+      }
+    })    
     .catch(error => {
       console.log('error', error)
       alert(`Lucrarea cu numărul "${workId}" nu a fost ștearsă. Te rugăm să încerci din nou.`);
@@ -273,12 +382,17 @@ function updateWorkDepartment(selectValue, workView) {
 
 function updateWork(message) {
   putWork(message)
+    .then(response => ResponseDataFromFetchReponse(response))
     .then(result => {
-      alert(`Lucrarea cu numărul "${result.data.id}" a fost modificată.`);
+      if (result.error) {
+        alert(`Lucrarea nu a fost modificată. Eroare: ${result.error}`);
+      } else {
+        alert(`Lucrarea cu numărul "${result.data.id}" a fost modificată.`);
+      }      
     })
     .catch(error => {
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+      alert('Lucrarea nu a fost modificată. Te rugăm sa încerci din nou.');
     });
 }
 
