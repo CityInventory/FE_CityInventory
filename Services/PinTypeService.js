@@ -1,5 +1,5 @@
-import { PinType } from "../Models/PinType.js";
 import { BACKEND_SERVER } from "../Utils/Resources.js";
+import { isPositiveResponse } from "../Models/ResponseData.js";
 
 export function getAllPinTypes() {
   let url = `${BACKEND_SERVER}/PinTypes`;
@@ -13,6 +13,10 @@ async function getMultiple(url) {
       redirect: 'follow'
     });
 
-  const result = await response.json();
-  return result.data.map(raw => new PinType(raw));
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }

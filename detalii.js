@@ -1,4 +1,5 @@
-import {getPinsById} from "./Services/PinService.js";
+import { getPinsById } from "./Services/PinService.js";
+import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
 
 window.addEventListener('load', init);
 
@@ -6,10 +7,16 @@ function init() {
 	if (window.location.search !== '') {
 		const id = window.location.search.split('=')[1];
     getPinsById(id)
-    .then(results=> {
-        showPinDetails(results.data)
-    })
-    .catch(error => console.log('error', error));
+      .then(response => ResponseDataFromFetchReponse(response))
+      .then(result => {
+          if (result.error) {
+            console.log(`Reading pins failed: ${result.error}`);
+            return;
+          } else {
+            showPinDetails(result.data)
+          }      
+      })
+      .catch(error => console.log('error', error));
 	}
 }
 

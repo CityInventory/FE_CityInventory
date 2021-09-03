@@ -17,17 +17,18 @@ import {
   postNewPin,
   putPin
 } from "./Services/PinService.js";
-import {getAllPinTypes} from "./Services/PinTypeService.js";
+import { getAllPinTypes } from "./Services/PinTypeService.js";
 import {
   arrayToSeparatedString,
   separatedStringToArray
 } from "./Utils/StringOperations.js";
-import {getAllDepartments} from "./Services/DepartmentService.js";
-import {Pin} from "./Models/Pin.js";
-import {Work} from "./Models/Work.js";
-import {postNewWork} from "./Services/WorkService.js";
-import {getAllStatuses} from "./Services/StatusService.js";
-import {getPinViewArray} from "./Models/PinView.js";
+import { getAllDepartments } from "./Services/DepartmentService.js";
+import { Pin } from "./Models/Pin.js";
+import { Work } from "./Models/Work.js";
+import { postNewWork } from "./Services/WorkService.js";
+import { getAllStatuses } from "./Services/StatusService.js";
+import { getPinViewArray } from "./Models/PinView.js";
+import { ResponseDataFromFetchReponse } from './Models/ResponseData.js';
 
 var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init);
@@ -44,19 +45,33 @@ function init() {
 
   initIssueTableFilters();
 
-  getAllStatuses().then(statusList => {
-    let issueStatusSelector = document.getElementById("work-status");
-    loadInputFormOptions(issueStatusSelector, statusList);
-  });
+  getAllStatuses()
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        console.log(`Reading statuses failed: ${result.error}`);
+      } else {
+        let issueStatusSelector = document.getElementById("work-status");
+        loadInputFormOptions(issueStatusSelector, result.data);
+      }
+    })
+    .catch(error => { console.log(error); });
 
   addCreatePinEvent();
   addUpdatePinEvent();
   addClosePinFormEvent();
 
-  getAllDepartments().then(departmentList => {
-    let departmentSelector = document.getElementById("work-department");
-    loadInputFormOptions(departmentSelector, departmentList);
-  });
+  getAllDepartments()
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        console.log(`Reading departments failed: ${result}`);
+      } else {
+        let departmentSelector = document.getElementById("work-department");
+        loadInputFormOptions(departmentSelector, result.data);
+      }       
+    })
+    .catch(error => { console.log(error); });
 
   addCloseWorkFormEvent();
   addCreateWorkEvent();
@@ -67,17 +82,22 @@ function init() {
 //MAP FUNCTIONS
 function loadMapPins() {
   getAllPins()
-    .then(pinsList => {
-      pinsList.forEach(pin => {
-        let newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
-
-        let popup = getPinOptionsPopup(pin.name);
-        popup.appendChild(getUpdatePinButton(pin));
-        popup.appendChild(getRemovePinButton(pin));
-        popup.appendChild(getAddWorkPinButton(pin));
-
-        newMarker.bindPopup(popup);
-      })
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        console.log(`Reading pins failed: ${result.error}`);
+      } else {
+        result.data.forEach(pin => {
+          let newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
+  
+          let popup = getPinOptionsPopup(pin.name);
+          popup.appendChild(getUpdatePinButton(pin));
+          popup.appendChild(getRemovePinButton(pin));
+          popup.appendChild(getAddWorkPinButton(pin));
+  
+          newMarker.bindPopup(popup);
+        })
+      }
     })
     .catch(error => console.log('error', error));
 }
@@ -168,13 +188,18 @@ function getAddPinButton(coordinates) {
 
 function removePin(pinId, pinName) {
   deletePin(pinId)
-    .then(_ => {
-      alert(`Marcajul cu numele "${pinName}" a fost șters.`);
-      location.reload();
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        alert(`Marcajul cu numele "${pinName}" nu a fost șters. Eroare: ${result.error}`);
+      } else {
+        alert(`Marcajul cu numele "${pinName}" a fost șters.`);
+        location.reload();
+      }
     })
     .catch(error => {
       console.log('error', error)
-      alert(`Marcajul cu numele "${pinName}" a fost șters. Te rugăm sa încerci din nou.`);
+      alert(`Marcajul cu numele "${pinName}" nu a fost șters. Te rugăm sa încerci din nou.`);
     });
 }
 
@@ -247,7 +272,17 @@ function hideWorksTable() {
 
 async function showAllPins() {
   let values = await Promise.all([getAllPins(), getAllPinTypes()]);
-  let pinViewCollection = getPinViewArray(values[0], values[1]);
+  let getPinsResult = ResponseDataFromFetchReponse(values[0])
+  if (getPinsResult.error) {
+    console.log(`Reading pins failed: ${getPinsResult.error}`);
+    return;
+  }
+  let getPinTypesResult = ResponseDataFromFetchReponse(values[1])
+  if (getPinTypesResult.error) {
+    console.log(`Reading pin types failed: ${getPinTypesResult.error}`);
+    return;
+  }  
+  let pinViewCollection = getPinViewArray(getPinsResult.data, getPinTypesResult.data);
   showPins(pinViewCollection);
 }
 
@@ -306,16 +341,21 @@ function addClosePinFormEvent() {
 }
 
 function loadPinTypes() {
-  getAllPinTypes().then( pinTypeList => {
-    let selector = document.getElementById("pin-type-input");
-
-    pinTypeList.forEach(pinType => {
-      let option = document.createElement("option");
-      option.text = arrayToSeparatedString(pinType.id, pinType.name);
-      selector.add(option);
-    });
-
-  }).catch(error => console.log('error', error));
+  getAllPinTypes()
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        console.log(`Reading pin types failed: ${result.error}`);
+      } else {
+        let selector = document.getElementById("pin-type-input");
+        result.data.forEach(pinType => {
+          let option = document.createElement("option");
+          option.text = arrayToSeparatedString(pinType.id, pinType.name);
+          selector.add(option);
+        });
+      }
+    })
+    .catch(error => console.log('error', error));
 }
 
 function showPinInputForm(isVisible) {
@@ -408,25 +448,35 @@ function getPinFormData() {
 
 function createPin(message) {
   postNewPin(message)
-    .then(response => {
-      alert(`Marcajul cu numele "${response.data.name}" fost salvat.`);
-      location.reload();
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        alert(`Marcajul nu a fost salvat. Eroare: ${result.error}`);
+      } else {
+        alert(`Marcajul cu numele "${result.data.name}" fost salvat.`);
+        location.reload();
+      }
     })
     .catch(error => {
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugăm să încerci din nou.');
+      alert('Marcajul nu a fost salvat. Te rugăm să încerci din nou.');
     });
 }
 
 function updatePin(message) {
   putPin(message)
-    .then(response => {
-      alert(`Marcajul cu numele "${response.data.name}" fost modificat.`);
-      location.reload();
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        alert(`Marcajul nu a fost modificat. Eroare: ${result.error}`);
+      } else {
+        alert(`Marcajul cu numele "${response.data.name}" fost modificat.`);
+        location.reload();
+      }
     })
     .catch(error => {
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugăm sa încerci din nou.');
+      alert('Marcajul nu a fost modificat. Te rugăm sa încerci din nou.');
     });
 }
 
@@ -496,12 +546,17 @@ function getWorkFormData() {
 
 function createWork(message) {
   postNewWork(message)
-    .then(response => {
-      alert(`Lucararea cu id "${response.data.id}" fost înregistrată.`);
-      location.reload();
-    })
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        alert(`Lucararea nu a fost înregistrată. Eroare: ${result.error}`);
+      } else {
+        alert(`Lucararea cu id "${result.data.id}" a fost înregistrată.`);
+        location.reload();
+      }
+    })    
     .catch(error => {
       console.log('error', error)
-      alert('Ceva nu a mers bine. Te rugăm să încerci din nou.');
+      alert('Lucararea nu a fost înregistrată. Te rugăm să încerci din nou.');
     });
 }

@@ -1,19 +1,28 @@
-import {getAllIssues} from "./Services/IssueService.js";
-import {Issue} from "./Models/Issue.js";
+import { getAllIssues } from "./Services/IssueService.js";
+import { Issue } from "./Models/Issue.js";
+import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
 
 window.addEventListener('load', init);
 
 function init() {
-  getAllIssues().then(issues => {
-    showLatestIssues(issues);
-    showIssuesPie(issues);
-  });
+  getAllIssues()
+    .then(response => ResponseDataFromFetchReponse(response))
+    .then(result => {
+      if (result.error) {
+        console.log(`Reading issues failed: ${result.error}`);
+      } else {
+        showLatestIssues(result.data);
+        showIssuesPie(result.data);
+      }
+    }).catch(error => { console.log(error); });
 }
 
 function showLatestIssues(issueList) {
+  if (!issueList) {
+    return;
+  }
   let newsElement = document.getElementById('news');
   newsElement.innerHTML = '';
-  let details = document.getElementById('news-content');
   let sortedIssues = sortIssuesDescendingByDate(issueList);
   for (let i = 0; i <= 5; i++) {
     let output = `

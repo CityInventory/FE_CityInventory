@@ -1,6 +1,6 @@
-import { Pin } from "../Models/Pin.js";
 import { BACKEND_SERVER } from "../Utils/Resources.js";
 import { getUserData } from "../Utils/Memory.js";
+import { isPositiveResponse } from "../Models/ResponseData.js";
 
 export function getPinsById(pinId) {
   let url = `${BACKEND_SERVER}/Pins/${pinId}`;
@@ -14,7 +14,12 @@ async function getSingle(url) {
       redirect: 'follow'
     });
 
-  return await response.json();
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export function getPinsByType(pinTypeId) {
@@ -28,14 +33,18 @@ export function getAllPins() {
 }
 
 async function getMultiple(url) {
-    const response = await fetch(url,
-        {
-            method: 'GET',
-            redirect: 'follow'
-        });
+  const response = await fetch(url,
+      {
+          method: 'GET',
+          redirect: 'follow'
+      });
 
-    const result = await response.json();
-    return result.data.map(raw => new Pin(raw));
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export async function postNewPin(message) {
@@ -52,7 +61,12 @@ export async function postNewPin(message) {
   };
 
   const response = await fetch(url, requestOptions);
-  return response.json();
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export async function putPin(message) {
@@ -70,7 +84,12 @@ export async function putPin(message) {
   };
 
   const response = await fetch(url, requestOptions);
-  return response.json();
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }
 
 export async function deletePin(id) {
@@ -84,7 +103,12 @@ export async function deletePin(id) {
     redirect: 'follow',
     mode: 'cors'
   };
-  const response = await fetch(url, requestOptions);
 
-  return response.json();
+  const response = await fetch(url, requestOptions);
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }

@@ -1,5 +1,5 @@
-import { Department } from "../Models/Department.js";
 import { BACKEND_SERVER } from "../Utils/Resources.js";
+import { isPositiveResponse } from "../Models/ResponseData.js";
 
 export function getAllDepartments() {
   let url = `${BACKEND_SERVER}/Departments`;
@@ -12,7 +12,11 @@ async function getMultiple(url) {
       method: 'GET',
       redirect: 'follow'
     });
-
-  const result = await response.json();
-  return result.data.map(raw => new Department(raw));
+  
+  if (isPositiveResponse(response.status)) {
+    return response.json();
+  }
+  else {
+    return response;
+  }
 }

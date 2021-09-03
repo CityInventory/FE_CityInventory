@@ -1,3 +1,4 @@
+import { ResponseDataFromAuthFetchReponse } from "./Models/ResponseData.js";
 import {
   IdToken
 } from "./Models/Token.js";
@@ -59,17 +60,20 @@ function signOutAndRefresh() {
 function signIn(googleUser) {
   let token = new IdToken(googleUser.getAuthResponse().id_token);
   postNewToken(JSON.stringify(token))
+    .then(response => ResponseDataFromAuthFetchReponse(response))
     .then(result => {
-      
-      let userName = googleUser.getBasicProfile().getName();
-      let user = new User(userName, result.authToken);
-      let daysToExpiration = 30;
-      saveUserData(JSON.stringify(user), daysToExpiration);
-
-      setUserNameLabel(userName);
-      
-      loginVisibility(true);
-      
+      if (result.error) {
+        alert(`Autentificare eșuată. Eroare ${result.error}`);
+      } else {
+        let userName = googleUser.getBasicProfile().getName();
+        let user = new User(userName, result.data);
+        let daysToExpiration = 30;
+        saveUserData(JSON.stringify(user), daysToExpiration);
+  
+        setUserNameLabel(userName);
+        
+        loginVisibility(true);  
+      }      
     }).catch(error => {
       console.log(error);
       alert(`Autentificare eșuată.`);
