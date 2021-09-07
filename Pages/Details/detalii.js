@@ -1,5 +1,5 @@
-import { getPinsById } from "./Services/PinService.js";
-import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
+import { getPinsById } from "../../Services/PinService.js";
+import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
 
 window.addEventListener('load', init);
 
@@ -11,10 +11,9 @@ function init() {
       .then(result => {
           if (result.error) {
             console.log(`Reading pins failed: ${result.error}`);
-            return;
           } else {
             showPinDetails(result.data)
-          }      
+          }
       })
       .catch(error => console.log('error', error));
 	}
