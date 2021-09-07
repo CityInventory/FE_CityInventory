@@ -1,31 +1,4 @@
-#actions {
-  display: flex;
-}
-
-#filtre {
-  flex: 1;
-}
-
-#sesizare {
-  flex: 1;
-}
-
-#filtre label {
-  display: block;
-}
-
-#sesizare form select {
-  display: block;
-}
-
-.formLabel {
-  padding-right: 2em;
-}
-
-#pinDescription {
-  height: 5em;
-}
-
+/* TABLES */
 .options-btn {
   display: block;
   margin-top: 0.5em;
@@ -33,39 +6,18 @@
   color: white;
 }
 
-#issueList {
-  display: none;
-  margin: 1em;
-}
-
-/* Ultimele sesizari - Homepage */
-
-.dot1, .dot2, .dot3 {
-  cursor: pointer;
-  height: 13px;
-  width: 13px;
-  margin: 2px;
-  background-color: black;
-  border-radius: 50%;
-  transition: background-color 0.6s ease;
-}
-
-.card-contor {
-  list-style: none;
-  margin-top: 10px;
-}
-
 .table-btn {
   margin-right: 0.5em;
-}
-
-#issue-create-form {
-  display: none;
 }
 
 .btn-primary-customization {
   color: #202020;
   border-width: thin;
+}
+
+/* INPUT FORMS */
+.formLabel {
+  padding-right: 2em;
 }
 
 input:invalid {
@@ -78,6 +30,7 @@ textarea {
   min-height: 5em;
 }
 
+/* MEDIA */
 .grid-media-container {
   display: grid;
   grid-gap: 1em;

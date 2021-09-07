@@ -1,16 +1,16 @@
-import { ResponseDataFromAuthFetchReponse } from "./Models/ResponseData.js";
+import { ResponseDataFromAuthFetchReponse } from "../../Models/ResponseData.js";
 import {
   IdToken
-} from "./Models/Token.js";
-import { User } from "./Models/Userdata.js";
-import { postNewToken } from "./Services/AuthService.js"
+} from "../../Models/Token.js";
+import { User } from "../../Models/Userdata.js";
+import { postNewToken } from "../../Services/AuthService.js"
 import {
   getUserData,
   saveUserData,
   removeUserData
-} from "./Utils/Memory.js";
+} from "../../Utils/Memory.js";
 
-function startApp() { 
+function startApp() {
   gapi.load('auth2', function(){
     let auth2 = gapi.auth2.init({
       client_id: '374800921348-2hhko2o7c8iufbp4h4qbpfv7km771qjt.apps.googleusercontent.com',
@@ -27,8 +27,7 @@ function startApp() {
   } else {
       loginVisibility(false);
   }
-};
-
+}
 
 function setUserNameLabel(userName) {
     document.getElementById('user-name').innerText = userName;
@@ -69,11 +68,11 @@ function signIn(googleUser) {
         let user = new User(userName, result.data);
         let daysToExpiration = 30;
         saveUserData(JSON.stringify(user), daysToExpiration);
-  
+
         setUserNameLabel(userName);
-        
-        loginVisibility(true);  
-      }      
+
+        loginVisibility(true);
+      }
     }).catch(error => {
       console.log(error);
       alert(`Autentificare eșuată.`);

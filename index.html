@@ -17,8 +17,8 @@
 
 <head>
   <meta charset="utf-8"/>
-  <link href="./assets/img/apple-icon.png" rel="apple-touch-icon" sizes="76x76">
-  <link href="./assets/img/logo2.PNG" rel="icon" type="image/png">
+  <link href="assets/img/apple-icon.png" rel="apple-touch-icon" sizes="76x76">
+  <link href="assets/img/logo2.PNG" rel="icon" type="image/png">
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
   <title>City Inventory</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
@@ -27,15 +27,15 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"/>
   <!-- CSS Files -->
-  <link href="./assets/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="./assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet"/>
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet"/>
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="./assets/css/demo.css" rel="stylesheet"/>
+  <link href="assets/css/demo.css" rel="stylesheet"/>
   <!-- Google authentification -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
-  <link href="auth.css" rel="stylesheet"/>
-  <link href="style.css" rel="stylesheet"/>
+  <link href="Pages/Security/auth.css" rel="stylesheet"/>
+  <link href="Utils/style.css" rel="stylesheet"/>
   <link href="index.css" rel="stylesheet"/>
 </head>
 
@@ -56,19 +56,19 @@
           </a>
         </li>
         <li>
-          <a class="nav-link" href="sesizari.html">
+          <a class="nav-link" href="Pages/Issues/sesizari.html">
             <i class="nc-icon nc-paper-2"></i>
             <p>Sesizări</p>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="administrare.html">
+          <a class="nav-link" href="Pages/Administation/administrare.html">
             <i class="nc-icon nc-atom"></i>
             <p>Administrare</p>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="help.html">
+          <a class="nav-link" href="Pages/Help/help.html">
             <i class="fa fa-question-circle"></i>
             <p>Ajutor</p>
           </a>
@@ -103,7 +103,7 @@
                 <span class="no-icon" id="user-name"></span>
               </a>
               <a class="nav-link">
-                <span class="no-icon" id="logoutBtn"">Deconectare</span>
+                <span class="no-icon" id="logoutBtn">Deconectare</span>
               </a>
             </li>
           </ul>
@@ -120,7 +120,7 @@
               <div class="card-body grid-media-container">
                 <span>
                   <video autoplay controls muted>
-                    <source src="assets/Timisoara_European_Capital_of_Culture 20212023.mp4" type="video/mp4">
+                    <source src="assets/Timisoara_European_Capital_of_Culture%2020212023.mp4" type="video/mp4">
                   </video>
                 </span>
                 <span>
@@ -210,21 +210,21 @@
   </div>
 </div>
 <!--   Core JS Files   -->
-<script src="./assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="./assets/js/plugins/bootstrap-switch.js"></script>
+<script src="assets/js/plugins/bootstrap-switch.js"></script>
 <!--  Notifications Plugin    -->
-<script src="./assets/js/plugins/bootstrap-notify.js"></script>
+<script src="assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-<script src="./assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
+<script src="assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
 <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
-<script src="./assets/js/demo.js"></script>
+<script src="assets/js/demo.js"></script>
 <!-- Google login -->
 <script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
-<script src="auth.js" type='module'></script>
+<script src="Pages/Security/auth.js" type='module'></script>
 <script src='Models/Token.js' type='module'></script>
 <script src='Models/Userdata.js' type='module'></script>
 <script src='Services/AuthService.js' type='module'></script>

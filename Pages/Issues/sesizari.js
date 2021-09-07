@@ -10,16 +10,16 @@ import {
   hasInvalidValue,
   setInputElementValue,
   isAuthorized
-} from './map-page-template.js';
-import { getAllPins } from "./Services/PinService.js";
-import { postNewIssue } from "./Services/IssueService.js";
-import { separatedStringToArray } from "./Utils/StringOperations.js";
-import { Issue } from "./Models/Issue.js";
-import { getAllStatuses } from "./Services/StatusService.js";
-import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
+} from '../../Utils/mapPageTemplate.js';
+import { getAllPins } from "../../Services/PinService.js";
+import { postNewIssue } from "../../Services/IssueService.js";
+import { separatedStringToArray } from "../../Utils/StringOperations.js";
+import { Issue } from "../../Models/Issue.js";
+import { getAllStatuses } from "../../Services/StatusService.js";
+import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
 
 var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
-window.addEventListener('load', init());
+window.addEventListener('load', init);
 
 function init() {
   loadMap(pageMap);
@@ -57,17 +57,17 @@ function loadMapPins() {
       } else {
         result.data.forEach(pin => {
           let newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
-  
+
           let popup = getPinOptionsPopup(pin.name);
           popup.appendChild(getPinDetailsButton(pin.id));
           popup.appendChild(getIssueCreateButton(pin.id));
-  
+
           // let issues = L.DomUtil.create('a');
           // issues.setAttribute("class", "btn btn-info btn-fill btn-wd options-btn");
           // issues.setAttribute("href", "#filter-select-buttons");
           // issues.innerHTML = "Listă sesizări"
           // popup.appendChild(issues);
-  
+
           newMarker.bindPopup(popup);
         })
       }
@@ -77,7 +77,7 @@ function loadMapPins() {
 
 function getPinDetailsButton(pinId) {
   let details = L.DomUtil.create('a');
-  details.setAttribute("href", "detalii.html?id=" + pinId);
+  details.setAttribute("href", "../Details/detalii.html?id=" + pinId);
   setMapButtonStyle(details);
   details.innerHTML = "Detalii"
   return details;

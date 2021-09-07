@@ -17,7 +17,7 @@
 
 <head>
   <meta charset="utf-8"/>
-  <link href="./assets/img/logo2.PNG" rel="icon" type="image/png">
+  <link href="../../assets/img/logo2.PNG" rel="icon" type="image/png">
   <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
   <title>City Inventory</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
@@ -26,12 +26,12 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet"/>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"/>
   <!-- CSS Files -->
-  <link href="./assets/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="./assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet"/>
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../../assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet"/>
   <!-- Google authentification -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
-  <link href="auth.css" rel="stylesheet"/>
+  <link href="../Security/auth.css" rel="stylesheet"/>
   <!--Map-->
   <link crossorigin="" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -40,7 +40,7 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <!--Page styles-->
-  <link href="style.css" rel="stylesheet"/>
+  <link href="../../Utils/style.css" rel="stylesheet"/>
   <link href="administrare.css" rel="stylesheet"/>
 </head>
 
@@ -58,13 +58,13 @@ Tip 2: you can also add an image using data-image tag
       </div>
       <ul class="nav">
         <li>
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="../../index.html">
             <i class="nc-icon nc-chart-pie-35"></i>
             <p>Acasă</p>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="sesizari.html">
+          <a class="nav-link" href="../Issues/sesizari.html">
             <i class="nc-icon nc-paper-2"></i>
             <p>Sesizări</p>
           </a>
@@ -76,7 +76,7 @@ Tip 2: you can also add an image using data-image tag
           </a>
         </li>
         <li>
-          <a class="nav-link" href="help.html">
+          <a class="nav-link" href="../Help/help.html">
             <i class="fa fa-question-circle"></i>
             <p>Ajutor</p>
           </a>
@@ -88,8 +88,8 @@ Tip 2: you can also add an image using data-image tag
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg " color-on-scroll="500">
       <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">
-          <img alt="" height="30%" src="./images/logo.PNG" width="30%">
+        <a class="navbar-brand" href="../../index.html">
+          <img alt="" height="30%" src="../../images/logo.PNG" width="30%">
         </a>
         <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"
                 data-toggle="collapse" href="" type="button">
@@ -111,7 +111,7 @@ Tip 2: you can also add an image using data-image tag
                 <span class="no-icon" id="user-name"></span>
               </a>
               <a class="nav-link">
-                <span class="no-icon" id="logoutBtn"">Deconectare</span>
+                <span class="no-icon" id="logoutBtn">Deconectare</span>
               </a>
             </li>
           </ul>
@@ -285,41 +285,41 @@ Tip 2: you can also add an image using data-image tag
   </div>
 </div>
 <!--   Core JS Files   -->
-<script src="./assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/popper.min.js" type="text/javascript"></script>
-<script src="./assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="../../assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="../../assets/js/core/bootstrap.min.js" type="text/javascript"></script>
 <!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
-<script src="./assets/js/plugins/bootstrap-switch.js"></script>
+<script src="../../assets/js/plugins/bootstrap-switch.js"></script>
 <!--  Notifications Plugin    -->
-<script src="./assets/js/plugins/bootstrap-notify.js"></script>
+<script src="../../assets/js/plugins/bootstrap-notify.js"></script>
 <!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
-<script src="./assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
+<script src="../../assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
 <!-- Google login -->
 <script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
-<script src="auth.js" type='module'></script>
-<script src='Models/Token.js' type='module'></script>
-<script src='Models/Userdata.js' type='module'></script>
-<script src='Services/AuthService.js' type='module'></script>    
+<script src="../Security/auth.js" type='module'></script>
+<script src='../../Models/Token.js' type='module'></script>
+<script src='../../Models/Userdata.js' type='module'></script>
+<script src='../../Services/AuthService.js' type='module'></script>
 <script src="administrare.js" type='module'></script>
-<script src='map-page-template.js' type='module'></script>
-<script src='Services/IssueService.js' type='module'></script>
-<script src='Models/Issue.js' type='module'></script>
-<script src='Services/PinService.js' type='module'></script>
-<script src='Models/Pin.js' type='module'></script>
-<script src='Services/StatusService.js' type='module'></script>
-<script src='Models/Status.js' type='module'></script>
-<script src='Models/IssueView.js' type='module'></script>
-<script src='Services/PinTypeService.js' type='module'></script>
-<script src='Models/PinType.js' type='module'></script>
-<script src='Utils/StringOperations.js' type='module'></script>
-<script src='Models/Department.js' type='module'></script>
-<script src='Models/Work.js' type='module'></script>
-<script src='Services/DepartmentService.js' type='module'></script>
-<script src='Services/WorkService.js' type='module'></script>
-<script src='Models/PinView.js' type='module'></script>
-<script src='Utils/Resources.js' type='module'></script>
-<script src='Utils/Memory.js' type='module'></script>
-<script src='Models/ResponseData.js' type='module'></script>
+<script src='../../Utils/mapPageTemplate.js' type='module'></script>
+<script src='../../Services/IssueService.js' type='module'></script>
+<script src='../../Models/Issue.js' type='module'></script>
+<script src='../../Services/PinService.js' type='module'></script>
+<script src='../../Models/Pin.js' type='module'></script>
+<script src='../../Services/StatusService.js' type='module'></script>
+<script src='../../Models/Status.js' type='module'></script>
+<script src='../../Models/IssueView.js' type='module'></script>
+<script src='../../Services/PinTypeService.js' type='module'></script>
+<script src='../../Models/PinType.js' type='module'></script>
+<script src='../../Utils/StringOperations.js' type='module'></script>
+<script src='../../Models/Department.js' type='module'></script>
+<script src='../../Models/Work.js' type='module'></script>
+<script src='../../Services/DepartmentService.js' type='module'></script>
+<script src='../../Services/WorkService.js' type='module'></script>
+<script src='../../Models/PinView.js' type='module'></script>
+<script src='../../Utils/Resources.js' type='module'></script>
+<script src='../../Utils/Memory.js' type='module'></script>
+<script src='../../Models/ResponseData.js' type='module'></script>
 </body>
 </html>

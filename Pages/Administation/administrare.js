@@ -10,31 +10,31 @@ import {
   setInputElementValue,
   showAllWorks,
   validateAuthorization
-} from './map-page-template.js';
+} from '../../Utils/mapPageTemplate.js';
 import {
   deletePin,
   getAllPins,
   postNewPin,
   putPin
-} from "./Services/PinService.js";
-import { getAllPinTypes } from "./Services/PinTypeService.js";
+} from "../../Services/PinService.js";
+import { getAllPinTypes } from "../../Services/PinTypeService.js";
 import {
   arrayToSeparatedString,
   separatedStringToArray
-} from "./Utils/StringOperations.js";
-import { getAllDepartments } from "./Services/DepartmentService.js";
-import { Pin } from "./Models/Pin.js";
-import { Work } from "./Models/Work.js";
-import { postNewWork } from "./Services/WorkService.js";
-import { getAllStatuses } from "./Services/StatusService.js";
-import { getPinViewArray } from "./Models/PinView.js";
-import { ResponseDataFromFetchReponse } from './Models/ResponseData.js';
+} from "../../Utils/StringOperations.js";
+import { getAllDepartments } from "../../Services/DepartmentService.js";
+import { Pin } from "../../Models/Pin.js";
+import { Work } from "../../Models/Work.js";
+import { postNewWork } from "../../Services/WorkService.js";
+import { getAllStatuses } from "../../Services/StatusService.js";
+import { getPinViewArray } from "../../Models/PinView.js";
+import { ResponseDataFromFetchReponse } from '../../Models/ResponseData.js';
 
-var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
+const pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init);
 
 function init() {
-  validateAuthorization(() => { window.location.href = "index.html"; } );
+  validateAuthorization(() => { window.location.href = "../../index.html"; } );
 
   loadMap(pageMap);
   loadMapPins();
@@ -69,7 +69,7 @@ function init() {
       } else {
         let departmentSelector = document.getElementById("work-department");
         loadInputFormOptions(departmentSelector, result.data);
-      }       
+      }
     })
     .catch(error => { console.log(error); });
 
@@ -81,6 +81,7 @@ function init() {
 
 //MAP FUNCTIONS
 function loadMapPins() {
+
   getAllPins()
     .then(response => ResponseDataFromFetchReponse(response))
     .then(result => {
@@ -89,12 +90,12 @@ function loadMapPins() {
       } else {
         result.data.forEach(pin => {
           let newMarker = L.marker([pin.gpsCoordX, pin.gpsCoordY]).addTo(pageMap);
-  
+
           let popup = getPinOptionsPopup(pin.name);
           popup.appendChild(getUpdatePinButton(pin));
           popup.appendChild(getRemovePinButton(pin));
           popup.appendChild(getAddWorkPinButton(pin));
-  
+
           newMarker.bindPopup(popup);
         })
       }
@@ -281,7 +282,7 @@ async function showAllPins() {
   if (getPinTypesResult.error) {
     console.log(`Reading pin types failed: ${getPinTypesResult.error}`);
     return;
-  }  
+  }
   let pinViewCollection = getPinViewArray(getPinsResult.data, getPinTypesResult.data);
   showPins(pinViewCollection);
 }
@@ -470,7 +471,7 @@ function updatePin(message) {
       if (result.error) {
         alert(`Marcajul nu a fost modificat. Eroare: ${result.error}`);
       } else {
-        alert(`Marcajul cu numele "${response.data.name}" fost modificat.`);
+        alert(`Marcajul cu numele "${result.data.name}" fost modificat.`);
         location.reload();
       }
     })
@@ -554,7 +555,7 @@ function createWork(message) {
         alert(`Lucararea cu id "${result.data.id}" a fost înregistrată.`);
         location.reload();
       }
-    })    
+    })
     .catch(error => {
       console.log('error', error)
       alert('Lucararea nu a fost înregistrată. Te rugăm să încerci din nou.');

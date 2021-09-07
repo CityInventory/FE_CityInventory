@@ -3,28 +3,28 @@ import {
   getIssuesByPinType,
   deleteIssue,
   putIssue
-} from "./Services/IssueService.js";
+} from "../Services/IssueService.js";
 import {
   getAllPins,
   getPinsByType
-} from "./Services/PinService.js";
-import {getAllStatuses} from "./Services/StatusService.js";
-import {getIssuesViewArray} from "./Models/IssueView.js";
-import {IssueFromIssueView} from "./Models/Issue.js";
+} from "../Services/PinService.js";
+import {getAllStatuses} from "../Services/StatusService.js";
+import {getIssuesViewArray} from "../Models/IssueView.js";
+import {IssueFromIssueView} from "../Models/Issue.js";
 import {
   arrayToSeparatedString,
   separatedStringToArray
-} from "./Utils/StringOperations.js";
-import {getAllDepartments} from "./Services/DepartmentService.js";
-import {getWorkViewArray} from "./Models/WorkView.js";
+} from "./StringOperations.js";
+import {getAllDepartments} from "../Services/DepartmentService.js";
+import {getWorkViewArray} from "../Models/WorkView.js";
 import {
   deleteWork,
   getAllWorks,
   putWork
-} from "./Services/WorkService.js";
-import { WorkFromWorkView } from "./Models/Work.js";
-import { getUserData } from "./Utils/Memory.js";
-import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
+} from "../Services/WorkService.js";
+import { WorkFromWorkView } from "../Models/Work.js";
+import { getUserData } from "./Memory.js";
+import { ResponseDataFromFetchReponse } from "../Models/ResponseData.js"
 
 // AUTHORIZATION
 export function isAuthorized() {
@@ -125,12 +125,12 @@ async function getIssuesViewByPinType(selectedPinType) {
   if (getPinsResult.error) {
     console.log(`Reading issues by pin type failed: ${getPinsResult.error}`);
     return [];
-  }  
+  }
   let getStatusesResult = ResponseDataFromFetchReponse(values[2])
   if (getStatusesResult.error) {
     console.log(`Reading statuses failed: ${getStatusesResult.error}`);
     return [];
-  }  
+  }
   return getIssuesViewArray(getIssuesResult.data, getPinsResult.data, getStatusesResult.data);
 }
 
@@ -150,7 +150,7 @@ async function getAllIssuesView() {
   if (getStatusesResult.error) {
     console.log(`Reading statuses failed: ${getStatusesResult.error}`);
     return [];
-  }    
+  }
   return getIssuesViewArray(getIssuesResult.data, getPinsResult.data, getStatusesResult.data);
 }
 
@@ -164,7 +164,7 @@ async function showIssues(issuesViewArray) {
         if (result.error) {
           console.log(`Reading statuses failed: ${result.error}`);
           return [];
-        } else { 
+        } else {
           return result.data;
         }
       })
@@ -223,7 +223,7 @@ function removeIssue(issueId, callback) {
       } else {
         alert(`Sesizarea cu numărul "${issueId}" a fost ștearsă.`);
         callback(true);
-      }      
+      }
     })
     .catch(error => {
       console.log('error', error)
@@ -240,7 +240,7 @@ function updateIssue(message) {
         alert(`Sesizarea nu a fost modificată. Eroare ${result.error}`);
       } else {
         alert(`Sesizarea cu numărul "${result.data.id}" a fost modificată.`);
-      }      
+      }
     })
     .catch(error => {
       console.log('error', error)
@@ -259,7 +259,7 @@ async function getAllWorksView() {
   if (getWorksResult.error) {
     console.log(`Reading works failed: ${getWorksResult.error}`);
     return [];
-  }  
+  }
   let getPinsResult = ResponseDataFromFetchReponse(values[1])
   if (getPinsResult.error) {
     console.log(`Reading pins failed: ${getPinsResult.error}`);
@@ -274,7 +274,7 @@ async function getAllWorksView() {
   if (getDepartmentsResult.error) {
     console.log(`Reading departments failed: ${getDepartmentsResult.error}`);
     return [];
-  }  
+  }
   return getWorkViewArray(getWorksResult.data, getPinsResult.data, getStatusesResult.data, getDepartmentsResult.data);
 }
 
@@ -301,7 +301,7 @@ async function showWorks(workViewArray) {
       console.log(error);
       return [];
     });
-  
+
   let departmentList = await getAllDepartments()
     .then(response => ResponseDataFromFetchReponse(response))
     .then(result => {
@@ -360,7 +360,7 @@ function removeWork(workId, callback) {
         alert(`Lucrarea cu numărul "${workId}" a fost ștearsă.`);
         callback(true);
       }
-    })    
+    })
     .catch(error => {
       console.log('error', error)
       alert(`Lucrarea cu numărul "${workId}" nu a fost ștearsă. Te rugăm să încerci din nou.`);
@@ -388,7 +388,7 @@ function updateWork(message) {
         alert(`Lucrarea nu a fost modificată. Eroare: ${result.error}`);
       } else {
         alert(`Lucrarea cu numărul "${result.data.id}" a fost modificată.`);
-      }      
+      }
     })
     .catch(error => {
       console.log('error', error)
