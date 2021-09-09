@@ -1,4 +1,4 @@
-import { ResponseDataFromAuthFetchReponse } from "../../Models/ResponseData.js";
+import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js";
 import {
   IdToken
 } from "../../Models/Token.js";
@@ -59,13 +59,13 @@ function signOutAndRefresh() {
 function signIn(googleUser) {
   let token = new IdToken(googleUser.getAuthResponse().id_token);
   postNewToken(JSON.stringify(token))
-    .then(response => ResponseDataFromAuthFetchReponse(response))
+    .then(response => ResponseDataFromFetchReponse(response))
     .then(result => {
       if (result.error) {
         alert(`Autentificare eșuată. Eroare ${result.error}`);
       } else {
         let userName = googleUser.getBasicProfile().getName();
-        let user = new User(userName, result.data);
+        let user = new User(userName, result.data.token, result.data.role);
         let daysToExpiration = 30;
         saveUserData(JSON.stringify(user), daysToExpiration);
 
