@@ -31,7 +31,7 @@
   <!-- Google authentification -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
-  <link href="../Security/auth.css" rel="stylesheet"/>
+  <link href="../Security/Auth.css" rel="stylesheet"/>
   <!--Map-->
   <link crossorigin="" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -40,13 +40,13 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <!--Page styles-->
-  <link href="../../Utils/style.css" rel="stylesheet"/>
-  <link href="administrare.css" rel="stylesheet"/>
+  <link href="../../Utils/SharedStyleRules.css" rel="stylesheet"/>
+  <link href="Issues.css" rel="stylesheet"/>
 </head>
 
 <body>
 <div class="wrapper">
-  <div class="sidebar" data-image="./assets/img/home.jpg">
+  <div class="sidebar" data-image="../../assets/img/home.jpg">
     <!--
 Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -58,25 +58,25 @@ Tip 2: you can also add an image using data-image tag
       </div>
       <ul class="nav">
         <li>
-          <a class="nav-link" href="../../index.html">
+          <a class="nav-link" href="../../Index.html">
             <i class="nc-icon nc-chart-pie-35"></i>
             <p>Acasă</p>
           </a>
         </li>
-        <li>
-          <a class="nav-link" href="../Issues/sesizari.html">
+        <li class="nav-item active">
+          <a class="nav-link" href="Issues.html">
             <i class="nc-icon nc-paper-2"></i>
             <p>Sesizări</p>
           </a>
         </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="administrare.html">
+        <li>
+          <a class="nav-link" href="../Administation/Administration.html">
             <i class="nc-icon nc-atom"></i>
             <p>Administrare</p>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="../Help/help.html">
+          <a class="nav-link" href="../Help/Help.html">
             <i class="fa fa-question-circle"></i>
             <p>Ajutor</p>
           </a>
@@ -88,10 +88,11 @@ Tip 2: you can also add an image using data-image tag
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg " color-on-scroll="500">
       <div class="container-fluid">
-        <a class="navbar-brand" href="../../index.html">
+        <a class="navbar-brand" href="../../Index.html">
           <img alt="" height="30%" src="../../images/logo.PNG" width="30%">
         </a>
-        <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"
+        <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler navbar-toggler-right"
                 data-toggle="collapse" href="" type="button">
           <span class="navbar-toggler-bar burger-lines"></span>
           <span class="navbar-toggler-bar burger-lines"></span>
@@ -127,141 +128,62 @@ Tip 2: you can also add an image using data-image tag
               <div class="card-body">
                 <div id="mapid" style="height: 500px"></div>
               </div>
-
-              <div class="card-body" id="pin-create-form">
-                <form id="">
+              <div class="card-body" id="issue-create-form">
+                <form>
                   <div class="form-group">
-                    <label class="formLabel">Cod marcaj</label>
-                    <input class="form-control" id="pinCode" readonly type="text" value="0"/>
+                    <label class="formLabel">Număr Sesizare</label>
+                    <input class="form-control" id="issue-form-issue-id" readonly type="text" value="0">
                   </div>
                   <div class="form-group">
-                    <label class="formLabel">Tip marcaj</label>
-                    <select class="form-control" id="pin-type-input"></select>
+                    <label class="formLabel">Număr Marcaj</label>
+                    <input class="form-control" id="issue-form-pin-id" readonly type="text">
                   </div>
                   <div class="form-group">
-                    <label class="formLabel">Este acesta un obiectiv de patrimoniu?</label>
-                    <input id="isHeritage" type="checkbox"/>
+                    <label class="formLabel">Status</label>
+                    <select class="form-control" disabled id="issue-status-selector"></select>
                   </div>
                   <div class="form-group">
-                    <label class="formLabel">Latitudine*</label>
-                    <input class="form-control requires-validation" id="latitude" name="latitude"/>
-                  </div>
-                  <div class="form-group">
-                    <label class="formLabel">Longitudine*</label>
-                    <input class="form-control requires-validation" id="longitude" name="longitude"/>
-                  </div>
-                  <div class="form-group">
-                    <label class="formLabel">Denumire obiectiv*</label>
-                    <input class="form-control requires-validation" id="pin-name" name="pin-name"/>
-                  </div>
-                  <div class="form-group">
-                    <label class="formLabel">Descriere*</label>
-                    <textarea class="form-control requires-validation" id="pin-description" name="message"></textarea>
+                    <label class="formLabel requires-validation">Descriere sesizare*</label>
+                    <textarea class="form-control" id="issue-description"></textarea>
                   </div>
                 </form>
-                <button class='btn btn-info btn-fill btn-wd' id="create-pin">Salvează</button>
-                <button class='btn btn-info btn-fill btn-wd' id="modify-pin">Modifică</button>
-                <button class='btn btn-info btn-fill btn-wd' id="close-pin-form">Renunță</button>
+                <button class='btn btn-info btn-fill btn-wd' id="save-issue-btn">Salvează</button>
+                <button class='btn btn-info btn-fill btn-wd' id="cancel-issue-btn">Renunță</button>
               </div>
-
             </div>
           </div>
-
           <div class="col-md-12">
 
-            <div class="card-body" id="work-create-form">
-              <div class="form-group">
-                <label class="formLabel">Cod lucrare</label>
-                <input class="form-control" id="work-id" readonly type="text" value="0"/>
-              </div>
-              <div class="form-group">
-                <label class="formLabel">Cod marcaj</label>
-                <input class="form-control" id="work-pin-id" readonly type="text" value="0"/>
-              </div>
-              <div class="form-group">
-                <label class="formLabel">Departament</label>
-                <select class="form-control" id="work-department"></select>
-              </div>
-              <div class="form-group">
-                <label class="formLabel">Status</label>
-                <select class="form-control" id="work-status"></select>
-              </div>
-              <div class="form-group">
-                <label class="formLabel">Detalii*</label>
-                <textarea class="form-control requires-validation" id="work-details" name="message"></textarea>
-              </div>
-              <button class='btn btn-info btn-fill btn-wd' id="create-work">Salvează</button>
-              <button class='btn btn-info btn-fill btn-wd' id="close-work-form">Renunță</button>
-            </div>
-
             <div class="card-body" id="filter-select-buttons">
-
-              <select class="btn btn-primary btn-default" id="selectedList">
-                <option class="dropdown-item">Selectează un tabel</option>
-                <option class="dropdown-item" id="sesizari" value="sesizari">Sesizări</option>
-                <option class="dropdown-item" id="marcaj" value="marcaj">Marcaje</option>
-                <option class="dropdown-item" id="lucrari" value="lucrari">Lucrări</option>
-              </select>
-
-              <div class="card-body btn-group pin-type-selector" id="issues-list-selector">
+              <div class="card-body btn-group-md pin-type-selector" id="issues-list-selector">
                 <button class="btn btn-primary btn-default btn-primary-customization" id="toate" value="toate">Toate Sesizările</button>
                 <button class="btn btn-primary btn-default btn-primary-customization" id="cladiri" value="cladire">Sesizări pentru clădiri</button>
                 <button class="btn btn-primary btn-default btn-primary-customization" id="drumuri" value="drumuri">Sesizări pentru Drumuri</button>
                 <button class="btn btn-primary btn-default btn-primary-customization" id="spatiiDeschise" value="spatii_deschise">Sesizări pentru spații deschise</button>
                 <button class="btn btn-primary btn-default btn-primary-customization" id="altele" value="altele">Sesizări pentru alte marcaje</button>
               </div>
-
             </div>
 
             <div class="card strpied-tabled-with-hover">
-              <div class="pins-list card-body table-full-width table-responsive" id="pinsList">
-                <table class="table table-hover" id="pins-table">
-                  <thead id="table-head">
-                  <tr>
-                    <th>Id marcaj</th>
-                    <th>Tip marcaj</th>
-                    <th>Denumire marcaj</th>
-                    <th>Opțiuni</th>
-                  </tr>
-                  </thead>
-                  <tbody id="pinsTableBody"></tbody>
-                </table>
-              </div>
-
-              <div class="issues-list" id="issuesList">
+              <div class="issues-list card-body table-full-width table-responsive" id="issues-section">
                 <div class="issues-list card-body table-full-width table-responsive">
-                  <table class="table table-hover" id="issues-table">
+                  <table class="table table-hover">
                     <thead id="issuesTable-head">
                     <tr>
-                      <th>Număr de ordine</th>
+                      <th>Numar de ordine</th>
                       <th>Marcaj</th>
                       <th>Descriere</th>
                       <th>Status</th>
                       <th>Data</th>
-                      <th>Opțiuni</th>
                     </tr>
                     </thead>
                     <tbody id="issuesTableBody"></tbody>
                   </table>
                 </div>
               </div>
-
-              <div class="works-list card-body table-full-width table-responsive" id="worksList">
-                <table class="table table-hover" id="works-table">
-                  <thead id="worksTable-head">
-                  <tr>
-                    <th>Număr de ordine</th>
-                    <th>Marcaj</th>
-                    <th>Descriere lucrare</th>
-                    <th>Status</th>
-                    <th>Departament</th>
-                    <th>Optiuni</th>
-                  </tr>
-                  </thead>
-                  <tbody id="works-table-body"></tbody>
-                </table>
-              </div>
             </div>
+            <a class='btn btn-info btn-fill btn-wd' href="Issues.html#mapid">Înapoi la hartă</a>
+
           </div>
         </div>
       </div>
@@ -284,6 +206,7 @@ Tip 2: you can also add an image using data-image tag
     </footer>
   </div>
 </div>
+
 <!--   Core JS Files   -->
 <script src="../../assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
 <script src="../../assets/js/core/popper.min.js" type="text/javascript"></script>
@@ -297,12 +220,12 @@ Tip 2: you can also add an image using data-image tag
 <!-- Google login -->
 <script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
-<script src="../Security/auth.js" type='module'></script>
+<script src="../Security/Auth.js" type='module'></script>
 <script src='../../Models/Token.js' type='module'></script>
 <script src='../../Models/Userdata.js' type='module'></script>
 <script src='../../Services/AuthService.js' type='module'></script>
-<script src="administrare.js" type='module'></script>
-<script src='../../Utils/mapPageTemplate.js' type='module'></script>
+<script src="Issues.js" type='module'></script>
+<script src='../../Utils/MapPageTemplate.js' type='module'></script>
 <script src='../../Services/IssueService.js' type='module'></script>
 <script src='../../Models/Issue.js' type='module'></script>
 <script src='../../Services/PinService.js' type='module'></script>
@@ -310,14 +233,7 @@ Tip 2: you can also add an image using data-image tag
 <script src='../../Services/StatusService.js' type='module'></script>
 <script src='../../Models/Status.js' type='module'></script>
 <script src='../../Models/IssueView.js' type='module'></script>
-<script src='../../Services/PinTypeService.js' type='module'></script>
-<script src='../../Models/PinType.js' type='module'></script>
 <script src='../../Utils/StringOperations.js' type='module'></script>
-<script src='../../Models/Department.js' type='module'></script>
-<script src='../../Models/Work.js' type='module'></script>
-<script src='../../Services/DepartmentService.js' type='module'></script>
-<script src='../../Services/WorkService.js' type='module'></script>
-<script src='../../Models/PinView.js' type='module'></script>
 <script src='../../Utils/Resources.js' type='module'></script>
 <script src='../../Utils/Memory.js' type='module'></script>
 <script src='../../Models/ResponseData.js' type='module'></script>

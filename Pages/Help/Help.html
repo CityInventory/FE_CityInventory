@@ -33,15 +33,15 @@
     <!-- Google authentification -->
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
     <script src="https://apis.google.com/js/api:client.js"></script>
-    <link href="../Security/auth.css" rel="stylesheet" />
-    <link href="help.css" rel="stylesheet">
-    <link href="../../Utils/style.css" rel="stylesheet">
+    <link href="../Security/Auth.css" rel="stylesheet" />
+    <link href="Help.css" rel="stylesheet">
+    <link href="../../Utils/SharedStyleRules.css" rel="stylesheet">
  </head>
 
  <!-- <body onload="realtimeClock()"> -->
 <body>
     <div class="wrapper">
-        <div class="sidebar" data-image="../assets/img/home.jpg">
+        <div class="sidebar" data-image="../../assets/img/home.jpg">
              <!--
          Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -53,25 +53,25 @@
                 </div>
                 <ul class="nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="../../index.html">
+                        <a class="nav-link" href="../../Index.html">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Acasa</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../Issues/sesizari.html">
+                        <a class="nav-link" href="../Issues/Issues.html">
                             <i class="nc-icon nc-paper-2"></i>
                             <p>Sesizari</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="../Administation/administrare.html">
+                        <a class="nav-link" href="../Administation/Administration.html">
                             <i class="nc-icon nc-atom"></i>
                             <p>Administrare</p>
                         </a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="help.html">
+                        <a class="nav-link" href="Help.html">
                             <i class="fa fa-question-circle"></i>
                             <p>Ajutor</p>
                         </a>
@@ -83,7 +83,7 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="../../index.html">
+                    <a class="navbar-brand" href="../../Index.html">
                         <img src="/images/logo.PNG" alt="" width="30%" height="30%">
                     </a>
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -153,7 +153,7 @@
                                         <li>In formularul de sub hartă completează câmpul "Descriere sesizare"(informațiile trebuie să fie cât mai complete);</li>
                                         <li>Apasă butonul "Trimite". Vei primi un mesaj de confirmare;</li>
                                         <li>Pentru a vizualiza sesizarea trimisă: click pe marcajul de pe hartă, apoi click pe "Listă sesizări". Aceasta va apărea în lista de sesizari de sub hartă.</li>
-                                        <li><a href="../Issues/sesizari.html#issuesTable-head">Spre sesizări</a></li>
+                                        <li><a href="../Issues/Issues.html#issuesTable-head">Spre sesizări</a></li>
                                       </ul>
                                     </span>
                                   </div>
@@ -205,7 +205,7 @@
     <!-- Google login -->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <!-- Custom code -->
-    <script src="../Security/auth.js" type='module'></script>
+    <script src="../Security/Auth.js" type='module'></script>
     <script src='../../Models/Token.js' type='module'></script>
     <script src='../../Models/Userdata.js' type='module'></script>
     <script src='../../Services/AuthService.js' type='module'></script>

@@ -10,7 +10,7 @@ import {
   hasInvalidValue,
   setInputElementValue,
   isAuthorized
-} from '../../Utils/mapPageTemplate.js';
+} from '../../Utils/MapPageTemplate.js';
 import { getAllPins } from "../../Services/PinService.js";
 import { postNewIssue } from "../../Services/IssueService.js";
 import { separatedStringToArray } from "../../Utils/StringOperations.js";
@@ -77,7 +77,7 @@ function loadMapPins() {
 
 function getPinDetailsButton(pinId) {
   let details = L.DomUtil.create('a');
-  details.setAttribute("href", "../Details/detalii.html?id=" + pinId);
+  details.setAttribute("href", "../Details/Details.html?id=" + pinId);
   setMapButtonStyle(details);
   details.innerHTML = "Detalii"
   return details;
