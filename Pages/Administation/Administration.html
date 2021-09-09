@@ -31,7 +31,7 @@
   <!-- Google authentification -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
-  <link href="../Security/auth.css" rel="stylesheet"/>
+  <link href="../Security/Auth.css" rel="stylesheet"/>
   <!--Map-->
   <link crossorigin="" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -40,8 +40,8 @@
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <!--Page styles-->
-  <link href="../../Utils/style.css" rel="stylesheet"/>
-  <link href="administrare.css" rel="stylesheet"/>
+  <link href="../../Utils/SharedStyleRules.css" rel="stylesheet"/>
+  <link href="Administration.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -58,25 +58,25 @@ Tip 2: you can also add an image using data-image tag
       </div>
       <ul class="nav">
         <li>
-          <a class="nav-link" href="../../index.html">
+          <a class="nav-link" href="../../Index.html">
             <i class="nc-icon nc-chart-pie-35"></i>
             <p>Acasă</p>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="../Issues/sesizari.html">
+          <a class="nav-link" href="../Issues/Issues.html">
             <i class="nc-icon nc-paper-2"></i>
             <p>Sesizări</p>
           </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="administrare.html">
+          <a class="nav-link" href="Administration.html">
             <i class="nc-icon nc-atom"></i>
             <p>Administrare</p>
           </a>
         </li>
         <li>
-          <a class="nav-link" href="../Help/help.html">
+          <a class="nav-link" href="../Help/Help.html">
             <i class="fa fa-question-circle"></i>
             <p>Ajutor</p>
           </a>
@@ -88,7 +88,7 @@ Tip 2: you can also add an image using data-image tag
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg " color-on-scroll="500">
       <div class="container-fluid">
-        <a class="navbar-brand" href="../../index.html">
+        <a class="navbar-brand" href="../../Index.html">
           <img alt="" height="30%" src="../../images/logo.PNG" width="30%">
         </a>
         <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"
@@ -297,12 +297,12 @@ Tip 2: you can also add an image using data-image tag
 <!-- Google login -->
 <script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
-<script src="../Security/auth.js" type='module'></script>
+<script src="../Security/Auth.js" type='module'></script>
 <script src='../../Models/Token.js' type='module'></script>
 <script src='../../Models/Userdata.js' type='module'></script>
 <script src='../../Services/AuthService.js' type='module'></script>
-<script src="administrare.js" type='module'></script>
-<script src='../../Utils/mapPageTemplate.js' type='module'></script>
+<script src="Administration.js" type='module'></script>
+<script src='../../Utils/MapPageTemplate.js' type='module'></script>
 <script src='../../Services/IssueService.js' type='module'></script>
 <script src='../../Models/Issue.js' type='module'></script>
 <script src='../../Services/PinService.js' type='module'></script>

@@ -10,7 +10,7 @@ import {
   setInputElementValue,
   showAllWorks,
   validateAuthorization
-} from '../../Utils/mapPageTemplate.js';
+} from '../../Utils/MapPageTemplate.js';
 import {
   deletePin,
   getAllPins,
@@ -34,7 +34,7 @@ const pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init);
 
 function init() {
-  validateAuthorization(() => { window.location.href = "../../index.html"; } );
+  validateAuthorization(() => { window.location.href = "../../Index.html"; } );
 
   loadMap(pageMap);
   loadMapPins();
@@ -298,11 +298,11 @@ function showPins(pinsArray) {
                 <td>${pin.pinTypeName}</td>
                 <td>${pin.name}</td>
                 <td class="btn-group">
-                    <button id=${pin.id} type="button" onclick="window.location.href='detalii.html?id=${pin.id}'"
+                    <button id=${pin.id} type="button" onclick="window.location.href='Details.html?id=${pin.id}'"
                     class="btn btn-sm btn-round btn-primary table-btn btn-primary-customization">
                         Detalii
                     </button>
-<!--                    <button id=${pin.id} type="button" href='detalii.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
+<!--                    <button id=${pin.id} type="button" href='Details.html' class="btn btn-sm btn-round btn-fill btn-default table-btn">Modifică</button>-->
 <!--                    <button id=${pin.id} type="button" class="btn btn-sm btn-round btn-fill btn-default table-btn">Șterge</button>-->
                 </td>
             <tr>
