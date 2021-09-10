@@ -9,6 +9,7 @@ import {
   saveUserData,
   removeUserData
 } from "../../Utils/Memory.js";
+import { setAdminPageVisibility } from "../Templates/PageTemplate.js";
 
 function startApp() {
   gapi.load('auth2', function(){
@@ -48,6 +49,7 @@ function signOut() {
         removeUserData();
         setUserNameLabel('');
         loginVisibility(false);
+        setAdminPageVisibility();
     });
 }
 
@@ -72,6 +74,7 @@ function signIn(googleUser) {
         setUserNameLabel(userName);
 
         loginVisibility(true);
+        setAdminPageVisibility();
       }
     }).catch(error => {
       console.log(error);
@@ -80,13 +83,15 @@ function signIn(googleUser) {
 }
 
 function loginVisibility(isLoggedIn) {
-    if (isLoggedIn) {
-        document.getElementById('log-out-container').style.display = 'block';
-        document.getElementById('log-in-container').style.display = 'none';
-    } else {
-      document.getElementById('log-out-container').style.display = 'none';
-      document.getElementById('log-in-container').style.display = 'block';
-    }
+  let logoutContainer = document.getElementById('log-out-container');
+  let loginContainer = document.getElementById('log-in-container');
+  if (isLoggedIn) {
+    logoutContainer.style.display = 'block';
+    loginContainer.style.display = 'none';
+  } else {
+    logoutContainer.style.display = 'none';
+    loginContainer.style.display = 'block';
+  }
 }
 
 startApp();

@@ -8,20 +8,25 @@ import {
   addInputFieldValidations,
   setValidityStyle,
   hasInvalidValue,
-  setInputElementValue,
-  isAuthorized
-} from '../../Utils/MapPageTemplate.js';
+  setInputElementValue
+} from '../Templates/MapPageTemplate.js';
 import { getAllPins } from "../../Services/PinService.js";
 import { postNewIssue } from "../../Services/IssueService.js";
 import { separatedStringToArray } from "../../Utils/StringOperations.js";
 import { Issue } from "../../Models/Issue.js";
 import { getAllStatuses } from "../../Services/StatusService.js";
 import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
+import {
+  loadSidebar,
+  isAuthorized
+} from "../Templates/PageTemplate.js";
+import { SidebarItemId } from "../Templates/SideBar.js";
 
 var pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init);
 
 function init() {
+  loadSidebar(SidebarItemId.Issues);
   loadMap(pageMap);
   loadMapPins();
 
