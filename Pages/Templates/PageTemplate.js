@@ -25,7 +25,6 @@ export function loadSidebar(selectedItem) {
 }
 
 export function setAdminPageVisibility() {
-  console.log('SidebarItemId.Administration='+SidebarItemId.Administration)
   if (isAuthorized(Role.Admin)) {
     document.getElementById(SidebarItemId.Administration).classList.remove('d-none');
   }
