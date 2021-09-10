@@ -10,7 +10,7 @@ import {
   setInputElementValue,
   showAllWorks,
   validateAuthorization
-} from '../../Utils/MapPageTemplate.js';
+} from '../Templates/MapPageTemplate.js';
 import {
   deletePin,
   getAllPins,
@@ -29,13 +29,17 @@ import { postNewWork } from "../../Services/WorkService.js";
 import { getAllStatuses } from "../../Services/StatusService.js";
 import { getPinViewArray } from "../../Models/PinView.js";
 import { ResponseDataFromFetchReponse } from '../../Models/ResponseData.js';
+import { Role } from "../../Models/Roles.js";
+import { loadSidebar } from "../Templates/PageTemplate.js";
+import { SidebarItemId } from "../Templates/SideBar.js";
 
 const pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
 window.addEventListener('load', init);
 
 function init() {
-  validateAuthorization(() => { window.location.href = "../../Index.html"; } );
+  validateAuthorization(() => { window.location.href = "../../Index.html"; }, Role.Admin );
 
+  loadSidebar(SidebarItemId.Administration);
   loadMap(pageMap);
   loadMapPins();
 

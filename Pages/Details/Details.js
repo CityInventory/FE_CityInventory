@@ -1,9 +1,11 @@
 import { getPinsById } from "../../Services/PinService.js";
 import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
+import { loadSidebar } from "../Templates/PageTemplate.js";
 
 window.addEventListener('load', init);
 
 function init() {
+  loadSidebar();
 	if (window.location.search !== '') {
 		const id = window.location.search.split('=')[1];
     getPinsById(id)

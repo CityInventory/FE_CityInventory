@@ -21,51 +21,14 @@
   <script src="https://apis.google.com/js/api:client.js"></script>
   <link href="../Security/Auth.css" rel="stylesheet"/>
   <!-- Page Style -->
-  <link href="../../Utils/SharedStyleRules.css" rel="stylesheet">
+  <link href="../Templates/SharedStyleRules.css" rel="stylesheet">
   <link href="Details.css" rel="stylesheet">
 </head>
 
 <!-- <body onload="realtimeClock()"> -->
 <body>
 <div class="wrapper">
-  <div class="sidebar" data-image="../../assets/img/home.jpg">
-    <!--
-Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-Tip 2: you can also add an image using data-image tag
--->
-    <div class="sidebar-wrapper">
-      <div class="logo">
-        HARTA INTERACTIVĂ
-      </div>
-      <ul class="nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="../../Index.html">
-            <i class="nc-icon nc-chart-pie-35"></i>
-            <p>Acasă</p>
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="../Issues/Issues.html">
-            <i class="nc-icon nc-paper-2"></i>
-            <p>Sesizări</p>
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="../Administation/Administration.html">
-            <i class="nc-icon nc-atom"></i>
-            <p>Administrare</p>
-          </a>
-        </li>
-        <li>
-          <a class="nav-link" href="../Help/Help.html">
-            <i class="fa fa-question-circle"></i>
-            <p>Ajutor</p>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <div id="sidebar-container" class="sidebar bg-transparent" data-image="../../assets/img/home.jpg"></div>
   <div class="main-panel">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg " color-on-scroll="500">
@@ -157,5 +120,7 @@ Tip 2: you can also add an image using data-image tag
 <script src='../../Utils/Resources.js' type='module'></script>
 <script src='../../Utils/Memory.js' type='module'></script>
 <script src='../../Models/ResponseData.js' type='module'></script>
+<script src='../Templates/SideBar.js' type='module'></script>
+<script src='../Templates/PageTemplate.js' type="module"></script>
 </body>
 </html>

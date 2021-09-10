@@ -3,38 +3,34 @@ import {
   getIssuesByPinType,
   deleteIssue,
   putIssue
-} from "../Services/IssueService.js";
+} from "../../Services/IssueService.js";
 import {
   getAllPins,
   getPinsByType
-} from "../Services/PinService.js";
-import {getAllStatuses} from "../Services/StatusService.js";
-import {getIssuesViewArray} from "../Models/IssueView.js";
-import {IssueFromIssueView} from "../Models/Issue.js";
+} from "../../Services/PinService.js";
+import { getAllStatuses } from "../../Services/StatusService.js";
+import { getIssuesViewArray } from "../../Models/IssueView.js";
+import { IssueFromIssueView } from "../../Models/Issue.js";
 import {
   arrayToSeparatedString,
   separatedStringToArray
-} from "./StringOperations.js";
-import {getAllDepartments} from "../Services/DepartmentService.js";
-import {getWorkViewArray} from "../Models/WorkView.js";
+} from "../../Utils/StringOperations.js";
+import { getAllDepartments } from "../../Services/DepartmentService.js";
+import { getWorkViewArray } from "../../Models/WorkView.js";
 import {
   deleteWork,
   getAllWorks,
   putWork
-} from "../Services/WorkService.js";
-import { WorkFromWorkView } from "../Models/Work.js";
-import { getUserData } from "./Memory.js";
-import { ResponseDataFromFetchReponse } from "../Models/ResponseData.js"
+} from "../../Services/WorkService.js";
+import { WorkFromWorkView } from "../../Models/Work.js";
+import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
+import { Role } from "../../Models/Roles.js";
+import { isAuthorized } from "./PageTemplate.js";
 
 // AUTHORIZATION
-export function isAuthorized() {
-  let token = getUserData();
-  return (token != null)
-}
-
-export function validateAuthorization(refusalCallback = ()=>{} ) {
-  if (!isAuthorized()) {
-    alert("Trebuie să fii autentificat pentru a putea accesa acest conținut.");
+export function validateAuthorization(refusalCallback = ()=>{}, requiredRole = Role.Unknown) {
+  if (!isAuthorized(requiredRole)) {
+    alert("Trebuie să fii administrator pentru a putea accesa acest conținut.");
     refusalCallback();
   }
 }
