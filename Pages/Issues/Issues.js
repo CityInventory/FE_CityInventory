@@ -18,6 +18,7 @@ import { getAllStatuses } from "../../Services/StatusService.js";
 import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
 import {
   loadSidebar,
+  loadFooter,
   isAuthorized
 } from "../Templates/PageTemplate.js";
 import { SidebarItemId } from "../Templates/SideBar.js";
@@ -50,6 +51,7 @@ function init() {
   setActiveFilterButton('toate');
 
   addInputFieldValidations();
+  loadFooter();
 }
 
 //MAP FUNCTIONS

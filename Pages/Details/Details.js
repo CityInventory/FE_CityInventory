@@ -1,6 +1,6 @@
 import { getPinsById } from "../../Services/PinService.js";
 import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
-import { loadSidebar } from "../Templates/PageTemplate.js";
+import { loadSidebar, loadFooter } from "../Templates/PageTemplate.js";
 
 window.addEventListener('load', init);
 
@@ -19,6 +19,7 @@ function init() {
       })
       .catch(error => console.log('error', error));
 	}
+  loadFooter();
 }
 
 function showPinDetails(pin) {
