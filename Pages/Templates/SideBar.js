@@ -17,7 +17,7 @@ export const SIDE_BAR = `
           </a>
         </li>
         <li id="administration-link" class="nav-item d-none">
-          <a class="nav-link" href="/Pages/Administation/Administration.html">
+          <a class="nav-link" href="/Pages/Administration/Administration.html">
             <i class="nc-icon nc-atom"></i>
             <p>Administrare</p>
           </a>
