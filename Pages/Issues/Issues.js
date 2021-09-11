@@ -17,6 +17,7 @@ import { Issue } from "../../Models/Issue.js";
 import { getAllStatuses } from "../../Services/StatusService.js";
 import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
 import {
+  loadNavbar,
   loadSidebar,
   loadFooter,
   isAuthorized
@@ -28,6 +29,7 @@ window.addEventListener('load', init);
 
 function init() {
   loadSidebar(SidebarItemId.Issues);
+  loadNavbar();
   loadMap(pageMap);
   loadMapPins();
 
