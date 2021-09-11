@@ -190,7 +190,7 @@ async function showIssues(issuesViewArray) {
     row.append(getTableCellWithContent(issueView.pinName));
     row.append(getTableCellWithContent(issueView.description));
     row.append(statusCell)
-    row.append(getTableCellWithContent(issueView.date.toDateString()))
+    row.append(getTableCellWithContent(issueView.date.toLocaleDateString()))
     row.append(optionsCell)
 
     issuesTableBody.append(row);

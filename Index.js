@@ -32,7 +32,7 @@ function showLatestIssues(issueList) {
     let output = `
         <ul class="card-contor">
             <li>
-                ${sortedIssues[i].date.toDateString()} -
+                ${sortedIssues[i].date.toLocaleDateString()} -
                 ${sortedIssues[i].details}
             </li>
         </ul>
