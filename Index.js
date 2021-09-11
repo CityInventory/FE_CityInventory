@@ -1,7 +1,7 @@
 import { getAllIssues } from "./Services/IssueService.js";
 import { Issue } from "./Models/Issue.js";
 import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
-import { loadSidebar } from "./Pages/Templates/PageTemplate.js";
+import { loadSidebar, loadFooter } from "./Pages/Templates/PageTemplate.js";
 import { SidebarItemId } from "./Pages/Templates/SideBar.js";
 
 window.addEventListener('load', init);
@@ -18,6 +18,7 @@ function init() {
         showIssuesPie(result.data);
       }
     }).catch(error => { console.log(error); });
+    loadFooter();
 }
 
 function showLatestIssues(issueList) {

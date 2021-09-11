@@ -5,6 +5,7 @@ import {
 } from "./SideBar.js";
 import { getUserData } from "../../Utils/Memory.js";
 import { Role } from "../../Models/Roles.js";
+import { FOOTER } from "./footer.js";
 
 export function isAuthorized(requiredRole) {
   let token = getUserData();
@@ -28,4 +29,8 @@ export function setAdminPageVisibility() {
   if (isAuthorized(Role.Admin)) {
     document.getElementById(SidebarItemId.Administration).classList.remove('d-none');
   }
+}
+
+export function loadFooter(selectedItem) {
+  document.getElementById('footer-container').innerHTML = FOOTER;
 }
