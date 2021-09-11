@@ -30,7 +30,11 @@ import { getAllStatuses } from "../../Services/StatusService.js";
 import { getPinViewArray } from "../../Models/PinView.js";
 import { ResponseDataFromFetchReponse } from '../../Models/ResponseData.js';
 import { Role } from "../../Models/Roles.js";
-import { loadSidebar, loadFooter } from "../Templates/PageTemplate.js";
+import {
+  loadNavbar,
+  loadSidebar,
+  loadFooter
+} from "../Templates/PageTemplate.js";
 import { SidebarItemId } from "../Templates/SideBar.js";
 
 const pageMap = L.map('mapid').setView([45.752373, 21.227216], 14);
@@ -40,6 +44,7 @@ function init() {
   validateAuthorization(() => { window.location.href = "../../Index.html"; }, Role.Admin );
 
   loadSidebar(SidebarItemId.Administration);
+  loadNavbar();
   loadMap(pageMap);
   loadMapPins();
 

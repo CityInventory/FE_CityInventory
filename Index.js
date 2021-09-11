@@ -1,13 +1,18 @@
 import { getAllIssues } from "./Services/IssueService.js";
 import { Issue } from "./Models/Issue.js";
 import { ResponseDataFromFetchReponse } from "./Models/ResponseData.js"
-import { loadSidebar, loadFooter } from "./Pages/Templates/PageTemplate.js";
+import {
+  loadNavbar,
+  loadSidebar,
+  loadFooter
+} from "./Pages/Templates/PageTemplate.js";
 import { SidebarItemId } from "./Pages/Templates/SideBar.js";
 
 window.addEventListener('load', init);
 
 function init() {
   loadSidebar(SidebarItemId.Home);
+  loadNavbar();
   getAllIssues()
     .then(response => ResponseDataFromFetchReponse(response))
     .then(result => {

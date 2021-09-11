@@ -1,4 +1,4 @@
-export const FOOTER = `
+export const Footer = `
 <div class="container-fluid">
 <nav>
   <p class="copyright text-center">

@@ -31,7 +31,6 @@
   <!-- Google authentification -->
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
   <script src="https://apis.google.com/js/api:client.js"></script>
-  <link href="../Security/Auth.css" rel="stylesheet"/>
   <!--Map-->
   <link crossorigin="" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -49,39 +48,7 @@
   <div id="sidebar-container" class="sidebar bg-transparent" data-image="../../assets/img/home.jpg"></div>
   <div class="main-panel">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg " color-on-scroll="500">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="../../Index.html">
-          <img alt="" height="30%" src="../../images/logo.PNG" width="30%">
-        </a>
-        <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation"
-                class="navbar-toggler navbar-toggler-right"
-                data-toggle="collapse" href="" type="button">
-          <span class="navbar-toggler-bar burger-lines"></span>
-          <span class="navbar-toggler-bar burger-lines"></span>
-          <span class="navbar-toggler-bar burger-lines"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navigation">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item" id="log-in-container">
-              <a class="nav-link">
-                <div class="customGPlusSignIn" id="loginBtn">
-                  <span class="buttonText">Autentificare cu Google</span>
-                </div>
-              </a>
-            </li>
-            <li class="nav-item" id="log-out-container">
-              <a class="nav-link">
-                <span class="no-icon" id="user-name"></span>
-              </a>
-              <a class="nav-link">
-                <span class="no-icon" id="logoutBtn">Deconectare</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    <nav id="navbar-container" class="navbar navbar-expand-lg" color-on-scroll="500"></nav>
     <!-- End Navbar -->
     <div class="content">
       <div class="container-fluid">
@@ -169,7 +136,6 @@
 <!-- Google login -->
 <script async defer src="https://apis.google.com/js/platform.js"></script>
 <!-- Custom code -->
-<script src="../Security/Auth.js" type='module'></script>
 <script src='../../Models/Token.js' type='module'></script>
 <script src='../../Models/Userdata.js' type='module'></script>
 <script src='../../Services/AuthService.js' type='module'></script>
@@ -187,7 +153,8 @@
 <script src='../../Utils/Memory.js' type='module'></script>
 <script src='../../Models/ResponseData.js' type='module'></script>
 <script src='../Templates/SideBar.js' type='module'></script>
-<script src='../Templates/footer.js' type='module'></script>
+<script src='../Templates/Footer.js' type='module'></script>
 <script src='../Templates/PageTemplate.js' type="module"></script>
+<script src='../Templates/NavBar.js' type="module"></script>
 </body>
 </html>

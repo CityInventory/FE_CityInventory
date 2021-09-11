@@ -1,11 +1,16 @@
 import { getPinsById } from "../../Services/PinService.js";
 import { ResponseDataFromFetchReponse } from "../../Models/ResponseData.js"
-import { loadSidebar, loadFooter } from "../Templates/PageTemplate.js";
+import {
+  loadNavbar,
+  loadSidebar,
+  loadFooter
+} from "../Templates/PageTemplate.js";
 
 window.addEventListener('load', init);
 
 function init() {
   loadSidebar();
+  loadNavbar();
 	if (window.location.search !== '') {
 		const id = window.location.search.split('=')[1];
     getPinsById(id)
