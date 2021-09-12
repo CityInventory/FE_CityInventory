@@ -107,6 +107,7 @@ function setAdminPageVisibility() {
 // FOOTER
 export function loadFooter() {
   document.getElementById('footer-container').innerHTML = Footer;
+  document.getElementById('current-year').innerHTML = new Date().getFullYear();
 }
 
 // NAVBAR

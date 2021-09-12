@@ -66,6 +66,11 @@ textarea {
 }
 
 /* NAVBAR */
+#city-inventory-logo {
+  height: 30%;
+  width: 30%;
+}
+
 #mapid {
   height: 700px;
 }
