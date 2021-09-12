@@ -1,7 +1,7 @@
 export const NAV_BAR = `
       <div class="container-fluid">
         <a class="navbar-brand" href="../../Index.html">
-          <img alt="" height="30%" src="../../images/logo.PNG" width="30%">
+          <img id="city-inventory-logo" alt="" src="../../images/logo.PNG">
         </a>
         <button aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right"
                 data-toggle="collapse" href="" type="button">
