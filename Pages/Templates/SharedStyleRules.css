@@ -88,3 +88,8 @@ span.buttonText {
 #name {
   padding-left: 10px;
 }
+
+/* MAP */
+#mapid {
+  height: 500px;
+}
