@@ -3,6 +3,6 @@
     "bootstrap": "*",
     "font-awesome": "*",
     "live-server": "*",
-    "npm-check-updates": "^11.8.3"
+    "npm-check-updates": "*"
   }
 }
