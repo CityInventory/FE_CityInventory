@@ -64,6 +64,18 @@ export function setMapButtonStyle(element) {
 }
 
 // ISSUES TABLE
+const ISSUE_FILTER_BUTTONS = `
+    <button class="btn btn-primary btn-default btn-primary-customization" id="toate">Toate Sesizările</button>
+    <button class="btn btn-primary btn-default btn-primary-customization" id="cladiri">Sesizări pentru clădiri</button>
+    <button class="btn btn-primary btn-default btn-primary-customization" id="drumuri">Sesizări pentru Drumuri</button>
+    <button class="btn btn-primary btn-default btn-primary-customization" id="spatiiDeschise">Sesizări pentru spații deschise</button>
+    <button class="btn btn-primary btn-default btn-primary-customization" id="altele">Sesizări pentru alte marcaje</button>
+`;
+
+export function loadIssueFilterButtons() {
+  document.getElementById("issues-list-selector").innerHTML = ISSUE_FILTER_BUTTONS;
+}
+
 export function initIssueTableFilters(customStyles = () => {}) {
   getAllIssuesView().then(issueList => showStyledIssues(issueList, customStyles));
 
