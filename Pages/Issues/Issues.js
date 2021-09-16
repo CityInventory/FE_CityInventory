@@ -8,7 +8,7 @@ import {
   addInputFieldValidations,
   setValidityStyle,
   hasInvalidValue,
-  setInputElementValue
+  setInputElementValue, loadIssueFilterButtons
 } from '../Templates/MapPageTemplate.js';
 import { getAllPins } from "../../Services/PinService.js";
 import { postNewIssue } from "../../Services/IssueService.js";
@@ -33,6 +33,7 @@ function init() {
   loadMap(pageMap);
   loadMapPins();
 
+  loadIssueFilterButtons();
   initIssueTableFilters(disableIssueStatusSelectors);
 
   getAllStatuses()

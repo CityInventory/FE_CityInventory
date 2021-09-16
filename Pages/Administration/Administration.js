@@ -9,7 +9,7 @@ import {
   loadInputFormOptions,
   setInputElementValue,
   showAllWorks,
-  validateAuthorization
+  validateAuthorization, loadIssueFilterButtons
 } from '../Templates/MapPageTemplate.js';
 import {
   deletePin,
@@ -45,13 +45,16 @@ function init() {
 
   loadSidebar(SidebarItemId.Administration);
   loadNavbar();
+
   loadMap(pageMap);
   loadMapPins();
 
   pageMap.on('click', onMapClick);
   loadPinTypes();
-  initTableSelector();
 
+  loadIssueFilterButtons();
+
+  initTableSelector();
   initIssueTableFilters();
 
   getAllStatuses()
